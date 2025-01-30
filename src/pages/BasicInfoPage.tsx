@@ -6,6 +6,7 @@ import AddressSelection from "../components/BasicInfo/AddressSelection";
 import PersonalitySelection from "../components/BasicInfo/PersonalitySelection";
 import HobbySelection from "../components/BasicInfo/HobbySelection";
 import Loading from "../components/BasicInfo/Loading";
+import Result from "../components/BasicInfo/Result";
 
 const BasicInfoPage = () => {
   const [currentStep, setCurrentStep] = useState<number>(1);
@@ -36,6 +37,10 @@ const BasicInfoPage = () => {
 
       {currentStep === 5 && (
         <Loading onNext={() => setCurrentStep(6)} />
+      )}
+
+      {currentStep === 6 && (
+        <Result onChatStart={() => setCurrentStep(1)}/>
       )}
     </div>
   )
