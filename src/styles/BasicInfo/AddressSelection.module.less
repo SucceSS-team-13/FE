@@ -1,0 +1,145 @@
+.container {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+
+.header {
+  text-align: center;
+  margin-top: 48px;
+}
+
+.title {
+  font-size: 30px;
+  font-weight: bold;
+  color: #111827;
+}
+
+.subtitle {
+  margin-top: 8px;
+  margin-bottom: 32px;
+  font-size: 14px;
+  color: #4B5563;
+}
+
+.form {
+  margin-top: 32px;
+}
+
+.inputWrapper {
+  position: relative;
+}
+
+.input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #D1D5DB;
+  border-radius: 8px;
+  font-size: 16px;
+  outline: none;
+  transition: all 0.2s;
+  box-sizing: border-box;
+
+  &:focus {
+    border-color: #3B82F6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+  }
+}
+
+.searchButton {
+  width: 100%;
+  margin-top: 16px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: none;
+  font-size: 18px;
+  font-weight: 500;
+  color: white;
+  background-color: #3B82F6;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #2563EB;
+  }
+}
+
+.resultsContainer {
+  margin-top: 24px;
+}
+
+.resultsTitle {
+  font-size: 14px;
+  color: #4B5563;
+  margin-bottom: 8px;
+}
+
+.resultsList {
+  background-color: white;
+  border: 1px solid #D1D5DB;
+  border-radius: 8px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  max-height: 300px;
+  overflow-y: auto;
+  
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  &::-webkit-scrollbar-track {
+    background: #F3F4F6;
+    border-radius: 3px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background: #D1D5DB;
+    border-radius: 3px;
+    
+    &:hover {
+      background: #9CA3AF;
+    }
+  }
+}
+
+.addressButton {
+  width: 100%;
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #E5E7EB;
+  border: none;
+  color: #374151;
+  transition: all 0.2s;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background-color: #F9FAFB;
+  }
+}
+
+.selectedAddress {
+  background-color: #EFF6FF;
+  color: #1D4ED8;
+}
+
+.submitContainer {
+  margin-top: 24px;
+}
+
+.submitButton {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border: none;
+  font-size: 18px;
+  font-weight: 500;
+  color: white;
+  background-color: #22C55E;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #16A34A;
+  }
+}
