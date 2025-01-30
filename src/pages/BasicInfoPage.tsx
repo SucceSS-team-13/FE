@@ -4,6 +4,7 @@ import ProgressBar from "../components/BasicInfo/ProgressBar";
 import AgeSelection from "../components/BasicInfo/AgeSelection";
 import AddressSelection from "../components/BasicInfo/AddressSelection";
 import PersonalitySelection from "../components/BasicInfo/PersonalitySelection";
+import HobbySelection from "../components/BasicInfo/HobbySelection";
 
 const BasicInfoPage = () => {
   const [currentStep, setCurrentStep] = useState<number>(1);
@@ -24,6 +25,10 @@ const BasicInfoPage = () => {
 
       {currentStep == 3 && (
         <PersonalitySelection onNext={() => setCurrentStep(4)} />
+      )}
+
+      {currentStep === 4 && (
+        <HobbySelection onNext={() => setCurrentStep(5)} />
       )}
     </div>
   )

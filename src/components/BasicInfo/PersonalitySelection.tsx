@@ -7,8 +7,8 @@ type Props = {
 }
 
 const PersonalitySelection = ({ onNext }: Props) => {
-  const [energyType, setEnergyType] = useState('');
-  const [decisionType, setDecisionType] = useState('');
+  const [energyType, setEnergyType] = useState<string>('');
+  const [decisionType, setDecisionType] = useState<string>('');
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
