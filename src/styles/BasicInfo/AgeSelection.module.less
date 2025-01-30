@@ -1,0 +1,95 @@
+.container {
+  width: 100%;
+}
+
+.header {
+  text-align: center;
+  margin-top: 3rem;
+}
+
+.title {
+  font-size: 1.875rem;
+  font-weight: 700;
+  color: #111827;
+}
+
+.subtitle {
+  margin-top: 0.5rem;
+  font-size: 0.875rem;
+  color: #4B5563;
+  margin-bottom: 2rem;
+}
+
+.form {
+  margin-top: 2rem;
+}
+
+.buttonGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+  max-width: 28rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ageButton {
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  transition-property: background-color, border-color, color;
+  transition-duration: 200ms;
+}
+
+.selectedButton {
+  background-color: #3B82F6;
+  color: white;
+  border: 1px solid #3B82F6;
+
+  &:hover {
+    background-color: #2563EB;
+  }
+}
+
+.unselectedButton {
+  background-color: white;
+  color: #374151;
+  border: 1px solid #D1D5DB;
+
+  &:hover {
+    background-color: #F9FAFB;
+  }
+}
+
+.submitWrapper {
+  max-width: 28rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.submitButton {
+  margin-top: 2rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: white;
+  border: none;
+  transition-property: background-color;
+  transition-duration: 200ms;
+}
+
+.activeSubmit {
+  background-color: #22C55E;
+
+  &:hover {
+    background-color: #16A34A;
+  }
+}
+
+.inactiveSubmit {
+  background-color: #D1D5DB;
+  cursor: not-allowed;
+}
