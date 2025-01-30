@@ -1,21 +1,26 @@
 .container {
-  min-height: 100vh;
-  background-color: #F9FAFB; 
-  padding: 3rem 1rem; 
-
-  @media (min-width: 640px) { 
-    padding-left: 1.5rem; 
-    padding-right: 1.5rem;
-  }
-
-  @media (min-width: 1024px) { 
-    padding-left: 2rem; 
-    padding-right: 2rem;
-  }
+  height: 100%;
+  background-color: #F9FAFB;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 0; // 패딩을 wrapper로 이동
 }
 
 .wrapper {
-  max-width: 28rem; 
+  max-width: 22rem;
+  width: 100%;
   margin-left: auto;
   margin-right: auto;
+  padding: 3rem 1rem 0;
+  
+  @media (min-width: 640px) {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
 }

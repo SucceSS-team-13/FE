@@ -1,5 +1,19 @@
 .container {
   width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  padding: 16px 0px; /* 좌우 패딩 추가 */
+
+  // 웹킷 기반 브라우저용 (Chrome, Safari, 최신 Edge)
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  // Firefox용
+  scrollbar-width: none;
+
+  // IE용
+  -ms-overflow-style: none;
 }
 
 .header {
@@ -25,6 +39,7 @@
   max-width: 42rem;
   margin-left: auto;
   margin-right: auto;
+  padding: 0 1em;
 }
 
 .categoryGrid {
