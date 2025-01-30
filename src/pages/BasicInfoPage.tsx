@@ -5,15 +5,18 @@ import AgeSelection from "../components/BasicInfo/AgeSelection";
 import AddressSelection from "../components/BasicInfo/AddressSelection";
 import PersonalitySelection from "../components/BasicInfo/PersonalitySelection";
 import HobbySelection from "../components/BasicInfo/HobbySelection";
+import Loading from "../components/BasicInfo/Loading";
 
 const BasicInfoPage = () => {
   const [currentStep, setCurrentStep] = useState<number>(1);
 
   return (
     <div className={styles.container}>
-      <div className={styles.wrapper}>
-        <ProgressBar currentStep={currentStep}/>
-      </div>
+      {![5, 6].includes(currentStep) && ( //로딩, 결과 페이지에서는 숨김
+        <div className={styles.wrapper}>
+          <ProgressBar currentStep={currentStep}/>
+        </div>
+      )}
 
       {currentStep === 1 && (
         <AgeSelection onNext={() => setCurrentStep(2)} />
@@ -29,6 +32,10 @@ const BasicInfoPage = () => {
 
       {currentStep === 4 && (
         <HobbySelection onNext={() => setCurrentStep(5)} />
+      )}
+
+      {currentStep === 5 && (
+        <Loading onNext={() => setCurrentStep(6)} />
       )}
     </div>
   )
