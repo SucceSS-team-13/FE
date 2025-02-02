@@ -1,0 +1,74 @@
+.container {
+  width: 100%;
+  max-width: 28rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2rem;
+}
+
+.stepsContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stepCircle {
+  width: 2.5rem; 
+  height: 2.5rem; 
+  border-radius: 9999px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-width: 2px;
+  font-size: 0.875rem; 
+  font-weight: 600; 
+}
+
+.activeStep {
+  background-color: #3B82F6; 
+  border-color: #3B82F6; 
+  color: white;
+}
+
+.inactiveStep {
+  background-color: white;
+  border-color: #D1D5DB; 
+  color: #6B7280; 
+}
+
+.stepWrapper {
+  position: relative; 
+}
+
+.stepLabel {
+  position: absolute;
+  bottom: -1.5rem; 
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.75rem; 
+  color: #6B7280; 
+  white-space: nowrap;
+}
+
+.stepConnector {
+  flex: 1;
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  height: 0.125rem; 
+  position: relative;
+}
+
+.connectorBg {
+  position: absolute;
+  inset: 0;
+  background-color: #D1D5DB; 
+}
+
+.connectorProgress {
+  position: absolute;
+  inset: 0;
+  background-color: #3B82F6; 
+  transition-property: all;
+  transition-duration: 300ms;
+  transform-origin: left;
+}
