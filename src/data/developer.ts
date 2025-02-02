@@ -1,0 +1,58 @@
+export const DEVELOPERS: Developer[] = [
+  {
+    name: "이만재",
+    university: "성공회대",
+    role: "Frontend Developer",
+    position: "팀장",
+    image: "/image/leemanjae.png",
+    portfolio: "", // 포트폴리오 링크 - 추후 추가 예정
+  },
+  {
+    name: "김산호",
+    university: "성공회대",
+    role: "Frontend Developer",
+    position: "팀장",
+    image: "/image/leemanjae.png",
+    portfolio: "",
+  },
+  {
+    name: "김유진",
+    university: "숙명여대",
+    role: "Backend Developer",
+    position: "팀장",
+    image: "/image/leemanjae.png",
+    portfolio: "",
+  },
+  {
+    name: "이경은",
+    university: "숙명여대",
+    role: "Backend Developer",
+    position: "팀장",
+    image: "/image/leemanjae.png",
+    portfolio: "",
+  },
+  {
+    name: "김지은",
+    university: "숙명여대",
+    role: "Backend Developer",
+    position: "팀장",
+    image: "/image/leemanjae.png",
+    portfolio: "",
+  },
+  {
+    name: "이현진",
+    university: "성신여대",
+    role: "AI/ML Developer",
+    position: "팀장",
+    image: "/image/leemanjae.png",
+    portfolio: "",
+  },
+  {
+    name: "김찬진",
+    university: "성신여대",
+    role: "AI/ML Developer",
+    position: "팀장",
+    image: "/image/leemanjae.png",
+    portfolio: "",
+  },
+];

@@ -1,0 +1,41 @@
+@import "/src/styles/GlobalStyle.module.less";
+
+.container {
+  overflow-y: scroll;
+  width: 100%;
+  height: 100vh;
+
+  .firstContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+
+    .logoContainer {
+      width: 40%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .textContainer {
+      width: 60%;
+      height: 100%;
+      padding: 0 5%;
+      .typeContainer {
+        box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        width: 100%;
+        height: 100%;
+        .textLarge {
+          font-size: 32px;
+          margin-bottom: 30px;
+        }
+        .textSmall {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}
