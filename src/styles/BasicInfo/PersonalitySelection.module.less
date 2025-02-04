@@ -1,5 +1,27 @@
+:global(body) {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  overflow-y: auto;
+}
+
+.pageWrapper {
+  min-height: 100vh;
+  width: 100%;
+  background-color: white;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 120px;
+}
+
 .container {
   width: 100%;
+  max-width: min(1200px, 90%);
+  margin: 0 auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 120px;
 }
 
 .header {
@@ -11,6 +33,7 @@
   font-size: 30px;
   font-weight: bold;
   color: #111827;
+  margin: 0;
 }
 
 .subtitle {
@@ -22,13 +45,20 @@
 
 .form {
   margin-top: 32px;
-  max-width: 24rem;
-  margin-left: auto;
-  margin-right: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.sectionsContainer {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
 }
 
 .section {
-  margin-bottom: 32px;
+  width: 100%;
 }
 
 .sectionTitle {
@@ -39,21 +69,26 @@
 }
 
 .buttonGrid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: 16px;
 }
 
 .typeButton {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-areas: "left right";
   align-items: center;
-  padding: 24px;
+  padding: 20px;
   border: 1px solid #D1D5DB;
   border-radius: 12px;
   background-color: white;
   color: #374151;
   transition: all 0.2s;
+  width: 100%;
+  gap: 24px;
+  text-align: left;
+  cursor: pointer;
 
   &:hover {
     border-color: #93C5FD;
@@ -66,37 +101,100 @@
   }
 }
 
+.leftContent {
+  grid-area: left;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.rightContent {
+  grid-area: right;
+  text-align: left;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
 .icon {
-  margin-bottom: 12px;
+  width: 32px;
+  height: 32px;
+  margin-bottom: 8px;
 }
 
 .buttonTitle {
   font-weight: 500;
 }
 
-.buttonSubtext {
-  font-size: 12px;
-  margin-top: 8px;
-  opacity: 0.8;
+.submitWrapper {
+  width: 100%;
+  margin-top: 2rem;
 }
 
 .submitButton {
   width: 100%;
-  padding: 12px 16px;
-  border-radius: 8px;
-  border: none;
-  font-size: 18px;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  font-size: 1.125rem;
   font-weight: 500;
   color: white;
-  background-color: #22C55E;
-  transition: background-color 0.2s;
+  border: none;
+  transition: all 0.2s;
+}
 
-  &:hover:not(.disabled) {
-    background-color: #16A34A;
+.activeSubmit {
+  background: linear-gradient(135deg, #6366F1, #2563EB);
+  box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.2);
+  cursor: pointer;
+
+  &:hover {
+    background: linear-gradient(135deg, #4F46E5, #1D4ED8);
+    box-shadow: 0 6px 8px -1px rgba(79, 70, 229, 0.25);
+    transform: translateY(-1px);
+  }
+}
+
+.inactiveSubmit {
+  background: linear-gradient(135deg, #E5E7EB, #D1D5DB);
+  cursor: not-allowed;
+  box-shadow: none;
+  opacity: 0.7;
+  color: #9CA3AF;
+  pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .pageWrapper {
+    padding-bottom: 100px; // 모바일에서 더 큰 하단 여백
+  }
+  .sectionsContainer {
+    grid-template-columns: 1fr;
+    gap: 24px;
   }
 
-  &.disabled {
-    background-color: #D1D5DB;
-    cursor: not-allowed;
+  .container {
+    padding: 16px;
+  }
+
+  .header {
+    margin-top: 32px;
+  }
+
+  .form {
+    margin-top: 24px;
+    gap: 24px;
+    margin-bottom: 32px;
+  }
+
+  .typeButton {
+    padding: 16px;
+  }
+
+  .rightContent {
+    font-size: 13px;
+  }
+
+  .icon {
+    width: 24px;
+    height: 24px;
   }
 }

@@ -1,6 +1,6 @@
 import { useState, FormEvent } from "react";
 import { Users, User, Heart, Brain } from 'lucide-react';
-import styles from "../../styles/BasicInfo/PersonalitySelection.module.less"
+import styles from "../../styles/BasicInfo/PersonalitySelection.module.less";
 
 type Props = {
   onNext: () => void;
@@ -18,85 +18,109 @@ const PersonalitySelection = ({ onNext }: Props) => {
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <h2 className={styles.title}>
-          성향을 선택해주세요
-        </h2>
-        <p className={styles.subtitle}>
-          맞춤형 상담 서비스를 위해 당신의 성향을 선택해주세요
-        </p>
+    <div className={styles.pageWrapper}>
+      <div className={styles.container}>
+        <div className={styles.header}>
+          <h2 className={styles.title}>
+            성향을 선택해주세요
+          </h2>
+          <p className={styles.subtitle}>
+            맞춤형 상담 서비스를 위해 당신의 성향을 선택해주세요
+          </p>
+        </div>
+
+        <form onSubmit={handleSubmit} className={styles.form}>
+          <div className={styles.sectionsContainer}>
+            {/* 에너지 방향 선택 */}
+            <div className={styles.section}>
+              <p className={styles.sectionTitle}>1. 에너지 방향</p>
+              <div className={styles.buttonGrid}>
+                <button
+                  type="button"
+                  onClick={() => setEnergyType('외향형')}
+                  className={`${styles.typeButton} ${
+                    energyType === '외향형' ? styles.selected : ''
+                  }`}
+                >
+                  <div className={styles.leftContent}>
+                    <Users className={styles.icon} />
+                    <span className={styles.buttonTitle}>외향형</span>
+                  </div>
+                  <span className={styles.rightContent}>
+                    사람들과 수다 떨며 에너지를 충전하는 사교왕 스타일!
+                  </span>
+                </button>
+                
+                <button
+                  type="button"
+                  onClick={() => setEnergyType('내향형')}
+                  className={`${styles.typeButton} ${
+                    energyType === '내향형' ? styles.selected : ''
+                  }`}
+                >
+                  <div className={styles.leftContent}>
+                    <User className={styles.icon} />
+                    <span className={styles.buttonTitle}>내향형</span>
+                  </div>
+                  <span className={styles.rightContent}>
+                    혼자만의 시간을 최고로 여기는 조용한 힐링러
+                  </span>
+                </button>
+              </div>
+            </div>
+
+            {/* 판단 결정 선택 */}
+            <div className={styles.section}>
+              <p className={styles.sectionTitle}>2. 판단 결정</p>
+              <div className={styles.buttonGrid}>
+                <button
+                  type="button"
+                  onClick={() => setDecisionType('감정형')}
+                  className={`${styles.typeButton} ${
+                    decisionType === '감정형' ? styles.selected : ''
+                  }`}
+                >
+                  <div className={styles.leftContent}>
+                    <Heart className={styles.icon} />
+                    <span className={styles.buttonTitle}>감정형</span>
+                  </div>
+                  <span className={styles.rightContent}>
+                    타인의 기분을 먼저 챙기는 따뜻한 공감 요정
+                  </span>
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setDecisionType('사고형')}
+                  className={`${styles.typeButton} ${
+                    decisionType === '사고형' ? styles.selected : ''
+                  }`}
+                >
+                  <div className={styles.leftContent}>
+                    <Brain className={styles.icon} />
+                    <span className={styles.buttonTitle}>사고형</span>
+                  </div>
+                  <span className={styles.rightContent}>
+                    논리와 데이터로 무장한 이성적인 해결사!
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div className={styles.submitWrapper}>
+            <button
+              type="submit"
+              disabled={!energyType || !decisionType}
+              className={`${styles.submitButton} ${
+                !(energyType && decisionType) ? styles.inactiveSubmit : styles.activeSubmit
+              }`}
+            >
+              다음
+            </button>
+          </div>
+        </form>
       </div>
-
-      <form onSubmit={handleSubmit} className={styles.form}>
-        {/* 에너지 방향 선택 */}
-        <div className={styles.section}>
-          <p className={styles.sectionTitle}>1. 에너지 방향</p>
-          <div className={styles.buttonGrid}>
-            <button
-              type="button"
-              onClick={() => setEnergyType('외향형')}
-              className={`${styles.typeButton} ${
-                energyType === '외향형' ? styles.selected : ''
-              }`}
-            >
-              <Users size={32} className={styles.icon} />
-              <span className={styles.buttonTitle}>외향형</span>
-              <span className={styles.buttonSubtext}>사교적, 활동적</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => setEnergyType('내향형')}
-              className={`${styles.typeButton} ${
-                energyType === '내향형' ? styles.selected : ''
-              }`}
-            >
-              <User size={32} className={styles.icon} />
-              <span className={styles.buttonTitle}>내향형</span>
-              <span className={styles.buttonSubtext}>신중함, 독립적</span>
-            </button>
-          </div>
-        </div>
-
-        {/* 판단 결정 선택 */}
-        <div className={styles.section}>
-          <p className={styles.sectionTitle}>2. 판단 결정</p>
-          <div className={styles.buttonGrid}>
-            <button
-              type="button"
-              onClick={() => setDecisionType('감정형')}
-              className={`${styles.typeButton} ${
-                decisionType === '감정형' ? styles.selected : ''
-              }`}
-            >
-              <Heart size={32} className={styles.icon} />
-              <span className={styles.buttonTitle}>감정형</span>
-              <span className={styles.buttonSubtext}>공감, 조화</span>
-            </button>
-            <button
-              type="button"
-              onClick={() => setDecisionType('사고형')}
-              className={`${styles.typeButton} ${
-                decisionType === '사고형' ? styles.selected : ''
-              }`}
-            >
-              <Brain size={32} className={styles.icon} />
-              <span className={styles.buttonTitle}>사고형</span>
-              <span className={styles.buttonSubtext}>논리, 객관성</span>
-            </button>
-          </div>
-        </div>
-
-        <button
-          type="submit"
-          disabled={!energyType || !decisionType}
-          className={`${styles.submitButton} ${
-            !(energyType && decisionType) ? styles.disabled : ''
-          }`}
-        >
-          다음
-        </button>
-      </form>
     </div>
   );
 };
