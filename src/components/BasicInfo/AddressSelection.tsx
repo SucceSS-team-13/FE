@@ -1,4 +1,5 @@
 import { useState, FormEvent, ChangeEvent } from "react";
+import { Search } from "lucide-react";
 import styles from "../../styles/BasicInfo/AddressSelection.module.less";
 
 type Props = {
@@ -28,6 +29,7 @@ const AddressSelection = ({ onNext }: Props) => {
   const handleAddressSelect = (address: string) => {
     setSelectedAddress(address);
     setSearchText(address);
+    setShowResults(false);
   };
 
   const handleFinalSubmit = () => {
@@ -48,7 +50,7 @@ const AddressSelection = ({ onNext }: Props) => {
       </div>
 
       <form onSubmit={handleSearch} className={styles.form}>
-        <div className={styles.inputWrapper}>
+        <div className={styles.searchWrapper}>
           <input
             type="text"
             value={searchText}
@@ -56,14 +58,14 @@ const AddressSelection = ({ onNext }: Props) => {
             placeholder="주소 검색 (예: 도로명, 건물명)"
             className={styles.input}
           />
+          <button
+            type="submit"
+            className={styles.searchButton}
+            aria-label="주소 검색"
+          >
+            <Search size={20} />
+          </button>
         </div>
-
-        <button
-          type="submit"
-          className={styles.searchButton}
-        >
-          주소 검색
-        </button>
         
         {showResults && (
           <div className={styles.resultsContainer}>
