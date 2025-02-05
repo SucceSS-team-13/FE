@@ -104,6 +104,7 @@ const HobbySelection = ({ onNext }: Props) => {
               <button
                 key={category.id}
                 type="button"
+                data-category={category.id}
                 onClick={() => setSelectedCategory(
                   selectedCategory === category.id ? null : category.id
                 )}
