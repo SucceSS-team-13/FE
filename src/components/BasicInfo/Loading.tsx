@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { Brain } from "lucide-react";
+import { useEffect, useState } from "react";
 import Logo from "../Logo";
 import styles from "../../styles/BasicInfo/Loading.module.less";
 
@@ -8,14 +7,19 @@ type Props = {
 }
 
 const Loading = ({ onNext }: Props) => {
+  const [isExiting, setIsExiting] = useState<boolean>(false);
+  
   useEffect(() => {
-    setTimeout(() => {
-      onNext();
-    }, 5000);
+    const timer = setTimeout(() => {
+      setIsExiting(true);
+      setTimeout(onNext, 500); // 애니메이션 시간만큼 지연
+    }, 4500);
+
+    return () => clearTimeout(timer);
   });
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${isExiting ? styles.exit : ''}`}>
       <div className={styles.content}>
         {/* 로고 */}
         <div className={styles.logoContainer}>

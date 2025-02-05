@@ -2,8 +2,17 @@
   min-height: 100vh;
   background-color: white;
   padding: 48px 16px;
+  animation: slideUp 0.5s ease-out forwards;
 }
 
+@keyframes slideUp {
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
 .content {
   max-width: 42rem;
   margin-left: auto;

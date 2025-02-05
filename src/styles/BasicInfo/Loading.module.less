@@ -5,6 +5,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  transform: translateY(0);
+  transition: transform 0.5s ease-out;
+  
+  &.exit {
+    transform: translateY(-100%);
+  }
 }
 
 .content {
