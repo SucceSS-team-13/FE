@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { Brain } from "lucide-react";
+import Logo from "../Logo";
 import styles from "../../styles/BasicInfo/Loading.module.less";
 
 type Props = {
@@ -18,7 +19,7 @@ const Loading = ({ onNext }: Props) => {
       <div className={styles.content}>
         {/* 로고 */}
         <div className={styles.logoContainer}>
-          <Brain size={64} className={styles.logo} />
+          <Logo />
         </div>
         
         {/* 로딩 메시지 */}
