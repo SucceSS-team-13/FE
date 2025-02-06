@@ -53,9 +53,9 @@ const AgeSelection = ({ onNext }: Props) => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h2 className={styles.title}>나이를 선택해주세요</h2>
+        <h2 className={styles.title}>당신의 이야기를 더 잘 이해하고 싶어요</h2>
         <p className={styles.subtitle}>
-          맞춤형 상담 서비스를 위해 연령대를 선택해주세요
+          더 나은 대화를 위해 연령대를 알려주시겠어요?
         </p>
       </div>
 

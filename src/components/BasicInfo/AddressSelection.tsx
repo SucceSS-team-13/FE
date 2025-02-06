@@ -42,10 +42,10 @@ const AddressSelection = ({ onNext }: Props) => {
     <div className={styles.container}>
       <div className={styles.header}>
         <h2 className={styles.title}>
-          주소를 입력해주세요
+          당신의 일상 가까이에서 찾는 위로
         </h2>
         <p className={styles.subtitle}>
-          맞춤형 서비스 제공을 위해 주소를 입력해주세요
+          거주하시는 지역을 알려주시면 가까운 곳의 도움이 되는 장소들을 추천해드려요
         </p>
       </div>
 

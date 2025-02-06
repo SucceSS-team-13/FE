@@ -88,10 +88,10 @@ const HobbySelection = ({ onNext }: Props) => {
     <div className={styles.container}>
       <div className={styles.header}>
         <h2 className={styles.title}>
-          취미를 선택해주세요
+          어떤 활동에서 즐거움을 느끼시나요?
         </h2>
         <p className={styles.subtitle}>
-          관심 있는 취미를 모두 선택해주세요
+          당신이 관심 있는 활동들을 선택하시면 맞춤 제안을 준비할게요
         </p>
       </div>
 

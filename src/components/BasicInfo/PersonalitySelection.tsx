@@ -22,10 +22,10 @@ const PersonalitySelection = ({ onNext }: Props) => {
       <div className={styles.container}>
         <div className={styles.header}>
           <h2 className={styles.title}>
-            성향을 선택해주세요
+            당신만의 특별한 성향을 공유해주세요
           </h2>
           <p className={styles.subtitle}>
-            맞춤형 상담 서비스를 위해 당신의 성향을 선택해주세요
+            에너지 방향과 판단 방식에 따라 맞춤 상담을 제공해드려요
           </p>
         </div>
 
