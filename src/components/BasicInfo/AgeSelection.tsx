@@ -1,5 +1,5 @@
 import { useState, FormEvent } from "react";
-import { Backpack, GraduationCap, Briefcase, Users, Heart, School } from "lucide-react";
+import { GraduationCap, Briefcase, Users, Heart, School } from "lucide-react";
 import styles from '../../styles/BasicInfo/AgeSelection.module.less';
 
 type Props = {

@@ -2,7 +2,9 @@
   width: 100%;
   height: 100%;
   overflow-y: auto;
-  padding: 16px 0px; /* 좌우 패딩 추가 */
+  padding: 16px 0px; 
+  position: relative;
+  animation: slideIn 0.5s ease-in-out;
 
   // 웹킷 기반 브라우저용 (Chrome, Safari, 최신 Edge)
   &::-webkit-scrollbar {
@@ -15,6 +17,18 @@
   // IE용
   -ms-overflow-style: none;
 }
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
 
 .header {
   text-align: center;
