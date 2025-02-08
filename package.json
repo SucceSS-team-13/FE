@@ -11,6 +11,7 @@
     "mock": "npx tsx watch ./src/mocks/http.ts"
   },
   "dependencies": {
+    "@tanstack/react-query": "5",
     "axios": "^1.7.9",
     "lucide-react": "^0.474.0",
     "msw": "^2.7.0",
@@ -24,6 +25,7 @@
   "devDependencies": {
     "@eslint/js": "^9.17.0",
     "@mswjs/http-middleware": "^0.10.3",
+    "@tanstack/react-query-devtools": "5",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/react": "^19.0.8",
