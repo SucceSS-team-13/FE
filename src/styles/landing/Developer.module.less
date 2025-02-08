@@ -10,19 +10,18 @@
     display: block;
     text-align: center;
     h2 {
-      color: #fff;
-      font-size: 48px;
+      color: @mainWhite;
+      font-size: 3rem;
       font-weight: 500;
       margin: 0;
     }
   }
   .title {
     width: 100%;
-    color: #fff;
+    color: @mainWhite;
     text-align: center;
-    margin-top: 15px;
     p {
-      color: #fff;
+      color: @mainWhite;
       font-size: 24px;
     }
   }
@@ -30,6 +29,7 @@
     width: 100%;
     height: 90%;
     overflow-y: scroll;
+
     ul {
       padding: 0;
       margin: 0;
@@ -41,7 +41,7 @@
       flex-wrap: wrap;
       li {
         width: 260px;
-        background-color: @black2;
+        background-color: @subBlack;
         border-radius: 0;
         padding: 40px 37px 0;
         margin: 0 10px 20px;
@@ -52,18 +52,18 @@
           h3 {
             font-weight: 700;
             margin: 0 0 15px;
-            color: #fff;
+            color: @mainWhite;
             font-size: 32px;
             line-height: 3vw;
           }
           p {
             font-weight: 400;
             font-size: 20px;
-            color: #ffffff4d;
+            color: @gray;
             margin: 0 0 25px;
             span {
               width: 100%;
-              color: @blue2;
+              color: @mainBlue;
               font-weight: 500;
               display: inline-block;
             }
@@ -84,14 +84,10 @@
       }
     }
   }
+  ::-webkit-scrollbar {
+    display: none;
+  }
   li :hover {
     cursor: pointer;
   }
 }
-
-// @media (min-width: 768px) and (max-width: 1210px) {
-//   ul li {
-//     width: 26.529vw;
-//     padding: 3.306vw 3.058vw 0;
-//   }
-// }
