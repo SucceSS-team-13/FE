@@ -1,15 +1,47 @@
 import { useState, FormEvent } from "react";
+import { GraduationCap, Briefcase, Users, Heart, School } from "lucide-react";
 import styles from '../../styles/BasicInfo/AgeSelection.module.less';
 
 type Props = {
   onNext: () => void;
+  selectedAge: number;
+  setSelectedAge: (age: number) => void;
 }
 
-const AgeSelection = ({ onNext }: Props) => {
-  const [selectedAge, setSelectedAge] = useState('');
+type AgeOption = {
+  value: number;
+  icon: React.ReactNode;
+  label: string;
+}
+
+const AgeSelection = ({ onNext, selectedAge, setSelectedAge }: Props) => {
   
-  const ageRanges = [
-    '10대', '20대', '30대', '40대', '50대', '60대', '70대'
+  const ageOptions: AgeOption[] = [
+    {
+      value: 10,
+      icon: <School size={24} />,
+      label: '학생'
+    },
+    {
+      value: 20,
+      icon: <GraduationCap size={24} />,
+      label: '청년'
+    },
+    {
+      value: 30,
+      icon: <Briefcase size={24} />,
+      label: '직장인'
+    },
+    {
+      value: 40,
+      icon: <Users size={24} />,
+      label: '중년'
+    },
+    {
+      value: 50,
+      icon: <Heart size={24} />,
+      label: '장년'
+    }
   ];
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
@@ -22,22 +54,30 @@ const AgeSelection = ({ onNext }: Props) => {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h2 className={styles.title}>나이를 선택해주세요</h2>
-        <p className={styles.subtitle}>맞춤형 상담 서비스를 위해 연령대를 선택해주세요</p>
+        <h2 className={styles.title}>당신의 이야기를 더 잘 이해하고 싶어요</h2>
+        <p className={styles.subtitle}>
+          더 나은 대화를 위해 연령대를 알려주시겠어요?
+        </p>
       </div>
 
       <form onSubmit={handleSubmit} className={styles.form}>
         <div className={styles.buttonGrid}>
-          {ageRanges.map((age) => (
+          {ageOptions.map((option) => (
             <button
-              key={age}
+              key={option.value}
               type="button"
-              onClick={() => setSelectedAge(age)}
+              onClick={() => setSelectedAge(option.value)}
               className={`${styles.ageButton} ${
-                selectedAge === age ? styles.selectedButton : styles.unselectedButton
+                selectedAge === option.value ? styles.selectedButton : styles.unselectedButton
               }`}
             >
-              {age}
+              <div className={styles.buttonContent}>
+                <span className={styles.icon}>{option.icon}</span>
+                <span className={styles.ageValue}>
+                  {option.value === 50 ? `${option.value}대+` : `${option.value}대`}
+                </span>
+                <span className={styles.ageLabel}>{option.label}</span>
+              </div>
             </button>
           ))}
         </div>

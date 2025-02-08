@@ -1,24 +1,59 @@
-import { useEffect } from "react";
-import { Brain } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Logo from "../Logo";
 import styles from "../../styles/BasicInfo/Loading.module.less";
+import axios from "axios";
 
 type Props = {
   onNext: () => void;
+  selectedAge: number;
+  selectedAddress: string;
+  energyType: string;
+  decisionType: string;
+  selectedHobbies: string[];
+  setResult: (result: string) => void;
 }
 
-const Loading = ({ onNext }: Props) => {
+const Loading = ({ onNext, selectedAge, selectedAddress, energyType, decisionType, selectedHobbies, setResult }: Props) => {
+  const [isExiting, setIsExiting] = useState<boolean>(false);
+  const navigate = useNavigate();
+  
   useEffect(() => {
-    setTimeout(() => {
-      onNext();
-    }, 5000);
-  });
+    const sendSurveyData = async () => {
+      try {
+        const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/survey`, {
+          age: selectedAge,
+          address: selectedAddress,
+          energyType,
+          decisionType,
+          hobbies: selectedHobbies
+        });
+
+        setResult(res.data.result);
+      } catch (error) {
+        alert('데이터를 가져오는 중 문제가 발생했습니다.');
+        navigate('/');
+        console.error('Failed to send survey data:', error);
+      }
+    };
+
+    sendSurveyData();
+
+    // 로딩 애니메이션 타이머(최소 5초)
+    const timer = setTimeout(() => {
+      setIsExiting(true);
+      setTimeout(onNext, 500);
+    }, 4500);
+
+    return () => clearTimeout(timer);
+  }, [navigate]);
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${isExiting ? styles.exit : ''}`}>
       <div className={styles.content}>
         {/* 로고 */}
         <div className={styles.logoContainer}>
-          <Brain size={64} className={styles.logo} />
+          <Logo />
         </div>
         
         {/* 로딩 메시지 */}
