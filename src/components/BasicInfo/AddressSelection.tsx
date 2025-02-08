@@ -4,11 +4,12 @@ import styles from "../../styles/BasicInfo/AddressSelection.module.less";
 
 type Props = {
   onNext: () => void;
+  selectedAddress: string;
+  setSelectedAddress: (address: string) => void;
 }
 
-const AddressSelection = ({ onNext }: Props) => {
+const AddressSelection = ({ onNext, selectedAddress, setSelectedAddress }: Props) => {
   const [searchText, setSearchText] = useState<string>('');
-  const [selectedAddress, setSelectedAddress] = useState<string>('');
   const [showResults, setShowResults] = useState<boolean>(false);
 
   const dummyAddresses = [

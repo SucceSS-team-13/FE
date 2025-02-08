@@ -4,40 +4,41 @@ import styles from '../../styles/BasicInfo/AgeSelection.module.less';
 
 type Props = {
   onNext: () => void;
+  selectedAge: number;
+  setSelectedAge: (age: number) => void;
 }
 
 type AgeOption = {
-  value: string;
+  value: number;
   icon: React.ReactNode;
   label: string;
 }
 
-const AgeSelection = ({ onNext }: Props) => {
-  const [selectedAge, setSelectedAge] = useState('');
+const AgeSelection = ({ onNext, selectedAge, setSelectedAge }: Props) => {
   
   const ageOptions: AgeOption[] = [
     {
-      value: '10대',
+      value: 10,
       icon: <School size={24} />,
       label: '학생'
     },
     {
-      value: '20대',
+      value: 20,
       icon: <GraduationCap size={24} />,
       label: '청년'
     },
     {
-      value: '30대',
+      value: 30,
       icon: <Briefcase size={24} />,
       label: '직장인'
     },
     {
-      value: '40대',
+      value: 40,
       icon: <Users size={24} />,
       label: '중년'
     },
     {
-      value: '50대~',
+      value: 50,
       icon: <Heart size={24} />,
       label: '장년'
     }
@@ -72,7 +73,9 @@ const AgeSelection = ({ onNext }: Props) => {
             >
               <div className={styles.buttonContent}>
                 <span className={styles.icon}>{option.icon}</span>
-                <span className={styles.ageValue}>{option.value}</span>
+                <span className={styles.ageValue}>
+                  {option.value === 50 ? `${option.value}대+` : `${option.value}대`}
+                </span>
                 <span className={styles.ageLabel}>{option.label}</span>
               </div>
             </button>

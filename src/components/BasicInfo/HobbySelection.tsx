@@ -5,11 +5,12 @@ import styles from "../../styles/BasicInfo/HobbySelection.module.less";
 
 type Props = {
   onNext: () => void;
+  selectedHobbies: string[];
+  setSelectedHobbies: (hobbies: string[] | ((prev: string[]) => string[])) => void;
 }
 
-const HobbySelection = ({ onNext }: Props) => {
+const HobbySelection = ({ onNext, selectedHobbies, setSelectedHobbies }: Props) => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [selectedHobbies, setSelectedHobbies] = useState<string[]>([]);
 
   const hobbyCategories: Hobby[] = [
     {
@@ -70,12 +71,12 @@ const HobbySelection = ({ onNext }: Props) => {
   ];
 
   const toggleHobby = (hobby: string) => {
-    setSelectedHobbies(prev => 
+    setSelectedHobbies((prev: string[]) => 
       prev.includes(hobby)
         ? prev.filter(h => h !== hobby)
         : [...prev, hobby]
     );
-  };
+};
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

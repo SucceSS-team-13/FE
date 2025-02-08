@@ -10,6 +10,12 @@ import Result from "../components/BasicInfo/Result";
 
 const BasicInfoPage = () => {
   const [currentStep, setCurrentStep] = useState<number>(1);
+  const [selectedAge, setSelectedAge] = useState<number>(0); //연령대
+  const [selectedAddress, setSelectedAddress] = useState<string>(''); //거주지
+  const [energyType, setEnergyType] = useState<string>(''); //에너지 성향(E, I)
+  const [decisionType, setDecisionType] = useState<string>(''); //판단 결정(T, F)
+  const [selectedHobbies, setSelectedHobbies] = useState<string[]>([]);
+
 
   return (
     <div className={styles.container}>
@@ -20,19 +26,37 @@ const BasicInfoPage = () => {
       )}
 
       {currentStep === 1 && (
-        <AgeSelection onNext={() => setCurrentStep(2)} />
+        <AgeSelection 
+          onNext={() => setCurrentStep(2)} 
+          selectedAge={selectedAge}
+          setSelectedAge={setSelectedAge}
+        />
       )}
 
       {currentStep === 2 && (
-        <AddressSelection onNext={() => setCurrentStep(3)} />
+        <AddressSelection 
+          onNext={() => setCurrentStep(3)} 
+          selectedAddress={selectedAddress}
+          setSelectedAddress={setSelectedAddress}
+        />
       )}
 
       {currentStep == 3 && (
-        <PersonalitySelection onNext={() => setCurrentStep(4)} />
+        <PersonalitySelection 
+          onNext={() => setCurrentStep(4)} 
+          energyType={energyType}
+          setEnergyType={setEnergyType}
+          decisionType={decisionType}
+          setDecisionType={setDecisionType}
+        />
       )}
 
       {currentStep === 4 && (
-        <HobbySelection onNext={() => setCurrentStep(5)} />
+        <HobbySelection 
+          onNext={() => setCurrentStep(5)} 
+          selectedHobbies={selectedHobbies}
+          setSelectedHobbies={setSelectedHobbies}
+        />
       )}
 
       {currentStep === 5 && (

@@ -4,12 +4,14 @@ import styles from "../../styles/BasicInfo/PersonalitySelection.module.less";
 
 type Props = {
   onNext: () => void;
+  energyType: string;
+  setEnergyType: (type: string) => void;
+  decisionType: string;
+  setDecisionType: (type: string) => void;
 }
 
-const PersonalitySelection = ({ onNext }: Props) => {
-  const [energyType, setEnergyType] = useState<string>('');
-  const [decisionType, setDecisionType] = useState<string>('');
-
+const PersonalitySelection = ({ onNext, energyType, setEnergyType, decisionType, setDecisionType }: Props) => {
+  
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (energyType && decisionType && onNext) {
