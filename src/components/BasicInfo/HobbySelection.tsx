@@ -62,7 +62,7 @@ const HobbySelection = ({ onNext, selectedHobbies, setSelectedHobbies }: Props) 
     {
       id: 'craft',
       title: '공예',
-      imageUrl: '../../../public/image/craft.png',
+      imageUrl: '/image/craft.png',
       subCategories: [
         '뜨개질', '자수', '도자기', '가죽공예', '목공예',
         '비즈공예', '캔들/디퓨저', '페이퍼크래프트', '마크라메', '레진아트'
