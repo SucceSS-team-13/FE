@@ -14,7 +14,8 @@ const BasicInfoPage = () => {
   const [selectedAddress, setSelectedAddress] = useState<string>(''); //거주지
   const [energyType, setEnergyType] = useState<string>(''); //에너지 성향(E, I)
   const [decisionType, setDecisionType] = useState<string>(''); //판단 결정(T, F)
-  const [selectedHobbies, setSelectedHobbies] = useState<string[]>([]);
+  const [selectedHobbies, setSelectedHobbies] = useState<string[]>([]); //취미 목록
+  const [result, setResult] = useState<string>('');
 
 
   return (
@@ -60,11 +61,22 @@ const BasicInfoPage = () => {
       )}
 
       {currentStep === 5 && (
-        <Loading onNext={() => setCurrentStep(6)} />
+        <Loading 
+          onNext={() => setCurrentStep(6)} 
+          selectedAge={selectedAge}
+          selectedAddress={selectedAddress}
+          energyType={energyType}
+          decisionType={decisionType}
+          selectedHobbies={selectedHobbies}
+          setResult={setResult}
+        />
       )}
 
       {currentStep === 6 && (
-        <Result onChatStart={() => setCurrentStep(1)}/>
+        <Result 
+          onChatStart={() => setCurrentStep(1)}
+          result={result}
+        />
       )}
     </div>
   )

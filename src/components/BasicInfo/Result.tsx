@@ -3,9 +3,10 @@ import styles from "../../styles/BasicInfo/Result.module.less";
 
 type Props = {
   onChatStart: () => void;
+  result: string;
 }
 
-const Result = ({ onChatStart }: Props) => {
+const Result = ({ onChatStart, result }: Props) => {
   // 임시 분석 결과 텍스트
   const dummyResult = `안녕하세요, 홍길동 님! 성향 분석 결과를 알려드릴게요.
 
@@ -32,7 +33,7 @@ const Result = ({ onChatStart }: Props) => {
         {/* 분석 결과 */}
         <div className={styles.resultCard}>
           <div className={styles.resultText}>
-            {dummyResult}
+            {result}
           </div>
         </div>
 
