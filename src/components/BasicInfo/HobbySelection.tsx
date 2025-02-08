@@ -1,6 +1,6 @@
 import { FormEvent, useState } from "react";
 import { Hobby } from "../../model/Hobby";
-import { BookOpen, Clapperboard, Dumbbell, Gamepad2, Palette, Plane, Check } from "lucide-react";
+import { Check } from "lucide-react";
 import styles from "../../styles/BasicInfo/HobbySelection.module.less";
 
 type Props = {
@@ -16,7 +16,7 @@ const HobbySelection = ({ onNext, selectedHobbies, setSelectedHobbies }: Props) 
     {
       id: 'exercise',
       title: '운동',
-      icon: Dumbbell,
+      imageUrl: '/image/exercise.png',
       subCategories: [
         '헬스', '요가', '필라테스', '수영', '테니스',
         '골프', '클라이밍', '축구', '농구', '볼링',
@@ -26,7 +26,7 @@ const HobbySelection = ({ onNext, selectedHobbies, setSelectedHobbies }: Props) 
     {
       id: 'travel',
       title: '여행',
-      icon: Plane,
+      imageUrl: '/image/travel.png',
       subCategories: [
         '국내여행', '해외여행', '백패킹', '캠핑',
         '도시여행', '맛집탐방', '문화탐방', '힐링여행'
@@ -35,7 +35,7 @@ const HobbySelection = ({ onNext, selectedHobbies, setSelectedHobbies }: Props) 
     {
       id: 'reading',
       title: '독서',
-      icon: BookOpen,
+      imageUrl: '/image/reading.png',
       subCategories: [
         '소설', '시', '에세이', '자기계발', '인문',
         '역사', '과학', '경제/경영', '철학', '예술'
@@ -44,7 +44,7 @@ const HobbySelection = ({ onNext, selectedHobbies, setSelectedHobbies }: Props) 
     {
       id: 'movie',
       title: '영화',
-      icon: Clapperboard,
+      imageUrl: '/image/movie.png',
       subCategories: [
         '로맨스', '코미디', '액션', '스릴러', '공포',
         'SF', '판타지', '드라마', '애니메이션', '다큐멘터리'
@@ -53,7 +53,7 @@ const HobbySelection = ({ onNext, selectedHobbies, setSelectedHobbies }: Props) 
     {
       id: 'game',
       title: '게임',
-      icon: Gamepad2,
+      imageUrl: '/image/game.png',
       subCategories: [
         'RPG', 'FPS', '액션', '전략', '시뮬레이션',
         '스포츠', '퍼즐', '음악/리듬', '카드', 'MMORPG'
@@ -62,7 +62,7 @@ const HobbySelection = ({ onNext, selectedHobbies, setSelectedHobbies }: Props) 
     {
       id: 'craft',
       title: '공예',
-      icon: Palette,
+      imageUrl: '../../../public/image/craft.png',
       subCategories: [
         '뜨개질', '자수', '도자기', '가죽공예', '목공예',
         '비즈공예', '캔들/디퓨저', '페이퍼크래프트', '마크라메', '레진아트'
@@ -100,7 +100,6 @@ const HobbySelection = ({ onNext, selectedHobbies, setSelectedHobbies }: Props) 
         {/* 메인 카테고리 선택 */}
         <div className={styles.categoryGrid}>
           {hobbyCategories.map((category) => {
-            const Icon = category.icon;
             return (
               <button
                 key={category.id}
@@ -113,7 +112,10 @@ const HobbySelection = ({ onNext, selectedHobbies, setSelectedHobbies }: Props) 
                   selectedCategory === category.id ? styles.selected : ''
                 }`}
               >
-                <Icon size={28} className={styles.categoryIcon} />
+                <img
+                  src={category.imageUrl}
+                  alt={category.title}
+                />
                 <span className={styles.categoryTitle}>{category.title}</span>
               </button>
             );
