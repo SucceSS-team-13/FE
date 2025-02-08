@@ -1,0 +1,75 @@
+.container {
+  min-height: 100vh;
+  background-color: white;
+  padding: 48px 16px;
+  animation: slideUp 0.5s ease-out forwards;
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(100%);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+.content {
+  max-width: 42rem;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.title {
+  font-size: 30px;
+  font-weight: bold;
+  color: #111827;
+  margin-bottom: 8px;
+}
+
+.subtitle {
+  color: #4B5563;
+}
+
+.resultCard {
+  background-color: #F9FAFB;
+  border-radius: 16px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+  border: 1px solid #E5E7EB;
+  padding: 32px;
+  margin-bottom: 48px;
+}
+
+.resultText {
+  white-space: pre-line;
+  color: #374151;
+  line-height: 1.7;
+}
+
+.chatButton {
+  width: 100%;
+  background: linear-gradient(135deg, #6366F1, #2563EB);
+  color: white;
+  border-radius: 12px;
+  border: none;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background: linear-gradient(135deg, #4F46E5, #1D4ED8);
+    box-shadow: 0 6px 8px -1px rgba(79, 70, 229, 0.25);
+    transform: translateY(-1px);
+  }
+}
+
+.buttonText {
+  font-weight: 500;
+}

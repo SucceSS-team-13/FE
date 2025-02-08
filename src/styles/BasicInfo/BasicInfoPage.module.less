@@ -1,0 +1,26 @@
+.container {
+  height: 100%;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 0;
+}
+
+.wrapper {
+  max-width: 22rem;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 3rem 1rem 0;
+  
+  @media (min-width: 640px) {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
