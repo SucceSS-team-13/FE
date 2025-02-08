@@ -14,3 +14,8 @@ interface ServiceInformation {
   text: string;
   icon: string;
 }
+
+interface ChatResponses {
+  //랜딩페이지 채팅프리뷰 정보
+  [key: string]: string;
+}

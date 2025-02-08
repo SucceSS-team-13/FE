@@ -1,0 +1,119 @@
+@import "/src/styles/GlobalStyle.module.less";
+
+.container {
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  padding: 0 10%;
+  .textContainer {
+    width: 100%;
+    height: 20%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    .word {
+      span {
+        font-size: 4rem;
+        font-weight: bold;
+      }
+    }
+    .information {
+      p {
+        font-size: 24px;
+        font-weight: bold;
+      }
+      span {
+        color: @mainBlue;
+      }
+    }
+  }
+  .informationContainer {
+    // background-color: #f8f9fb;
+    border-radius: 2rem;
+    width: 100%;
+    height: 60%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    box-sizing: border-box;
+    .slider {
+      width: 100%;
+      height: 100%;
+      // border-radius: 2rem;
+      // background-color: #fff;
+      :global {
+        .slick-slider,
+        .slick-list,
+        .slick-track {
+          height: 100%;
+        }
+      }
+      .inforBox {
+        width: 100%;
+        height: 430px;
+        display: flex !important; //slider 속성 덮어쓰기방지
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        background: linear-gradient(to right, @mainWhite, #e2f4ff);
+        border-radius: 2rem;
+        .titleBox {
+          width: 30%;
+          height: 100%;
+          .title {
+            width: 100%;
+            height: 20%;
+            display: flex;
+            align-items: center;
+            justify-content: start;
+            h2 {
+              margin: 0;
+              padding-left: 2rem;
+              color: @gray;
+            }
+          }
+          .iconBox {
+            width: 100%;
+            height: 60%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            img {
+              width: 10rem;
+              height: 10rem;
+              padding-right: 1rem;
+            }
+          }
+          .paddingBox {
+            width: 100%;
+            height: 20%;
+          }
+        }
+        .textBox {
+          width: 70%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          .text {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 80%;
+            height: 100%;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: @gray;
+          }
+        }
+      }
+    }
+  }
+  .padding {
+    width: 100%;
+    height: 10%;
+  }
+}

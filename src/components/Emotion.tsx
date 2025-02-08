@@ -1,7 +1,15 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import * as THREE from "three";
 
-const Logo: React.FC = () => {
+const Emotion = ({
+  red,
+  green,
+  blue,
+}: {
+  red: number;
+  green: number;
+  blue: number;
+}) => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -28,7 +36,7 @@ const Logo: React.FC = () => {
 
       // 씬 설정
       scene = new THREE.Scene();
-      scene.background = new THREE.Color(0xfffffff);
+      //   scene.background = new THREE.Color(0xfffffff);
 
       // 지오메트리 설정 (조각을 촘촘하게 만들기 위해 vertexCount 증가)
       const vertexCount = 10 * 3; // 조각을 더 촘촘하게
@@ -43,10 +51,14 @@ const Logo: React.FC = () => {
         positions.push(Math.random() - 0.5);
 
         // r, g, b, a 색상
-        colors.push(Math.random() * 255);
-        colors.push(Math.random() * 255);
-        colors.push(Math.random() * 255);
-        colors.push(Math.random() * 255);
+        // colors.push(Math.random() * 255);
+        // colors.push(Math.random() * 255);
+        // colors.push(Math.random() * 255);
+        // colors.push(Math.random() * 255);
+        colors.push(red);
+        colors.push(green);
+        colors.push(blue);
+        colors.push(255);
       }
 
       const positionAttribute = new THREE.Float32BufferAttribute(positions, 3);
@@ -78,20 +90,21 @@ const Logo: React.FC = () => {
       `;
 
       const fragmentShader = `
-        precision mediump float;
-        precision mediump int;
+      precision mediump float;
+  precision mediump int;
 
-        uniform float time;
+  uniform float time;
 
-        varying vec3 vPosition;
-        varying vec4 vColor;
+  varying vec3 vPosition;
+  varying vec4 vColor;
 
-        void main() {
-          vec4 color = vec4(vColor);
-          color.r += sin(vPosition.x * 10.0 + time) * 0.5;
-          gl_FragColor = color;
-        }
-      `;
+  void main() {
+    vec4 baseColor = vec4(vColor.rgb, vColor.a); 
+    float brightness = sin(vPosition.x * 10.0 + time) * 0.2;
+    vec4 finalColor = baseColor + vec4(brightness, brightness, brightness, 0.0); 
+    gl_FragColor = finalColor;
+  }
+        `;
 
       // 머티리얼 설정
       const material = new THREE.RawShaderMaterial({
@@ -109,7 +122,7 @@ const Logo: React.FC = () => {
 
       // 렌더러 설정
       renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-      renderer.setSize(500, 500); // 3D 모델 렌더 사이즈
+      renderer.setSize(300, 300); // 3D 모델 렌더 사이즈
       container.appendChild(renderer.domElement);
     }
 
@@ -138,11 +151,11 @@ const Logo: React.FC = () => {
         containerRef.current.innerHTML = "";
       }
     };
-  }, []);
+  }, [red, green, blue]);
 
   return (
-    <div ref={containerRef} style={{ width: "500px", height: "500px" }}></div> // 3D모델 렌더 Div 사이즈
+    <div ref={containerRef} style={{ width: "300px", height: "300px" }}></div> // 3D모델 렌더 Div 사이즈
   );
 };
 
-export default Logo;
+export default Emotion;

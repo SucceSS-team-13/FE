@@ -1,10 +1,12 @@
 import BasicInfoPage from './pages/BasicInfoPage'
 import { Route, Routes } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
+import AuthPage from "./pages/AuthPage";
 
 function App() {
   return (
     <Routes>
+      <Route path="/oauth" element={<AuthPage />} />
       <Route path="/" element={<LandingPage />} />
       <Route path="/survey" element={<BasicInfoPage />} />
     </Routes>

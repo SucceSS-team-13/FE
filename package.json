@@ -13,14 +13,19 @@
   "dependencies": {
     "@tanstack/react-query": "5",
     "axios": "^1.7.9",
+    "framer-motion": "^12.4.1",
+    "less": "^4.2.2",
     "lucide-react": "^0.474.0",
     "msw": "^2.7.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^7.1.5",
+    "react-router-dom": "^7.1.3",
+    "react-slick": "^0.30.3",
     "react-typewriter-effect": "^1.1.0",
+    "slick-carousel": "^1.8.1",
     "three": "^0.172.0",
-    "typewriter-effect": "^2.21.0"
+    "typewriter-effect": "^2.21.0",
+    "zustand": "^5.0.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
@@ -30,6 +35,7 @@
     "@types/express": "^5.0.0",
     "@types/react": "^19.0.8",
     "@types/react-dom": "^18.3.5",
+    "@types/react-slick": "^0.23.13",
     "@types/three": "^0.172.0",
     "@vitejs/plugin-react-swc": "^3.5.0",
     "cors": "^2.8.5",
