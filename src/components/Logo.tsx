@@ -109,7 +109,7 @@ const Logo: React.FC = () => {
 
       // 렌더러 설정
       renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-      renderer.setSize(500, 500);
+      renderer.setSize(500, 500); // 3D 모델 렌더 사이즈
       container.appendChild(renderer.domElement);
     }
 
@@ -141,7 +141,7 @@ const Logo: React.FC = () => {
   }, []);
 
   return (
-    <div ref={containerRef} style={{ width: "500px", height: "500px" }}></div>
+    <div ref={containerRef} style={{ width: "500px", height: "500px" }}></div> // 3D모델 렌더 Div 사이즈
   );
 };
 
