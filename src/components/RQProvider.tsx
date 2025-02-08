@@ -25,7 +25,7 @@ function RQProvider({ children }: Props) {
     <QueryClientProvider client={client}>
       {children}
       <ReactQueryDevtools
-        initialIsOpen={process.env.NEXT_PUBLIC_MODE === "local"}
+        initialIsOpen={import.meta.env.VITE_PUBLIC_MODE === "local"}
       />
     </QueryClientProvider>
   );
