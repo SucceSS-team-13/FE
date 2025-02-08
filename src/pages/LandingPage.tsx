@@ -1,12 +1,67 @@
 import Logo from "../components/Logo";
 import styles from "../styles/landing/LandingPage.module.less";
-import LandingInformation from "../components/landing/LandingInformation";
-import LandingInformation2 from "../components/landing/LandingInformation2";
-import Typewriter from "react-typewriter-effect";
+import Header from "../components/Header";
+import Footer from "../components/Footer";
+import Guide from "../components/landing/Guide";
+import Help from "../components/landing/Help";
+import Developer from "../components/landing/Developer";
+import { DEVELOPERS } from "../data/developer";
 import { SERVICE_INFORMATION } from "../data/serviceInformation";
+import Product from "../components/landing/Product";
+import Features from "../components/landing/Features";
+import Growth from "../components/landing/Growth";
+import Typewriter from "react-typewriter-effect";
+import { useRef, useState, useEffect } from "react";
+
 const LandingPage = () => {
+  const helpRef = useRef<HTMLDivElement>(null);
+  const productRef = useRef<HTMLDivElement>(null);
+  const featuresRef = useRef<HTMLDivElement>(null);
+  const [helpInView, setHelpInView] = useState(false);
+  const [productInView, setProductInView] = useState(false);
+  const [featuresInView, setFeaturesInView] = useState(false);
+
+  useEffect(() => {
+    const helpObserver = new IntersectionObserver(
+      ([entry]) => {
+        setHelpInView(entry.isIntersecting);
+      },
+      {
+        threshold: 0.5,
+      }
+    );
+
+    const productObserver = new IntersectionObserver(
+      ([entry]) => {
+        setProductInView(entry.isIntersecting);
+      },
+      {
+        threshold: 0.5,
+      }
+    );
+    const featuresObserver = new IntersectionObserver(
+      ([entry]) => {
+        setFeaturesInView(entry.isIntersecting);
+      },
+      {
+        threshold: 0.5,
+      }
+    );
+
+    if (helpRef.current) helpObserver.observe(helpRef.current);
+    if (productRef.current) productObserver.observe(productRef.current);
+    if (featuresRef.current) featuresObserver.observe(featuresRef.current);
+
+    return () => {
+      if (helpRef.current) helpObserver.unobserve(helpRef.current);
+      if (productRef.current) productObserver.unobserve(productRef.current);
+      if (featuresRef.current) featuresObserver.unobserve(featuresRef.current);
+    };
+  }, []);
+
   return (
     <div className={styles.container}>
+      <Header />
       <div className={styles.firstContainer}>
         <div className={styles.logoContainer}>
           <Logo />
@@ -26,7 +81,7 @@ const LandingPage = () => {
             </div>
             <div className={styles.textSmall}>
               <Typewriter
-                text='"따뜻한 위로와 새로운 시작을 함께 만들어가는 AI 심리상담 서비스, "오늘 어땠어"가 당신의 마음을 살피고 더 나은 내일로 안내합니다."'
+                text='따뜻한 위로로 마음을 살피고, 더 나은 내일을 함께하는 AI 심리상담 서비스, "오늘 어땠어"'
                 cursorColor="#000"
                 typeSpeed={100}
                 startDelay={2500}
@@ -38,8 +93,26 @@ const LandingPage = () => {
           </div>
         </div>
       </div>
-      <LandingInformation serviceInformation={SERVICE_INFORMATION} />
-      <LandingInformation2 />
+      <div ref={helpRef} className={styles.informationComponent}>
+        <Help
+          serviceInformation={SERVICE_INFORMATION}
+          helpInView={helpInView}
+        />
+      </div>
+      <div ref={productRef} className={styles.informationComponent}>
+        <Product productInView={productInView} />
+      </div>
+      <div ref={featuresRef} className={styles.informationComponent}>
+        <Features featuresInView={featuresInView} />
+      </div>
+      <div className={styles.developersComponent}>
+        <Developer developers={DEVELOPERS} />
+      </div>
+      <div className={styles.informationComponent}>
+        <Growth />
+      </div>
+      <Guide />
+      <Footer />
     </div>
   );
 };
