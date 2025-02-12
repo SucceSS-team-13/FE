@@ -17,9 +17,11 @@ const LandingPage = () => {
   const helpRef = useRef<HTMLDivElement>(null);
   const productRef = useRef<HTMLDivElement>(null);
   const featuresRef = useRef<HTMLDivElement>(null);
+  const growthRef = useRef<HTMLDivElement>(null);
   const [helpInView, setHelpInView] = useState(false);
   const [productInView, setProductInView] = useState(false);
   const [featuresInView, setFeaturesInView] = useState(false);
+  const [growthInView, setGrowthInView] = useState(false);
 
   useEffect(() => {
     const helpObserver = new IntersectionObserver(
@@ -47,15 +49,25 @@ const LandingPage = () => {
         threshold: 0.5,
       }
     );
+    const growthObserver = new IntersectionObserver(
+      ([entry]) => {
+        setGrowthInView(entry.isIntersecting);
+      },
+      {
+        threshold: 0.5,
+      }
+    );
 
     if (helpRef.current) helpObserver.observe(helpRef.current);
     if (productRef.current) productObserver.observe(productRef.current);
     if (featuresRef.current) featuresObserver.observe(featuresRef.current);
+    if (growthRef.current) growthObserver.observe(growthRef.current);
 
     return () => {
       if (helpRef.current) helpObserver.unobserve(helpRef.current);
       if (productRef.current) productObserver.unobserve(productRef.current);
       if (featuresRef.current) featuresObserver.unobserve(featuresRef.current);
+      if (growthRef.current) growthObserver.unobserve(growthRef.current);
     };
   }, []);
 
@@ -105,11 +117,11 @@ const LandingPage = () => {
       <div ref={featuresRef} className={styles.informationComponent}>
         <Features featuresInView={featuresInView} />
       </div>
+      <div ref={growthRef} className={styles.informationComponent}>
+        <Growth growthInView={growthInView} />
+      </div>
       <div className={styles.developersComponent}>
         <Developer developers={DEVELOPERS} />
-      </div>
-      <div className={styles.informationComponent}>
-        <Growth />
       </div>
       <Guide />
       <Footer />
