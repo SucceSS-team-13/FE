@@ -154,7 +154,7 @@ const Emotion = ({
   }, [red, green, blue]);
 
   return (
-    <div ref={containerRef} style={{ width: "300px", height: "300px" }}></div> // 3D모델 렌더 Div 사이즈
+    <div ref={containerRef} style={{ width: "100%", height: "100%" }}></div> // 3D모델 렌더 Div 사이즈
   );
 };
 
