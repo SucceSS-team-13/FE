@@ -5,10 +5,17 @@ const ChatInput = ({
   inputValue,
   setInputValue,
 }: {
-  handleSendMessage: () => void;
+  handleSendMessage: (e: React.FormEvent) => void;
   inputValue: string;
   setInputValue: (value: string) => void;
 }) => {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      handleSendMessage(e);
+      setInputValue("");
+    }
+  };
   return (
     <div className={styles.container}>
       <input
@@ -16,6 +23,7 @@ const ChatInput = ({
         placeholder="메시지를 입력하세요..."
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
+        onKeyDown={handleKeyDown}
       />
       <button className={styles.sendBtn} onClick={handleSendMessage}>
         <img src="/image/btn.png" />
