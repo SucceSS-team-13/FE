@@ -1,0 +1,32 @@
+@import "../GlobalStyle.module.less";
+
+.container {
+  width: 100%;
+  height: 3rem;
+  display: flex;
+  column-gap: 5%;
+  input {
+    background-color: @mainGray;
+    padding: 20px;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100%;
+    border: 1px solid @mainBlack;
+    border-radius: 20px;
+    border: none;
+    outline: none;
+  }
+  .sendBtn {
+    width: auto;
+    height: 100%;
+    border: none;
+    background-color: @mainWhite;
+    img {
+      width: 2rem;
+      height: 2rem;
+    }
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
