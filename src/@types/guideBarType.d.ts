@@ -1,0 +1,3 @@
+interface GuideBar {
+  title: string;
+}
