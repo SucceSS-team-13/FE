@@ -58,7 +58,7 @@ const ChatPreview = ({ chatResponses }: { chatResponses: ChatResponses }) => {
               type="text"
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              onKeyPress={(e) => e.key === "Enter" && handleSendMessage()}
+              onKeyDown={(e) => e.key === "Enter" && handleSendMessage()}
               placeholder="메시지를 입력하세요..."
             />
             <button onClick={handleSendMessage} className={styles.sendBtn}>
