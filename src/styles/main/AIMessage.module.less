@@ -1,0 +1,28 @@
+@import "../GlobalStyle.module.less";
+
+.container {
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+
+  .lumiLogo {
+    width: 30px;
+    height: 30px;
+    img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  .lumiMessage {
+    padding: 8px 12px;
+    border-radius: 20px;
+    border: 1px solid @mainBlack;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 90%;
+    word-wrap: break-word; /* 긴 단어 줄바꿈 */
+    word-break: break-word; /* 단어 내부도 줄바꿈 */
+    white-space: pre-wrap; /* 공백 유지, 줄바꿈 허용 */
+  }
+}
