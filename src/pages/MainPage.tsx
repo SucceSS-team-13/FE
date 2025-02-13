@@ -3,7 +3,7 @@ import Header from "../components/Header";
 import GuideBar from "../components/main/GuideBar";
 import { CHAT_GUIDE } from "../data/chatGuide";
 import ChatInput from "../components/main/ChatInput";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import UserMessage from "../components/main/UserMessage";
 import AIMessage from "../components/main/AIMessage";
 import { CHAT_RESPONSES } from "../data/chatResponses";
@@ -13,9 +13,19 @@ const MainPage = () => {
   const [messages, setMessages] = useState<
     { text: string; sender: "user" | "lumi" }[]
   >([]);
+  const messageEndRef = useRef<HTMLDivElement>(null);
 
-  const handleSendMessage = () => {
+  const scrollToBottom = () => {
+    messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  const handleSendMessage = (e: React.FormEvent) => {
     if (CHAT_RESPONSES[inputValue]) {
+      e.preventDefault();
       setMessages([
         ...messages,
         { text: inputValue, sender: "user" },
@@ -40,6 +50,7 @@ const MainPage = () => {
                 return <AIMessage message={message.text} key={index} />;
               }
             })}
+            <div ref={messageEndRef} />
           </div>
           <div className={styles.bottomContainer}>
             <GuideBar guideBar={CHAT_GUIDE} setInputValue={setInputValue} />
