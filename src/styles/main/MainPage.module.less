@@ -7,8 +7,17 @@
   .sideBar {
     width: 20%;
     height: 100%;
-    background-color: red;
+    :global {
+      .ps-sidebar-container {
+        background: @mainWhite;
+        border-right: 1px solid #e5e7eb;
+      }
+      .ps-menu-button:hover {
+        background-color: #f3f4f6;
+      }
+    }
   }
+
   .mainContainer {
     width: 80%;
     height: 100%;

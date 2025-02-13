@@ -7,6 +7,7 @@ import { useState, useEffect, useRef } from "react";
 import UserMessage from "../components/main/UserMessage";
 import AIMessage from "../components/main/AIMessage";
 import { CHAT_RESPONSES } from "../data/chatResponses";
+import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 
 const MainPage = () => {
   const [inputValue, setInputValue] = useState("");
@@ -36,7 +37,13 @@ const MainPage = () => {
   };
   return (
     <div className={styles.container}>
-      <div className={styles.sideBar}>1</div>
+      <Sidebar className={styles.sideBar}>
+        <Menu>
+          <MenuItem> 메뉴 1 </MenuItem>
+          <MenuItem> 메뉴 2 </MenuItem>
+          <MenuItem> 메뉴 3 </MenuItem>
+        </Menu>
+      </Sidebar>
       <div className={styles.mainContainer}>
         <div className={styles.header}>
           <Header />
