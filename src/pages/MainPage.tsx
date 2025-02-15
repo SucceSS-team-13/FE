@@ -17,17 +17,23 @@ const MainPage = () => {
   const messageEndRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
 
-  const chatRoomId = 1; //채팅방 ID 
+  const chatRoomId = 1; //채팅방 ID
 
-  const {data: chatting, isLoading} = useQuery<Chat[], object, Chat[], [_1: string, number]>({
+  const { data: chatting, isLoading } = useQuery<
+    Chat[],
+    object,
+    Chat[],
+    [_1: string, number]
+  >({
     queryKey: ["chatting", chatRoomId],
     queryFn: getChatting,
     staleTime: 60 * 1000,
     gcTime: 300 * 1000,
-  })
+  });
 
-  useEffect(() => { // 처음 chatting 내용 가져올 때 message 상태 변수에 저장
-    if(!isLoading) {
+  useEffect(() => {
+    // 처음 chatting 내용 가져올 때 message 상태 변수에 저장
+    if (!isLoading) {
       setMessages(chatting ? [...chatting] : []);
     }
   }, [isLoading, chatting]);
@@ -35,30 +41,31 @@ const MainPage = () => {
   const postChat = useMutation({
     mutationFn: async () => {
       return CustomAxios.post(`/api/chatting/${1}`, {
-        text: inputValue
-      })
+        text: inputValue,
+      });
     },
     onMutate() {
       const queryCache = queryClient.getQueryCache();
-      const queryKeys = queryCache.getAll().map(cache => cache.queryKey);
+      const queryKeys = queryCache.getAll().map((cache) => cache.queryKey);
       queryKeys.forEach((queryKey) => {
-        if(queryKey[0] === "chatting") {
+        if (queryKey[0] === "chatting") {
           const value: Chat[] = queryClient.getQueryData(queryKey) ?? []; //undefined라면 빈 배열 추가
           const shallow = [...value];
           shallow.push({
             id: Date.now() + 1,
             sender: "user",
-            text: inputValue
+            text: inputValue,
           });
-          shallow.push({ //로딩을 보여주기 위한 빈 메시지 생성
+          shallow.push({
+            //로딩을 보여주기 위한 빈 메시지 생성
             id: Date.now() + 2,
             sender: "lumi",
-            text: ""
+            text: "",
           });
           queryClient.setQueryData(queryKey, shallow);
           setMessages(shallow);
         }
-      })
+      });
     },
     onSuccess: (response) => {
       setInputValue("");
@@ -66,9 +73,9 @@ const MainPage = () => {
 
       //퀴리 캐시 업데이트
       const queryCache = queryClient.getQueryCache();
-      const queryKeys = queryCache.getAll().map(cache => cache.queryKey);
+      const queryKeys = queryCache.getAll().map((cache) => cache.queryKey);
       queryKeys.forEach((queryKey) => {
-        if(queryKey[0] === "chatting") {
+        if (queryKey[0] === "chatting") {
           const value: Chat[] = queryClient.getQueryData(queryKey) ?? [];
           const shallow = [...value];
           // 마지막 메시지(빈 AI 응답)를 실제 응답으로 교체
@@ -80,8 +87,8 @@ const MainPage = () => {
     },
     onError: (error) => {
       console.error("Mutation error: ", error);
-    }
-  })
+    },
+  });
 
   const scrollToBottom = () => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -115,7 +122,17 @@ const MainPage = () => {
               if (message.sender === "user") {
                 return <UserMessage message={message.text} key={index} />;
               } else {
-                return <AIMessage message={message.text} key={index} isLoading={message.sender === "lumi" && message.text === "" && postChat.isPending} />;
+                return (
+                  <AIMessage
+                    message={message.text}
+                    key={index}
+                    isLoading={
+                      message.sender === "lumi" &&
+                      message.text === "" &&
+                      postChat.isPending
+                    }
+                  />
+                );
               }
             })}
             <div ref={messageEndRef} />
