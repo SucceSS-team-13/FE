@@ -1,4 +1,9 @@
 import { http, HttpResponse } from 'msw'
+import { CHAT_RESPONSES } from '../data/chatResponses'
+
+interface ChatRequest {
+  message: string;
+}
 
 export const handlers = [
   http.post('/api/survey', () => {
@@ -11,6 +16,20 @@ export const handlers = [
 
         앞으로도 자신만의 페이스를 유지하면서 차근차근 성장해 나가시면 좋을 것 같아요. 혹시 고민이 있으시다면 언제든 저에게 이야기해 주세요.
       `
+    })
+  }),
+  http.post(`/api/chatting/:chatRoomId`, async ({ request }) => {
+    const requestData = await request.json() as ChatRequest;
+    const userMessage = requestData.message;
+
+    if(CHAT_RESPONSES[userMessage]) {
+      return HttpResponse.json({
+        result: CHAT_RESPONSES[userMessage]
+      })
+    }
+
+    return HttpResponse.json({
+      result: "많이 힘드셨겠어요"
     })
   })
 ]
