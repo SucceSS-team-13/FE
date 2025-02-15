@@ -9,7 +9,7 @@ import AIMessage from "../components/main/AIMessage";
 import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import CustomAxios from "../api/CustomAxios";
-import { getChatting } from "../lib/main/getChatting";
+import { getChatting } from "../service/getChatting";
 
 const MainPage = () => {
   const [inputValue, setInputValue] = useState("");
