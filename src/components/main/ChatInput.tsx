@@ -13,7 +13,6 @@ const ChatInput = ({
     if (e.key === "Enter") {
       e.preventDefault();
       handleSendMessage(e);
-      setInputValue("");
     }
   };
   return (

@@ -2,8 +2,12 @@ import { http, HttpResponse } from 'msw'
 import { CHAT_RESPONSES } from '../data/chatResponses'
 
 interface ChatRequest {
-  message: string;
+  text: string;
 }
+
+const delay = (ms: number) => new Promise((res) => {
+  setTimeout(res, ms);
+});
 
 export const handlers = [
   http.post('/api/survey', () => {
@@ -18,18 +22,36 @@ export const handlers = [
       `
     })
   }),
+  // 채팅 내용 가져오기
+  http.get(`/api/chatting/:chatRoomId`, () => {
+    return HttpResponse.json({
+      result: {
+        chatting: []
+      }
+    })
+  }),
+  // 채팅 전송
   http.post(`/api/chatting/:chatRoomId`, async ({ request }) => {
+    await delay(2000);
     const requestData = await request.json() as ChatRequest;
-    const userMessage = requestData.message;
+    const userMessage = requestData.text;
 
     if(CHAT_RESPONSES[userMessage]) {
       return HttpResponse.json({
-        result: CHAT_RESPONSES[userMessage]
+        result: {
+          id: Date.now() + 2,
+          sender: "lumi",
+          text: CHAT_RESPONSES[userMessage],
+        }
       })
     }
 
     return HttpResponse.json({
-      result: "많이 힘드셨겠어요"
+      result: {
+        id: Date.now() + 2,
+        sender: "lumi",
+        text: "많이 힘드셨겠어요"
+      }
     })
   })
 ]
