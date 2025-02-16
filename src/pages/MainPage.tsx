@@ -74,6 +74,7 @@ const MainPage = () => {
         id: recomment.id,
         sender: 'lumi',
         text: recomment.text,
+        location: recomment.location,
       }
 
       //퀴리 캐시 업데이트
@@ -136,6 +137,7 @@ const MainPage = () => {
                       message.text === "" &&
                       postChat.isPending
                     }
+                    location={message.location}
                   />
                 );
               }
