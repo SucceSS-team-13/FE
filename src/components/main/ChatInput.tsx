@@ -9,13 +9,19 @@ const ChatInput = ({
   inputValue: string;
   setInputValue: (value: string) => void;
 }) => {
+  const handleSubmit = (e: React.FormEvent) => {
+    if (inputValue.trim()) {
+      handleSendMessage(e);
+    }
+  };
+
   const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      handleSendMessage(e);
-      setInputValue("");
+      handleSubmit(e);
     }
   };
+
   return (
     <div className={styles.container}>
       <input
@@ -25,7 +31,7 @@ const ChatInput = ({
         onChange={(e) => setInputValue(e.target.value)}
         onKeyDown={handleKeyDown}
       />
-      <button className={styles.sendBtn} onClick={handleSendMessage}>
+      <button className={styles.sendBtn} onClick={handleSubmit}>
         <img src="/image/btn.png" />
       </button>
     </div>
