@@ -1,5 +1,5 @@
 interface Chat {
   id: number;
-  sender: "user" | "lumi";
+  sender?: "user" | "lumi";
   text: string;
 }

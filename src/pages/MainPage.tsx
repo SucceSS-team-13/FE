@@ -70,6 +70,11 @@ const MainPage = () => {
     onSuccess: (response) => {
       setInputValue("");
       const recomment = response.data.result;
+      const lumiResponse: Chat = {
+        id: recomment.id,
+        sender: 'lumi',
+        text: recomment.text,
+      }
 
       //퀴리 캐시 업데이트
       const queryCache = queryClient.getQueryCache();
@@ -79,7 +84,7 @@ const MainPage = () => {
           const value: Chat[] = queryClient.getQueryData(queryKey) ?? [];
           const shallow = [...value];
           // 마지막 메시지(빈 AI 응답)를 실제 응답으로 교체
-          shallow[shallow.length - 1] = recomment;
+          shallow[shallow.length - 1] = lumiResponse;
           queryClient.setQueryData(queryKey, shallow);
           setMessages(shallow);
         }

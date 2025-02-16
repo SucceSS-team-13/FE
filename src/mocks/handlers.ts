@@ -41,7 +41,6 @@ export const handlers = [
       return HttpResponse.json({
         result: {
           id: Date.now() + 2,
-          sender: "lumi",
           text: CHAT_RESPONSES[userMessage],
         },
       });
@@ -50,7 +49,6 @@ export const handlers = [
     return HttpResponse.json({
       result: {
         id: Date.now() + 2,
-        sender: "lumi",
         text: "많이 힘드셨겠어요",
       },
     });
