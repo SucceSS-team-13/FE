@@ -10,11 +10,13 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import CustomAxios from "../api/CustomAxios";
 import { getChatting } from "../service/getChatting";
 import Sidebar from "../components/main/Sidebar";
+import { useSidebarStore } from "../store/SideBarStatusStore";
 const MainPage = () => {
   const [inputValue, setInputValue] = useState("");
   const [messages, setMessages] = useState<Chat[]>([]);
   const messageEndRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
+  const { sideBarStatus, toggleSidebar } = useSidebarStore();
 
   const chatRoomId = 1; //채팅방 ID
 
@@ -110,14 +112,32 @@ const MainPage = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.sideBar}>
-        <Sidebar />
+      <div className={`${styles.sideBar} ${!sideBarStatus ? "" : styles.open}`}>
+        {sideBarStatus && <Sidebar toggleSidebar={toggleSidebar} />}
+        {!sideBarStatus && (
+          <div className={styles.menuBarItem}>
+            <span>
+              <button onClick={toggleSidebar}>
+                <img src="/image/showSidepanel.png" />
+              </button>
+            </span>
+            <span>
+              <button>
+                <img src="/image/newChat.png" />
+              </button>
+            </span>
+          </div>
+        )}
       </div>
       <div className={styles.mainContainer}>
         <div className={styles.header}>
           <Header />
         </div>
-        <div className={styles.chatContainer}>
+        <div
+          className={`${styles.chatContainer} ${
+            !sideBarStatus ? "" : styles.open
+          }`}
+        >
           <div className={styles.messageContainer}>
             {messages.map((message, index) => {
               if (message.sender === "user") {

@@ -5,21 +5,54 @@
   height: 100vh;
   display: flex;
   .sideBar {
-    width: 20%;
-    height: 100%;
-    :global {
-      .ps-sidebar-container {
-        background: @mainWhite;
-        border-right: 1px solid #e5e7eb;
+    transition: width 0.3s ease;
+    width: 5%;
+    height: 65px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .menuBarItem {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 3rem;
+      span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        button {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          height: 100%;
+          border: none;
+          background-color: transparent;
+          img {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 25px;
+            height: 25px;
+          }
+          &:hover {
+            cursor: pointer;
+          }
+        }
       }
-      .ps-menu-button:hover {
-        background-color: #f3f4f6;
-      }
+    }
+    &.open {
+      width: 20%;
+      height: 100%;
     }
   }
 
   .mainContainer {
-    width: 80%;
+    margin: 0 auto;
+    width: 100%;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -34,7 +67,7 @@
     .chatContainer {
       width: 100%;
       height: calc(100% - 65px); // header 높이 65px
-      padding: 0 10%;
+      padding: 0 10% 0 5%;
       box-sizing: border-box;
       display: flex;
       flex-direction: column;
@@ -56,6 +89,9 @@
         justify-content: center;
         flex-direction: column;
         row-gap: 0.5rem;
+      }
+      &.open {
+        padding: 0 10%;
       }
     }
   }
