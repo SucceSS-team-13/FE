@@ -1,0 +1,95 @@
+@import "../GlobalStyle.module.less";
+
+.container {
+  width: 100%;
+  height: 100vh;
+  background-color: @mainGray;
+  .menuBar {
+    width: 100%;
+    height: 3rem;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .menuBarItem {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 25%;
+      height: 100%;
+      span {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 100%;
+        button {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 100%;
+          height: 100%;
+          border: none;
+          background-color: transparent;
+          img {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+          }
+          &:hover {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+    .menuBarItem:nth-child(1) {
+      button {
+        display: flex;
+        justify-content: left;
+        img {
+          width: 25px;
+          height: 25px;
+        }
+      }
+    }
+  }
+  .chatRoomList {
+    width: 100%;
+    height: calc(100% - 3rem);
+    box-sizing: border-box;
+    background-color: @mainGray;
+    overflow: auto;
+    ul {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      list-style: none;
+      .chatRoomDate {
+        width: 100%;
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+        color: darken(@mainWhite, 80%);
+        font-weight: bold;
+      }
+      .chatRoom {
+        width: 100%;
+        height: 3rem;
+        background-color: @mainGray;
+        display: flex;
+        align-items: center;
+        padding: 0.5rem 1rem;
+        box-sizing: border-box;
+        color: darken(@mainWhite, 70%);
+        border-bottom: 1px solid darken(@mainGray, 5%);
+
+        &:hover {
+          background-color: darken(@mainGray, 3%);
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}
