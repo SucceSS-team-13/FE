@@ -6,4 +6,4 @@ export const DATE_GROUP = {
   OLDER: "이전 메시지",
 } as const;
 
-export const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
+export const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24; // 하루 밀리초 86400000
