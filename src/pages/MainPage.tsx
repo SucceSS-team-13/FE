@@ -6,11 +6,10 @@ import ChatInput from "../components/main/ChatInput";
 import { useState, useEffect, useRef } from "react";
 import UserMessage from "../components/main/UserMessage";
 import AIMessage from "../components/main/AIMessage";
-import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import CustomAxios from "../api/CustomAxios";
 import { getChatting } from "../service/getChatting";
-
+import Sidebar from "../components/main/Sidebar";
 const MainPage = () => {
   const [inputValue, setInputValue] = useState("");
   const [messages, setMessages] = useState<Chat[]>([]);
@@ -72,10 +71,10 @@ const MainPage = () => {
       const recomment = response.data.result;
       const lumiResponse: Chat = {
         id: recomment.id,
-        sender: 'lumi',
+        sender: "lumi",
         text: recomment.text,
         location: recomment.location,
-      }
+      };
 
       //퀴리 캐시 업데이트
       const queryCache = queryClient.getQueryCache();
@@ -111,13 +110,9 @@ const MainPage = () => {
 
   return (
     <div className={styles.container}>
-      <Sidebar className={styles.sideBar}>
-        <Menu>
-          <MenuItem> 메뉴 1 </MenuItem>
-          <MenuItem> 메뉴 2 </MenuItem>
-          <MenuItem> 메뉴 3 </MenuItem>
-        </Menu>
-      </Sidebar>
+      <div className={styles.sideBar}>
+        <Sidebar />
+      </div>
       <div className={styles.mainContainer}>
         <div className={styles.header}>
           <Header />
