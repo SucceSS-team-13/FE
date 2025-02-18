@@ -1,6 +1,7 @@
 import { http, HttpResponse } from "msw";
 import { CHAT_RESPONSES } from "../data/chatResponses";
 import { chatRooms } from "../data/chatRoomList";
+import { PAGE_SIZE } from "../constants/pagiNationConstants";
 
 interface ChatRequest {
   text: string;
@@ -10,7 +11,6 @@ const delay = (ms: number) =>
   new Promise((res) => {
     setTimeout(res, ms);
   });
-const PAGE_SIZE = 20; // 페이지당 데이터 수
 
 export const handlers = [
   http.post("/api/survey", () => {
