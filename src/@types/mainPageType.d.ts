@@ -16,3 +16,10 @@ interface ChatRoom {
   title: string;
   lastMessageDate: string;
 }
+
+interface ChatRoomResponse {
+  result: ChatRoom[];
+  nextPage: number | undefined;
+  totalItems: number;
+  totalPages: number;
+}
