@@ -1,5 +1,6 @@
 import { http, HttpResponse } from "msw";
 import { CHAT_RESPONSES } from "../data/chatResponses";
+import { chatRooms } from "../data/chatRoomList";
 
 interface ChatRequest {
   text: string;
@@ -9,6 +10,7 @@ const delay = (ms: number) =>
   new Promise((res) => {
     setTimeout(res, ms);
   });
+const PAGE_SIZE = 20; // 페이지당 데이터 수
 
 export const handlers = [
   http.post("/api/survey", () => {
@@ -52,6 +54,23 @@ export const handlers = [
         text: "많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요!",
         location: "서울특별시 구로구 연동로 320",
       },
+    });
+  }),
+  http.get(`/api/chatRoomList`, async ({ request }) => {
+    await delay(3000);
+    const url = new URL(request.url);
+    const page = parseInt(url.searchParams.get("page") || "1", 10);
+    const start = (page - 1) * PAGE_SIZE;
+    const end = start + PAGE_SIZE;
+    const paginatedChatRooms = chatRooms.slice(start, end);
+
+    const nextPage = end < chatRooms.length ? page + 1 : undefined;
+
+    return HttpResponse.json({
+      result: paginatedChatRooms,
+      nextPage,
+      totalItems: chatRooms.length,
+      totalPages: Math.ceil(chatRooms.length / PAGE_SIZE),
     });
   }),
 ];
