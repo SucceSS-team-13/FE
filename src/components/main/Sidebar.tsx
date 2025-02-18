@@ -1,30 +1,46 @@
 import styles from "../../styles/main/Sidebar.module.less";
-import { chatRooms } from "../../data/chatRoomList";
+import {
+  DATE_GROUP,
+  MILLISECONDS_PER_DAY,
+} from "../../constants/dateConstants";
 
-const DATE_GROUP = {
-  TODAY: "오늘",
-  YESTERDAY: "어제",
-  LAST_WEEK: "지난 7일",
-  LAST_MONTH: "지난 30일",
-  OLDER: "이전 메시지",
-} as const;
+const Sidebar = ({
+  toggleSidebar,
+  chatRoomList,
+}: {
+  toggleSidebar: () => void;
+  chatRoomList: ChatRoom[];
+}) => {
+  const calculateDaysDifference = (dateStr: string): number => {
+    const today = new Date();
+    const date = new Date(dateStr);
 
-const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
+    const todayWithoutTime = Date.UTC(
+      // 서버 응답값을 UTC기준으로 작성
+      today.getUTCFullYear(),
+      today.getUTCMonth(),
+      today.getUTCDate()
+    );
 
-const calculateDaysDifference = (date: Date): number => {
-  const today = new Date();
-  return Math.floor((today.getTime() - date.getTime()) / MILLISECONDS_PER_DAY);
-};
+    const dateWithoutTime = Date.UTC(
+      date.getUTCFullYear(),
+      date.getUTCMonth(),
+      date.getUTCDate()
+    );
 
-const getDateGroupKey = (diffDays: number): string => {
-  if (diffDays === 0) return DATE_GROUP.TODAY;
-  if (diffDays === 1) return DATE_GROUP.YESTERDAY;
-  if (diffDays < 7) return DATE_GROUP.LAST_WEEK;
-  if (diffDays < 30) return DATE_GROUP.LAST_MONTH;
-  return DATE_GROUP.OLDER;
-};
+    return Math.floor(
+      (todayWithoutTime - dateWithoutTime) / MILLISECONDS_PER_DAY
+    );
+  };
 
-const Sidebar = () => {
+  const getDateGroupKey = (diffDays: number) => {
+    if (diffDays === 0) return DATE_GROUP.TODAY;
+    if (diffDays === 1) return DATE_GROUP.YESTERDAY;
+    if (diffDays <= 7) return DATE_GROUP.LAST_WEEK;
+    if (diffDays <= 30) return DATE_GROUP.LAST_MONTH;
+    return DATE_GROUP.OLDER;
+  };
+
   // 채팅방을 날짜별로 그룹화하는 함수
   const groupChatsByDate = (chats: ChatRoom[]) => {
     const groups: { [key: string]: ChatRoom[] } = {};
@@ -42,14 +58,14 @@ const Sidebar = () => {
     return groups;
   };
 
-  const groupedChats = groupChatsByDate(chatRooms);
+  const groupedChats = groupChatsByDate(chatRoomList);
 
   return (
     <div className={styles.container}>
       <div className={styles.menuBar}>
         <div className={styles.menuBarItem}>
           <span>
-            <button>
+            <button onClick={toggleSidebar}>
               <img src="/image/hideSidepanel.png" />
             </button>
           </span>
@@ -70,11 +86,13 @@ const Sidebar = () => {
       <div className={styles.chatRoomList}>
         <ul>
           {Object.entries(groupedChats).map(([date, chats]) => (
-            <div key={date}>
+            <div key={date} className={styles.chatRoomListGroup}>
               <span className={styles.chatRoomDate}>{date}</span>
               {chats.map((chat) => (
                 <li key={chat.id} className={styles.chatRoom}>
-                  {chat.title}
+                  <a href={`/main/${chat.id}`} className={styles.chatRoomLink}>
+                    {chat.title}
+                  </a>
                 </li>
               ))}
             </div>

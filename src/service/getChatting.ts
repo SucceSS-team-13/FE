@@ -22,3 +22,16 @@ export const getChatting: QueryFunction<Chat[], [_1: string, number]> = async ({
     throw err;
   }
 };
+
+export const getChatRoomList: QueryFunction<
+  ChatRoom[],
+  [string]
+> = async () => {
+  try {
+    const response = await CustomAxios.get("/api/chatRoomList");
+    return response.data.result;
+  } catch (err) {
+    console.error("Failed to fetch data", err);
+    throw err;
+  }
+};

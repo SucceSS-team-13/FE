@@ -8,15 +8,16 @@ import UserMessage from "../components/main/UserMessage";
 import AIMessage from "../components/main/AIMessage";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import CustomAxios from "../api/CustomAxios";
-import { getChatting } from "../service/getChatting";
+import { getChatting, getChatRoomList } from "../service/getChatting";
 import Sidebar from "../components/main/Sidebar";
 import { useSidebarStore } from "../store/SideBarStatusStore";
+
 const MainPage = () => {
   const [inputValue, setInputValue] = useState("");
   const [messages, setMessages] = useState<Chat[]>([]);
   const messageEndRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
-  const { sideBarStatus, toggleSidebar } = useSidebarStore();
+  const { sideBarStatus, toggleSidebar } = useSidebarStore(); // 사이드바 상태 관리
 
   const chatRoomId = 1; //채팅방 ID
 
@@ -97,6 +98,18 @@ const MainPage = () => {
     },
   });
 
+  const { data: ChatRoomList } = useQuery<
+    ChatRoom[],
+    Error,
+    ChatRoom[],
+    [string]
+  >({
+    queryKey: ["chatRoomList"], // 쿼리 식별 고유키
+    queryFn: getChatRoomList, // 데이터 가져오는 함수
+    staleTime: 60 * 1000, // 데이터 유효 시간
+    gcTime: 300 * 1000, // 데이터 캐시 삭제 시간
+  });
+
   const scrollToBottom = () => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
@@ -113,7 +126,12 @@ const MainPage = () => {
   return (
     <div className={styles.container}>
       <div className={`${styles.sideBar} ${!sideBarStatus ? "" : styles.open}`}>
-        {sideBarStatus && <Sidebar toggleSidebar={toggleSidebar} />}
+        {sideBarStatus && (
+          <Sidebar
+            toggleSidebar={toggleSidebar}
+            chatRoomList={ChatRoomList ?? []}
+          />
+        )}
         {!sideBarStatus && (
           <div className={styles.menuBarItem}>
             <span>
@@ -123,7 +141,7 @@ const MainPage = () => {
             </span>
             <span>
               <button>
-                <img src="/image/newChat.png" />
+                <img src="/image/newChat.png" className={styles.newChat} />
               </button>
             </span>
           </div>
