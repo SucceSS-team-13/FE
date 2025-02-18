@@ -1,0 +1,36 @@
+@import "./GlobalStyle.module.less";
+
+.container {
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 0.5rem;
+  img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 15px;
+    height: 20px;
+  }
+  .text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: @gray;
+  }
+  .small {
+    font-size: 0.5rem; // 8px
+  }
+
+  .medium {
+    font-size: 0.7rem; // 12px
+  }
+
+  .large {
+    font-size: 1rem; // 16px
+  }
+}
