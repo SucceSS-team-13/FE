@@ -7,9 +7,13 @@ import {
 const Sidebar = ({
   toggleSidebar,
   chatRoomList,
+  lastElementRef,
+  isFetchingNextPage,
 }: {
   toggleSidebar: () => void;
   chatRoomList: ChatRoom[];
+  lastElementRef: (node: HTMLElement | null) => void;
+  isFetchingNextPage: boolean;
 }) => {
   const calculateDaysDifference = (dateStr: string): number => {
     const today = new Date();
@@ -95,8 +99,12 @@ const Sidebar = ({
                   </a>
                 </li>
               ))}
+              <div ref={lastElementRef}></div>
             </div>
           ))}
+          {isFetchingNextPage && (
+            <div className={styles.loading}>Loading...</div>
+          )}
         </ul>
       </div>
     </div>

@@ -23,13 +23,17 @@ export const getChatting: QueryFunction<Chat[], [_1: string, number]> = async ({
   }
 };
 
-export const getChatRoomList: QueryFunction<
-  ChatRoom[],
-  [string]
-> = async () => {
+export const getChatRoomList = async ({
+  pageParam,
+}: {
+  pageParam: number | undefined;
+}) => {
   try {
-    const response = await CustomAxios.get("/api/chatRoomList");
-    return response.data.result;
+    const response = await CustomAxios.get(
+      `/api/chatRoomList?page=${pageParam}`
+    );
+    console.log("채팅방 목록 ", response.data.result);
+    return response.data;
   } catch (err) {
     console.error("Failed to fetch data", err);
     throw err;

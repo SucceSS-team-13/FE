@@ -11,6 +11,7 @@ import CustomAxios from "../api/CustomAxios";
 import { getChatting, getChatRoomList } from "../service/getChatting";
 import Sidebar from "../components/main/Sidebar";
 import { useSidebarStore } from "../store/SideBarStatusStore";
+import { useInfiniteScroll } from "../hook/useInfiniteScroll";
 
 const MainPage = () => {
   const [inputValue, setInputValue] = useState("");
@@ -98,17 +99,20 @@ const MainPage = () => {
     },
   });
 
-  const { data: ChatRoomList } = useQuery<
-    ChatRoom[],
-    Error,
-    ChatRoom[],
-    [string]
-  >({
-    queryKey: ["chatRoomList"], // 쿼리 식별 고유키
-    queryFn: getChatRoomList, // 데이터 가져오는 함수
-    staleTime: 60 * 1000, // 데이터 유효 시간
-    gcTime: 300 * 1000, // 데이터 캐시 삭제 시간
+  const {
+    data: chatRoomData,
+    lastElementRef,
+    isFetchingNextPage,
+  } = useInfiniteScroll<ChatRoomResponse>({
+    queryKey: "chatRoomList",
+    queryFn: async ({ pageParam }) => {
+      const response = await getChatRoomList({ pageParam });
+      return response;
+    },
+    getNextPageParam: (lastPage) => lastPage.nextPage,
   });
+
+  const chatRooms = chatRoomData?.pages.flatMap((page) => page.result) || [];
 
   const scrollToBottom = () => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -129,7 +133,9 @@ const MainPage = () => {
         {sideBarStatus && (
           <Sidebar
             toggleSidebar={toggleSidebar}
-            chatRoomList={ChatRoomList ?? []}
+            chatRoomList={chatRooms}
+            lastElementRef={lastElementRef}
+            isFetchingNextPage={isFetchingNextPage}
           />
         )}
         {!sideBarStatus && (
