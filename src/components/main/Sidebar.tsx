@@ -3,6 +3,7 @@ import {
   DATE_GROUP,
   MILLISECONDS_PER_DAY,
 } from "../../constants/dateConstants";
+import Loading from "../Loading";
 
 const Sidebar = ({
   toggleSidebar,
@@ -88,24 +89,34 @@ const Sidebar = ({
         </div>
       </div>
       <div className={styles.chatRoomList}>
-        <ul>
-          {Object.entries(groupedChats).map(([date, chats]) => (
-            <div key={date} className={styles.chatRoomListGroup}>
-              <span className={styles.chatRoomDate}>{date}</span>
-              {chats.map((chat) => (
-                <li key={chat.id} className={styles.chatRoom}>
-                  <a href={`/main/${chat.id}`} className={styles.chatRoomLink}>
-                    {chat.title}
-                  </a>
-                </li>
-              ))}
-              <div ref={lastElementRef}></div>
-            </div>
-          ))}
-          {isFetchingNextPage && (
-            <div className={styles.loading}>Loading...</div>
-          )}
-        </ul>
+        {!chatRoomList.length ? (
+          <Loading
+            text="루미가 샅샅이 뒤졌는데… 아무것도 없네요!"
+            size="medium"
+          />
+        ) : (
+          <ul>
+            {Object.entries(groupedChats).map(([date, chats]) => (
+              <div key={date} className={styles.chatRoomListGroup}>
+                <span className={styles.chatRoomDate}>{date}</span>
+                {chats.map((chat) => (
+                  <li key={chat.id} className={styles.chatRoom}>
+                    <a
+                      href={`/main/${chat.id}`}
+                      className={styles.chatRoomLink}
+                    >
+                      {chat.title}
+                    </a>
+                  </li>
+                ))}
+                <div ref={lastElementRef}></div>
+              </div>
+            ))}
+            {isFetchingNextPage && (
+              <div className={styles.loading}>Loading...</div>
+            )}
+          </ul>
+        )}
       </div>
     </div>
   );
