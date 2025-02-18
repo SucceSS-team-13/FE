@@ -113,7 +113,12 @@ const Sidebar = ({
               </div>
             ))}
             {isFetchingNextPage && (
-              <div className={styles.loading}>Loading...</div>
+              <div className={styles.loading}>
+                <Loading
+                  text="루미가 채팅방 목록을 가져오는 중이에요!"
+                  size="small"
+                />
+              </div>
             )}
           </ul>
         )}
