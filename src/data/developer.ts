@@ -4,7 +4,7 @@ export const DEVELOPERS: Developer[] = [
     university: "성공회대",
     role: "Frontend Developer",
     position: "팀장",
-    image: "/image/leemanjae.png",
+    image: "/image/developer1.png",
     portfolio: "", // 포트폴리오 링크 - 추후 추가 예정
   },
   {
@@ -12,7 +12,7 @@ export const DEVELOPERS: Developer[] = [
     university: "성공회대",
     role: "Frontend Developer",
     position: "",
-    image: "/image/leemanjae.png",
+    image: "/image/developer1.png",
     portfolio: "",
   },
   {
@@ -20,7 +20,7 @@ export const DEVELOPERS: Developer[] = [
     university: "숙명여대",
     role: "Backend Developer",
     position: "",
-    image: "/image/leemanjae.png",
+    image: "/image/developer2.png",
     portfolio: "",
   },
   {
@@ -28,7 +28,7 @@ export const DEVELOPERS: Developer[] = [
     university: "숙명여대",
     role: "Backend Developer",
     position: "",
-    image: "/image/leemanjae.png",
+    image: "/image/developer1.png",
     portfolio: "",
   },
   {
@@ -36,7 +36,7 @@ export const DEVELOPERS: Developer[] = [
     university: "숙명여대",
     role: "Backend Developer",
     position: "",
-    image: "/image/leemanjae.png",
+    image: "/image/developer1.png",
     portfolio: "",
   },
   {
@@ -44,7 +44,7 @@ export const DEVELOPERS: Developer[] = [
     university: "성신여대",
     role: "AI/ML Developer",
     position: "",
-    image: "/image/leemanjae.png",
+    image: "/image/developer1.png",
     portfolio: "",
   },
   {
@@ -52,7 +52,7 @@ export const DEVELOPERS: Developer[] = [
     university: "성신여대",
     role: "AI/ML Developer",
     position: "",
-    image: "/image/leemanjae.png",
+    image: "/image/developer1.png",
     portfolio: "",
   },
 ];
