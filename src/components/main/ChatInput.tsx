@@ -4,19 +4,21 @@ const ChatInput = ({
   handleSendMessage,
   inputValue,
   setInputValue,
+  isPending,
 }: {
   handleSendMessage: (e: React.FormEvent) => void;
   inputValue: string;
   setInputValue: (value: string) => void;
+  isPending: boolean;
 }) => {
   const handleSubmit = (e: React.FormEvent) => {
-    if (inputValue.trim()) {
+    if (inputValue.trim() && !isPending) {
       handleSendMessage(e);
     }
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") {
+    if (e.key === "Enter" && !isPending) {
       e.preventDefault();
       handleSubmit(e);
     }
