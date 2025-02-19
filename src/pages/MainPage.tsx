@@ -43,8 +43,10 @@ const MainPage = () => {
 
   const postChat = useMutation({
     mutationFn: async () => {
+      const messageText = inputValue;
+      setInputValue("");
       return CustomAxios.post(`/api/chatting/${1}`, {
-        text: inputValue,
+        text: messageText,
       });
     },
     onMutate() {
@@ -71,7 +73,6 @@ const MainPage = () => {
       });
     },
     onSuccess: (response) => {
-      setInputValue("");
       const recomment = response.data.result;
       const lumiResponse: Chat = {
         id: recomment.id,
