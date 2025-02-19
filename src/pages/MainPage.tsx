@@ -189,6 +189,7 @@ const MainPage = () => {
               handleSendMessage={handleSendMessage}
               inputValue={inputValue}
               setInputValue={setInputValue}
+              isPending={postChat.isPending}
             />
           </div>
         </div>
