@@ -2,15 +2,15 @@ import { useInfiniteQuery, QueryFunction } from "@tanstack/react-query";
 import { useRef, useCallback } from "react";
 import { InfiniteData } from "@tanstack/react-query";
 
-export const useInfiniteScroll = <T>({
+export const useInfiniteScroll = <T, TQueryKey extends readonly unknown[]>({
   queryKey,
   queryFn,
   getNextPageParam,
-}: UseInfiniteScrollProps<T>) => {
+}: UseInfiniteScrollProps<T, TQueryKey>) => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery<T, Error, InfiniteData<T>, [string], number>({
-      queryKey: [queryKey],
-      queryFn: queryFn as QueryFunction<T, [string], number>,
+    useInfiniteQuery<T, Error, InfiniteData<T>, TQueryKey, number>({
+      queryKey: queryKey,
+      queryFn: queryFn as QueryFunction<T, TQueryKey, number>,
       getNextPageParam,
       initialPageParam: 1,
     });
@@ -33,3 +33,9 @@ export const useInfiniteScroll = <T>({
 
   return { data, lastElementRef, isFetchingNextPage }; // 데이터, 마지막 요소 ref, 데이터를 가져오는 중인지 여부 반환
 };
+
+interface UseInfiniteScrollProps<T, TQueryKey extends readonly unknown[]> {
+  queryKey: TQueryKey;
+  queryFn: QueryFunction<T, TQueryKey, number>;
+  getNextPageParam: (lastPage: T, allPages: T[]) => number | undefined;
+}

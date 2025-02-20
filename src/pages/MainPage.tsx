@@ -104,8 +104,8 @@ const MainPage = () => {
     data: chatRoomData,
     lastElementRef,
     isFetchingNextPage,
-  } = useInfiniteScroll<ChatRoomResponse>({
-    queryKey: "chatRoomList",
+  } = useInfiniteScroll<ChatRoomResponse, readonly ["chatRoomList"]>({
+    queryKey: ["chatRoomList"] as const,
     queryFn: async ({ pageParam }) => {
       const response = await getChatRoomList({ pageParam });
       return response;
