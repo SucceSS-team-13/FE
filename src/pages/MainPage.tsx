@@ -4,14 +4,13 @@ import GuideBar from "../components/main/GuideBar";
 import { CHAT_GUIDE } from "../data/chatGuide";
 import ChatInput from "../components/main/ChatInput";
 import { useState, useEffect, useRef } from "react";
-import UserMessage from "../components/main/UserMessage";
-import AIMessage from "../components/main/AIMessage";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { InfiniteData, useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import CustomAxios from "../api/CustomAxios";
 import { getChatting, getChatRoomList } from "../service/getChatting";
 import Sidebar from "../components/main/Sidebar";
 import { useSidebarStore } from "../store/SideBarStatusStore";
 import { useInfiniteScroll } from "../hook/useInfiniteScroll";
+import MessageContainer from "../components/main/MessageContainer";
 
 const MainPage = () => {
   const [inputValue, setInputValue] = useState("");
@@ -20,24 +19,35 @@ const MainPage = () => {
   const queryClient = useQueryClient();
   const { sideBarStatus, toggleSidebar } = useSidebarStore(); // 사이드바 상태 관리
 
-  const chatRoomId = 1; //채팅방 ID
+  const chatRoomId = 0; //채팅방 ID
 
-  const { data: chatting, isLoading } = useQuery<
+  const { 
+    data: chatting, 
+    isLoading,
+    fetchNextPage,
+    hasNextPage
+     } = useInfiniteQuery<
     Chat[],
     object,
-    Chat[],
-    [_1: string, number]
+    InfiniteData<Chat[]>,
+    [_1: string, number],
+    number
   >({
     queryKey: ["chatting", chatRoomId],
     queryFn: getChatting,
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, allPages) => {
+      return lastPage.length === 0 ? undefined : allPages.length
+    },
     staleTime: 60 * 1000,
     gcTime: 300 * 1000,
   });
 
   useEffect(() => {
-    // 처음 chatting 내용 가져올 때 message 상태 변수에 저장
     if (!isLoading) {
-      setMessages(chatting ? [...chatting] : []);
+      // optional chaining과 nullish coalescing 사용
+      const messages = chatting?.pages.flat() ?? [];
+      setMessages(messages);
     }
   }, [isLoading, chatting]);
 
@@ -163,27 +173,16 @@ const MainPage = () => {
             !sideBarStatus ? "" : styles.open
           }`}
         >
-          <div className={styles.messageContainer}>
-            {messages.map((message, index) => {
-              if (message.sender === "user") {
-                return <UserMessage message={message.text} key={index} />;
-              } else {
-                return (
-                  <AIMessage
-                    message={message.text}
-                    key={index}
-                    isLoading={
-                      message.sender === "lumi" &&
-                      message.text === "" &&
-                      postChat.isPending
-                    }
-                    location={message.location}
-                  />
-                );
-              }
-            })}
-            <div ref={messageEndRef} />
-          </div>
+          <MessageContainer
+            messages={messages}
+            isPending={postChat.isPending}
+            messageEndRef={messageEndRef}
+            hasNextPage={hasNextPage}
+            onLoadMore={() => {
+              fetchNextPage();
+              return Promise.resolve();
+            }}
+          />
           <div className={styles.bottomContainer}>
             <GuideBar guideBar={CHAT_GUIDE} setInputValue={setInputValue} />
             <ChatInput

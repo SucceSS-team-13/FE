@@ -73,4 +73,89 @@ export const handlers = [
       totalPages: Math.ceil(chatRooms.length / PAGE_SIZE),
     });
   }),
+  http.get(`/api/chat/room/:chatRoomId`, async ({ params, request }) => {
+    
+    const { chatRoomId } = params
+
+    if(chatRoomId === "0") {
+      return HttpResponse.json({
+        result: {
+          content: [],
+        },
+      });
+    } else {
+      return HttpResponse.json({
+        result: {
+          content: [
+            {
+              id: Date.now() + 1,
+              sender: 'lumi',
+              text: "많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요!",
+              location: "서울특별시 구로구 연동로 320",
+            },
+            {
+              id: Date.now() + 2,
+              sender: 'user',
+              text: "많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요!",
+            },
+            {
+              id: Date.now() + 3,
+              sender: 'lumi',
+              text: "많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요!",
+              location: "서울특별시 구로구 연동로 320",
+            },
+            {
+              id: Date.now() + 4,
+              sender: 'user',
+              text: "많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요!",
+            },
+            {
+              id: Date.now() + 5,
+              sender: 'lumi',
+              text: "많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요!",
+              location: "서울특별시 구로구 연동로 320",
+            },
+            {
+              id: Date.now() + 6,
+              sender: 'user',
+              text: "많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요!",
+            },
+            {
+              id: Date.now() + 7,
+              sender: 'lumi',
+              text: "많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요!",
+              location: "서울특별시 구로구 연동로 320",
+            },
+            {
+              id: Date.now() + 8,
+              sender: 'user',
+              text: "많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요!",
+            },
+            {
+              id: Date.now() + 9,
+              sender: 'lumi',
+              text: "많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요!",
+              location: "서울특별시 구로구 연동로 320",
+            },
+            {
+              id: Date.now() + 10,
+              sender: 'user',
+              text: "많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요!",
+            },
+            {
+              id: Date.now() + 11,
+              sender: 'lumi',
+              text: "많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요!",
+              location: "서울특별시 구로구 연동로 320",
+            },
+            {
+              id: Date.now() + 12,
+              sender: 'user',
+              text: "많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요!",
+            },
+          ]
+        }
+      })
+    }
+  })
 ];
