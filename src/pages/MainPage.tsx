@@ -20,7 +20,7 @@ const MainPage = () => {
   const queryClient = useQueryClient();
   const { sideBarStatus, toggleSidebar } = useSidebarStore(); // 사이드바 상태 관리
 
-  const chatRoomId = 1; //채팅방 ID
+  const chatRoomId = 1; //msw용 채팅방 ID(0: 빈 채팅방, 1: 내용 있는 채팅방)
 
   const { 
     data: chatting, 
