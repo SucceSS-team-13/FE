@@ -142,17 +142,6 @@ export const handlers = [
               sender: 'user',
               text: "많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요!",
             },
-            {
-              id: Date.now() + 11,
-              sender: 'lumi',
-              text: "많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요!",
-              location: "서울특별시 구로구 연동로 320",
-            },
-            {
-              id: Date.now() + 12,
-              sender: 'user',
-              text: "많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요!",
-            },
           ]
         }
       })

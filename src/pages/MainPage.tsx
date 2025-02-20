@@ -19,7 +19,7 @@ const MainPage = () => {
   const queryClient = useQueryClient();
   const { sideBarStatus, toggleSidebar } = useSidebarStore(); // 사이드바 상태 관리
 
-  const chatRoomId = 0; //채팅방 ID
+  const chatRoomId = 1; //채팅방 ID
 
   const { 
     data: chatting, 
@@ -210,6 +210,7 @@ const MainPage = () => {
               fetchNextPage();
               return Promise.resolve();
             }}
+            isLoading={isLoading} // isLoading prop 추가
           />
           <div className={styles.bottomContainer}>
             <GuideBar guideBar={CHAT_GUIDE} setInputValue={setInputValue} />
