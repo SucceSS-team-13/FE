@@ -4,7 +4,7 @@ import GuideBar from "../components/main/GuideBar";
 import { CHAT_GUIDE } from "../data/chatGuide";
 import ChatInput from "../components/main/ChatInput";
 import { useState, useEffect, useRef } from "react";
-import { InfiniteData, useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { InfiniteData, useMutation, useQueryClient } from "@tanstack/react-query";
 import CustomAxios from "../api/CustomAxios";
 import { getChatting, getChatRoomList } from "../service/getChatting";
 import Sidebar from "../components/main/Sidebar";
@@ -18,37 +18,27 @@ const MainPage = () => {
   const messageEndRef = useRef<HTMLDivElement>(null);
   const prevMessagesLengthRef = useRef(0);
   const queryClient = useQueryClient();
-  const { sideBarStatus, toggleSidebar } = useSidebarStore(); // 사이드바 상태 관리
+  const { sideBarStatus, toggleSidebar } = useSidebarStore();
 
-  const chatRoomId = 1; //msw용 채팅방 ID(0: 빈 채팅방, 1: 내용 있는 채팅방)
+  const chatRoomId = 1;
 
-  const { 
-    data: chatting, 
-    isLoading,
-    fetchNextPage,
-    hasNextPage
-     } = useInfiniteQuery<
-    Chat[],
-    object,
-    InfiniteData<Chat[]>,
-    [_1: string, number],
-    number
-  >({
+  const {
+    data: chatting,
+    lastElementRef: messageLastElementRef,
+  } = useInfiniteScroll<Chat[], [string, number]>({
     queryKey: ["chatting", chatRoomId],
     queryFn: getChatting,
-    initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) => {
-      return lastPage.length === 10 ? allPages.length : undefined //페이지 사이즈는 추후 백엔드와 상의해야 함
+      return lastPage.length === 10 ? allPages.length + 1 : undefined
     },
   });
 
   useEffect(() => {
-    if (!isLoading) {
-      const flattenedMessages = chatting?.pages.flat() ?? [];
-      // 최신 메시지가 아래에 오도록 순서 유지
+    if (chatting) {
+      const flattenedMessages = chatting.pages.flat();
       setMessages(flattenedMessages);
     }
-  }, [isLoading, chatting]);
+  }, [chatting]);
 
   const postChat = useMutation({
     mutationFn: async () => {
@@ -76,17 +66,13 @@ const MainPage = () => {
             const newLumiMessage: Chat = {
               id: Date.now() + 2,
               sender: "lumi",
-              text: "", // 로딩 상태를 위한 빈 메시지
+              text: "",
             };
     
-            // 항상 첫 번째 페이지에 새 메시지 추가
             const newFirstPage = [...(value.pages[0] || []), newUserMessage, newLumiMessage];
             
             const newData = {
-              pages: [
-                newFirstPage,  // 업데이트된 첫 페이지
-                ...value.pages.slice(1)  // 나머지 페이지들
-              ],
+              pages: [newFirstPage, ...value.pages.slice(1)],
               pageParams: [...value.pageParams]
             };
     
@@ -114,15 +100,11 @@ const MainPage = () => {
           const value = queryClient.getQueryData<InfiniteData<Chat[]>>(queryKey);
           
           if (value) {
-            // 첫 페이지의 마지막 메시지(빈 AI 응답)를 실제 응답으로 교체
             const firstPage = [...value.pages[0]];
             firstPage[firstPage.length - 1] = lumiResponse;
     
             const newData = {
-              pages: [
-                firstPage,  // 업데이트된 첫 페이지
-                ...value.pages.slice(1)  // 나머지 페이지들
-              ],
+              pages: [firstPage, ...value.pages.slice(1)],
               pageParams: [...value.pageParams]
             };
     
@@ -139,10 +121,10 @@ const MainPage = () => {
 
   const {
     data: chatRoomData,
-    lastElementRef,
-    isFetchingNextPage,
-  } = useInfiniteScroll<ChatRoomResponse, readonly ["chatRoomList"]>({
-    queryKey: ["chatRoomList"] as const,
+    lastElementRef: chatRoomLastElementRef,
+    isFetchingNextPage: isFetchingNextChatRoom,
+  } = useInfiniteScroll<ChatRoomResponse, [string]>({
+    queryKey: ["chatRoomList"],
     queryFn: async ({ pageParam }) => {
       const response = await getChatRoomList({ pageParam });
       return response;
@@ -156,11 +138,8 @@ const MainPage = () => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
-  // 이전 메시지 길이와 현재 메시지 길이를 비교하여
-  // 새 메시지가 추가된 경우에만 스크롤
   useEffect(() => {
     if (messages.length > prevMessagesLengthRef.current) {
-      // 새 메시지가 추가된 경우만 스크롤
       scrollToBottom();
     }
     prevMessagesLengthRef.current = messages.length;
@@ -178,8 +157,8 @@ const MainPage = () => {
           <Sidebar
             toggleSidebar={toggleSidebar}
             chatRoomList={chatRooms}
-            lastElementRef={lastElementRef}
-            isFetchingNextPage={isFetchingNextPage}
+            lastElementRef={chatRoomLastElementRef}
+            isFetchingNextPage={isFetchingNextChatRoom}
           />
         )}
         {!sideBarStatus && (
@@ -210,12 +189,9 @@ const MainPage = () => {
             messages={messages}
             isPending={postChat.isPending}
             messageEndRef={messageEndRef}
-            hasNextPage={hasNextPage}
-            onLoadMore={() => {
-              fetchNextPage();
-              return Promise.resolve();
-            }}
-            isLoading={isLoading} // isLoading prop 추가
+            hasNextPage={!!chatting?.pages[chatting.pages.length - 1]?.length}
+            isLoading={!chatting}
+            lastElementRef={messageLastElementRef}
           />
           <div className={styles.bottomContainer}>
             <GuideBar guideBar={CHAT_GUIDE} setInputValue={setInputValue} />
@@ -231,4 +207,5 @@ const MainPage = () => {
     </div>
   );
 };
+
 export default MainPage;
