@@ -45,9 +45,9 @@ const MainPage = () => {
 
   useEffect(() => {
     if (!isLoading) {
-      // optional chaining과 nullish coalescing 사용
-      const messages = chatting?.pages.flat() ?? [];
-      setMessages(messages);
+      const flattenedMessages = chatting?.pages.flat() ?? [];
+      // 최신 메시지가 아래에 오도록 순서 유지
+      setMessages(flattenedMessages);
     }
   }, [isLoading, chatting]);
 
