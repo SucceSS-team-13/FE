@@ -4,42 +4,41 @@ import GuideBar from "../components/main/GuideBar";
 import { CHAT_GUIDE } from "../data/chatGuide";
 import ChatInput from "../components/main/ChatInput";
 import { useState, useEffect, useRef } from "react";
-import UserMessage from "../components/main/UserMessage";
-import AIMessage from "../components/main/AIMessage";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { InfiniteData, useMutation, useQueryClient } from "@tanstack/react-query";
 import CustomAxios from "../api/CustomAxios";
 import { getChatting, getChatRoomList } from "../service/getChatting";
 import Sidebar from "../components/main/Sidebar";
 import { useSidebarStore } from "../store/SideBarStatusStore";
 import { useInfiniteScroll } from "../hook/useInfiniteScroll";
+import MessageContainer from "../components/main/MessageContainer";
 
 const MainPage = () => {
   const [inputValue, setInputValue] = useState("");
   const [messages, setMessages] = useState<Chat[]>([]);
   const messageEndRef = useRef<HTMLDivElement>(null);
+  const prevMessagesLengthRef = useRef(0);
   const queryClient = useQueryClient();
-  const { sideBarStatus, toggleSidebar } = useSidebarStore(); // 사이드바 상태 관리
+  const { sideBarStatus, toggleSidebar } = useSidebarStore();
 
-  const chatRoomId = 1; //채팅방 ID
+  const chatRoomId = 1;
 
-  const { data: chatting, isLoading } = useQuery<
-    Chat[],
-    object,
-    Chat[],
-    [_1: string, number]
-  >({
+  const {
+    data: chatting,
+    lastElementRef: messageLastElementRef,
+  } = useInfiniteScroll<Chat[], [string, number]>({
     queryKey: ["chatting", chatRoomId],
     queryFn: getChatting,
-    staleTime: 60 * 1000,
-    gcTime: 300 * 1000,
+    getNextPageParam: (lastPage, allPages) => {
+      return lastPage.length === 10 ? allPages.length + 1 : undefined
+    },
   });
 
   useEffect(() => {
-    // 처음 chatting 내용 가져올 때 message 상태 변수에 저장
-    if (!isLoading) {
-      setMessages(chatting ? [...chatting] : []);
+    if (chatting) {
+      const flattenedMessages = chatting.pages.flat();
+      setMessages(flattenedMessages);
     }
-  }, [isLoading, chatting]);
+  }, [chatting]);
 
   const postChat = useMutation({
     mutationFn: async () => {
@@ -52,26 +51,39 @@ const MainPage = () => {
     onMutate() {
       const queryCache = queryClient.getQueryCache();
       const queryKeys = queryCache.getAll().map((cache) => cache.queryKey);
+      
       queryKeys.forEach((queryKey) => {
         if (queryKey[0] === "chatting") {
-          const value: Chat[] = queryClient.getQueryData(queryKey) ?? []; //undefined라면 빈 배열 추가
-          const shallow = [...value];
-          shallow.push({
-            id: Date.now() + 1,
-            sender: "user",
-            text: inputValue,
-          });
-          shallow.push({
-            //로딩을 보여주기 위한 빈 메시지 생성
-            id: Date.now() + 2,
-            sender: "lumi",
-            text: "",
-          });
-          queryClient.setQueryData(queryKey, shallow);
-          setMessages(shallow);
+          const value = queryClient.getQueryData<InfiniteData<Chat[]>>(queryKey);
+          
+          if (value) {
+            const newUserMessage: Chat = {
+              id: Date.now() + 1,
+              sender: "user",
+              text: inputValue,
+            };
+            
+            const newLumiMessage: Chat = {
+              id: Date.now() + 2,
+              sender: "lumi",
+              text: "",
+            };
+    
+            // 첫 번째 페이지에 새 메시지 추가
+            const updatedFirstPage = [newLumiMessage, newUserMessage, ...value.pages[0]];
+            
+            const newData = {
+              pages: [updatedFirstPage, ...value.pages.slice(1)],
+              pageParams: [...value.pageParams]
+            };
+    
+            queryClient.setQueryData(queryKey, newData);
+            setMessages(newData.pages.flat());
+          }
         }
       });
     },
+    
     onSuccess: (response) => {
       const recomment = response.data.result;
       const lumiResponse: Chat = {
@@ -80,18 +92,27 @@ const MainPage = () => {
         text: recomment.text,
         location: recomment.location,
       };
-
-      //퀴리 캐시 업데이트
+    
       const queryCache = queryClient.getQueryCache();
       const queryKeys = queryCache.getAll().map((cache) => cache.queryKey);
+      
       queryKeys.forEach((queryKey) => {
         if (queryKey[0] === "chatting") {
-          const value: Chat[] = queryClient.getQueryData(queryKey) ?? [];
-          const shallow = [...value];
-          // 마지막 메시지(빈 AI 응답)를 실제 응답으로 교체
-          shallow[shallow.length - 1] = lumiResponse;
-          queryClient.setQueryData(queryKey, shallow);
-          setMessages(shallow);
+          const value = queryClient.getQueryData<InfiniteData<Chat[]>>(queryKey);
+          
+          if (value) {
+            // 첫 번째 페이지의 두 번째 메시지(빈 AI 메시지)를 업데이트
+            const updatedFirstPage = [...value.pages[0]];
+            updatedFirstPage[0] = lumiResponse;
+    
+            const newData = {
+              pages: [updatedFirstPage, ...value.pages.slice(1)],
+              pageParams: [...value.pageParams]
+            };
+    
+            queryClient.setQueryData(queryKey, newData);
+            setMessages(newData.pages.flat());
+          }
         }
       });
     },
@@ -102,10 +123,10 @@ const MainPage = () => {
 
   const {
     data: chatRoomData,
-    lastElementRef,
-    isFetchingNextPage,
-  } = useInfiniteScroll<ChatRoomResponse>({
-    queryKey: "chatRoomList",
+    lastElementRef: chatRoomLastElementRef,
+    isFetchingNextPage: isFetchingNextChatRoom,
+  } = useInfiniteScroll<ChatRoomResponse, [string]>({
+    queryKey: ["chatRoomList"],
     queryFn: async ({ pageParam }) => {
       const response = await getChatRoomList({ pageParam });
       return response;
@@ -120,7 +141,10 @@ const MainPage = () => {
   };
 
   useEffect(() => {
-    scrollToBottom();
+    if (messages.length > prevMessagesLengthRef.current) {
+      scrollToBottom();
+    }
+    prevMessagesLengthRef.current = messages.length;
   }, [messages]);
 
   const handleSendMessage = (e: React.FormEvent) => {
@@ -135,8 +159,8 @@ const MainPage = () => {
           <Sidebar
             toggleSidebar={toggleSidebar}
             chatRoomList={chatRooms}
-            lastElementRef={lastElementRef}
-            isFetchingNextPage={isFetchingNextPage}
+            lastElementRef={chatRoomLastElementRef}
+            isFetchingNextPage={isFetchingNextChatRoom}
           />
         )}
         {!sideBarStatus && (
@@ -163,27 +187,14 @@ const MainPage = () => {
             !sideBarStatus ? "" : styles.open
           }`}
         >
-          <div className={styles.messageContainer}>
-            {messages.map((message, index) => {
-              if (message.sender === "user") {
-                return <UserMessage message={message.text} key={index} />;
-              } else {
-                return (
-                  <AIMessage
-                    message={message.text}
-                    key={index}
-                    isLoading={
-                      message.sender === "lumi" &&
-                      message.text === "" &&
-                      postChat.isPending
-                    }
-                    location={message.location}
-                  />
-                );
-              }
-            })}
-            <div ref={messageEndRef} />
-          </div>
+          <MessageContainer
+            messages={messages}
+            isPending={postChat.isPending}
+            messageEndRef={messageEndRef}
+            hasNextPage={!!chatting?.pages[chatting.pages.length - 1]?.length}
+            isLoading={!chatting}
+            lastElementRef={messageLastElementRef}
+          />
           <div className={styles.bottomContainer}>
             <GuideBar guideBar={CHAT_GUIDE} setInputValue={setInputValue} />
             <ChatInput
@@ -198,4 +209,5 @@ const MainPage = () => {
     </div>
   );
 };
+
 export default MainPage;

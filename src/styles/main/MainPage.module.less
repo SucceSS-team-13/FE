@@ -81,12 +81,25 @@
       .messageContainer {
         overflow-y: auto;
         width: 100%;
+        height: 100%;
         flex: 1;
+        padding: 1rem;
+        box-sizing: border-box;
+        display: flex;  // 추가
+        flex-direction: column-reverse;  // 추가: 스크롤 방향 반전
+      }
+      .messagesWrapper {
         display: flex;
         flex-direction: column;
         gap: 10px;
-        padding: 1rem;
-        box-sizing: border-box;
+        min-height: min-content;
+        
+        // 추가: 로딩 트리거 스타일
+        .loadingTrigger {
+          height: 1px;
+          width: 100%;
+          visibility: hidden;  // 보이지 않게 처리
+        }
       }
       .bottomContainer {
         width: 100%;
