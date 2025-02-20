@@ -16,6 +16,7 @@ const MainPage = () => {
   const [inputValue, setInputValue] = useState("");
   const [messages, setMessages] = useState<Chat[]>([]);
   const messageEndRef = useRef<HTMLDivElement>(null);
+  const prevMessagesLengthRef = useRef(0);
   const queryClient = useQueryClient();
   const { sideBarStatus, toggleSidebar } = useSidebarStore(); // 사이드바 상태 관리
 
@@ -39,8 +40,6 @@ const MainPage = () => {
     getNextPageParam: (lastPage, allPages) => {
       return lastPage.length === 10 ? allPages.length : undefined //페이지 사이즈는 추후 백엔드와 상의해야 함
     },
-    staleTime: 60 * 1000,
-    gcTime: 300 * 1000,
   });
 
   useEffect(() => {
@@ -157,8 +156,14 @@ const MainPage = () => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
   };
 
+  // 이전 메시지 길이와 현재 메시지 길이를 비교하여
+  // 새 메시지가 추가된 경우에만 스크롤
   useEffect(() => {
-    scrollToBottom();
+    if (messages.length > prevMessagesLengthRef.current) {
+      // 새 메시지가 추가된 경우만 스크롤
+      scrollToBottom();
+    }
+    prevMessagesLengthRef.current = messages.length;
   }, [messages]);
 
   const handleSendMessage = (e: React.FormEvent) => {
