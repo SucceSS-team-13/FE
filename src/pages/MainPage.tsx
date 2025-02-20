@@ -69,10 +69,11 @@ const MainPage = () => {
               text: "",
             };
     
-            const newFirstPage = [...(value.pages[0] || []), newUserMessage, newLumiMessage];
+            // 첫 번째 페이지에 새 메시지 추가
+            const updatedFirstPage = [newLumiMessage, newUserMessage, ...value.pages[0]];
             
             const newData = {
-              pages: [newFirstPage, ...value.pages.slice(1)],
+              pages: [updatedFirstPage, ...value.pages.slice(1)],
               pageParams: [...value.pageParams]
             };
     
@@ -100,11 +101,12 @@ const MainPage = () => {
           const value = queryClient.getQueryData<InfiniteData<Chat[]>>(queryKey);
           
           if (value) {
-            const firstPage = [...value.pages[0]];
-            firstPage[firstPage.length - 1] = lumiResponse;
+            // 첫 번째 페이지의 두 번째 메시지(빈 AI 메시지)를 업데이트
+            const updatedFirstPage = [...value.pages[0]];
+            updatedFirstPage[0] = lumiResponse;
     
             const newData = {
-              pages: [firstPage, ...value.pages.slice(1)],
+              pages: [updatedFirstPage, ...value.pages.slice(1)],
               pageParams: [...value.pageParams]
             };
     
