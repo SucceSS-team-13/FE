@@ -7,7 +7,7 @@ export const getChatting: QueryFunction<Chat[], [_1: string, number], number> = 
   try {
     const chatRoomId = queryKey[1];
     
-    if (!chatRoomId) {
+    if (chatRoomId === undefined || chatRoomId === null) {
       // id가 없다면 예외 처리
       throw new Error("chatRoomId is required");
     }

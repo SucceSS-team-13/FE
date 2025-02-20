@@ -37,7 +37,7 @@ const MainPage = () => {
     queryFn: getChatting,
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) => {
-      return lastPage.length === 0 ? undefined : allPages.length
+      return lastPage.length === 10 ? allPages.length : undefined //페이지 사이즈는 추후 백엔드와 상의해야 함
     },
     staleTime: 60 * 1000,
     gcTime: 300 * 1000,
@@ -62,26 +62,42 @@ const MainPage = () => {
     onMutate() {
       const queryCache = queryClient.getQueryCache();
       const queryKeys = queryCache.getAll().map((cache) => cache.queryKey);
+      
       queryKeys.forEach((queryKey) => {
         if (queryKey[0] === "chatting") {
-          const value: Chat[] = queryClient.getQueryData(queryKey) ?? []; //undefined라면 빈 배열 추가
-          const shallow = [...value];
-          shallow.push({
-            id: Date.now() + 1,
-            sender: "user",
-            text: inputValue,
-          });
-          shallow.push({
-            //로딩을 보여주기 위한 빈 메시지 생성
-            id: Date.now() + 2,
-            sender: "lumi",
-            text: "",
-          });
-          queryClient.setQueryData(queryKey, shallow);
-          setMessages(shallow);
+          const value = queryClient.getQueryData<InfiniteData<Chat[]>>(queryKey);
+          
+          if (value) {
+            const newUserMessage: Chat = {
+              id: Date.now() + 1,
+              sender: "user",
+              text: inputValue,
+            };
+            
+            const newLumiMessage: Chat = {
+              id: Date.now() + 2,
+              sender: "lumi",
+              text: "", // 로딩 상태를 위한 빈 메시지
+            };
+    
+            // 항상 첫 번째 페이지에 새 메시지 추가
+            const newFirstPage = [...(value.pages[0] || []), newUserMessage, newLumiMessage];
+            
+            const newData = {
+              pages: [
+                newFirstPage,  // 업데이트된 첫 페이지
+                ...value.pages.slice(1)  // 나머지 페이지들
+              ],
+              pageParams: [...value.pageParams]
+            };
+    
+            queryClient.setQueryData(queryKey, newData);
+            setMessages(newData.pages.flat());
+          }
         }
       });
     },
+    
     onSuccess: (response) => {
       const recomment = response.data.result;
       const lumiResponse: Chat = {
@@ -90,18 +106,30 @@ const MainPage = () => {
         text: recomment.text,
         location: recomment.location,
       };
-
-      //퀴리 캐시 업데이트
+    
       const queryCache = queryClient.getQueryCache();
       const queryKeys = queryCache.getAll().map((cache) => cache.queryKey);
+      
       queryKeys.forEach((queryKey) => {
         if (queryKey[0] === "chatting") {
-          const value: Chat[] = queryClient.getQueryData(queryKey) ?? [];
-          const shallow = [...value];
-          // 마지막 메시지(빈 AI 응답)를 실제 응답으로 교체
-          shallow[shallow.length - 1] = lumiResponse;
-          queryClient.setQueryData(queryKey, shallow);
-          setMessages(shallow);
+          const value = queryClient.getQueryData<InfiniteData<Chat[]>>(queryKey);
+          
+          if (value) {
+            // 첫 페이지의 마지막 메시지(빈 AI 응답)를 실제 응답으로 교체
+            const firstPage = [...value.pages[0]];
+            firstPage[firstPage.length - 1] = lumiResponse;
+    
+            const newData = {
+              pages: [
+                firstPage,  // 업데이트된 첫 페이지
+                ...value.pages.slice(1)  // 나머지 페이지들
+              ],
+              pageParams: [...value.pageParams]
+            };
+    
+            queryClient.setQueryData(queryKey, newData);
+            setMessages(newData.pages.flat());
+          }
         }
       });
     },
