@@ -15,8 +15,10 @@ import MessageContainer from "../components/main/MessageContainer";
 const MainPage = () => {
   const [inputValue, setInputValue] = useState("");
   const [messages, setMessages] = useState<Chat[]>([]);
+  const [isNewMessage, setIsNewMessage] = useState(false);
   const messageEndRef = useRef<HTMLDivElement>(null);
-  const prevMessagesLengthRef = useRef(0);
+  const scrollPositionRef = useRef<number>(0);
+  const messageContainerRef = useRef<HTMLDivElement | null>(null);
   const queryClient = useQueryClient();
   const { sideBarStatus, toggleSidebar } = useSidebarStore();
 
@@ -37,8 +39,23 @@ const MainPage = () => {
 
   useEffect(() => {
     if (chatting) {
-      const flattenedMessages = chatting.pages.flat();
-      setMessages(flattenedMessages);
+      // 현재 스크롤 위치와 전체 높이 저장
+      const container = messageContainerRef.current;
+      if (container) {
+        const prevScrollHeight = container.scrollHeight;
+        const prevScrollTop = container.scrollTop;
+  
+        const flattenedMessages = chatting.pages.flat();
+        setIsNewMessage(false);
+        setMessages(flattenedMessages);
+  
+        // 다음 렌더링 사이클에서 스크롤 위치 조정
+        requestAnimationFrame(() => {
+          const newScrollHeight = container.scrollHeight;
+          const heightDiff = newScrollHeight - prevScrollHeight;
+          container.scrollTop = prevScrollTop + heightDiff;
+        });
+      }
     }
   }, [chatting]);
 
@@ -53,7 +70,7 @@ const MainPage = () => {
     onMutate() {
       const queryCache = queryClient.getQueryCache();
       const queryKeys = queryCache.getAll().map((cache) => cache.queryKey);
-      
+      setIsNewMessage(true);
       queryKeys.forEach((queryKey) => {
         if (queryKey[0] === "chatting") {
           const value = queryClient.getQueryData<InfiniteData<Chat[]>>(queryKey);
@@ -97,7 +114,7 @@ const MainPage = () => {
     
       const queryCache = queryClient.getQueryCache();
       const queryKeys = queryCache.getAll().map((cache) => cache.queryKey);
-      
+      setIsNewMessage(true); // 새 메시지임을 표시
       queryKeys.forEach((queryKey) => {
         if (queryKey[0] === "chatting") {
           const value = queryClient.getQueryData<InfiniteData<Chat[]>>(queryKey);
@@ -143,11 +160,11 @@ const MainPage = () => {
   };
 
   useEffect(() => {
-    if (messages.length > prevMessagesLengthRef.current) {
+    if (messages.length > 0 && isNewMessage) {
       scrollToBottom();
+      setIsNewMessage(false);
     }
-    prevMessagesLengthRef.current = messages.length;
-  }, [messages]);
+  }, [messages, isNewMessage]);
 
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
@@ -197,6 +214,7 @@ const MainPage = () => {
             isFetchingNextChat={isFetchingNextChat}
             lastElementRef={messageLastElementRef}
             isThrottled={isThrottled}
+            containerRef={messageContainerRef}
           />
           <div className={styles.bottomContainer}>
             <GuideBar guideBar={CHAT_GUIDE} setInputValue={setInputValue} />

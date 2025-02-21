@@ -11,6 +11,7 @@ const MessageContainer = ({
   lastElementRef,
   isFetchingNextChat,
   isThrottled,
+  containerRef,
 }: {
   messages: Chat[];
   isPending: boolean;
@@ -19,12 +20,13 @@ const MessageContainer = ({
   lastElementRef: (node: HTMLElement | null) => void;
   isFetchingNextChat: boolean;
   isThrottled: boolean;
+  containerRef: RefObject<HTMLDivElement | null>;
 }) => {
   const reversedMessages = [...messages].reverse();
 
   return (
     <div className={styles.messageContainer}>
-      <div className={styles.messagesWrapper}>
+      <div className={styles.messagesWrapper} ref={containerRef}>
         {hasNextPage && !isFetchingNextChat && !isThrottled && (
           <div ref={lastElementRef} className={styles.loadingTrigger} />
         )}
