@@ -70,11 +70,23 @@ const Sidebar = ({
     <div className={styles.container}>
       <div className={styles.menuBar}>
         <div className={styles.menuBarItem}>
-          <ActionIcon icon="/image/hideSidepanel.png" onClick={toggleSidebar} />
+          <ActionIcon
+            icon="/image/hideSidepanel.png"
+            onClick={toggleSidebar}
+            size="medium"
+          />
         </div>
         <div className={styles.menuBarItem}>
-          <ActionIcon icon="/image/search.png" onClick={() => {}} />
-          <ActionIcon icon="/image/newChat.png" onClick={() => {}} />
+          <ActionIcon
+            icon="/image/search.png"
+            onClick={() => {}}
+            size="small"
+          />
+          <ActionIcon
+            icon="/image/newChat.png"
+            onClick={() => {}}
+            size="small"
+          />
         </div>
       </div>
       <div className={styles.chatRoomList}>
