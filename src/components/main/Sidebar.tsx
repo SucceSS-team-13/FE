@@ -4,6 +4,7 @@ import {
   MILLISECONDS_PER_DAY,
 } from "../../constants/dateConstants";
 import Loading from "../Loading";
+import ActionIcon from "./ActionIcon";
 
 const Sidebar = ({
   toggleSidebar,
@@ -69,23 +70,11 @@ const Sidebar = ({
     <div className={styles.container}>
       <div className={styles.menuBar}>
         <div className={styles.menuBarItem}>
-          <span>
-            <button onClick={toggleSidebar}>
-              <img src="/image/hideSidepanel.png" />
-            </button>
-          </span>
+          <ActionIcon icon="/image/hideSidepanel.png" onClick={toggleSidebar} />
         </div>
         <div className={styles.menuBarItem}>
-          <span>
-            <button>
-              <img src="/image/search.png" />
-            </button>
-          </span>
-          <span>
-            <button>
-              <img src="/image/newChat.png" />
-            </button>
-          </span>
+          <ActionIcon icon="/image/search.png" onClick={() => {}} />
+          <ActionIcon icon="/image/newChat.png" onClick={() => {}} />
         </div>
       </div>
       <div className={styles.chatRoomList}>
