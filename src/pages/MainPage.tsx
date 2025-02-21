@@ -15,16 +15,18 @@ import MessageContainer from "../components/main/MessageContainer";
 const MainPage = () => {
   const [inputValue, setInputValue] = useState("");
   const [messages, setMessages] = useState<Chat[]>([]);
+  const [isNewMessage, setIsNewMessage] = useState(false);
   const messageEndRef = useRef<HTMLDivElement>(null);
-  const prevMessagesLengthRef = useRef(0);
   const queryClient = useQueryClient();
   const { sideBarStatus, toggleSidebar } = useSidebarStore();
 
-  const chatRoomId = 1;
+  const chatRoomId = 1; //msw용 chatRoomId(0: 빈 채팅방, 1: 내용 있는 채팅방)
 
   const {
     data: chatting,
     lastElementRef: messageLastElementRef,
+    isFetchingNextPage: isFetchingNextChat,
+    isThrottled,
   } = useInfiniteScroll<Chat[], [string, number]>({
     queryKey: ["chatting", chatRoomId],
     queryFn: getChatting,
@@ -36,6 +38,7 @@ const MainPage = () => {
   useEffect(() => {
     if (chatting) {
       const flattenedMessages = chatting.pages.flat();
+      setIsNewMessage(false);
       setMessages(flattenedMessages);
     }
   }, [chatting]);
@@ -51,7 +54,7 @@ const MainPage = () => {
     onMutate() {
       const queryCache = queryClient.getQueryCache();
       const queryKeys = queryCache.getAll().map((cache) => cache.queryKey);
-      
+      setIsNewMessage(true);
       queryKeys.forEach((queryKey) => {
         if (queryKey[0] === "chatting") {
           const value = queryClient.getQueryData<InfiniteData<Chat[]>>(queryKey);
@@ -95,7 +98,7 @@ const MainPage = () => {
     
       const queryCache = queryClient.getQueryCache();
       const queryKeys = queryCache.getAll().map((cache) => cache.queryKey);
-      
+      setIsNewMessage(true); // 새 메시지임을 표시
       queryKeys.forEach((queryKey) => {
         if (queryKey[0] === "chatting") {
           const value = queryClient.getQueryData<InfiniteData<Chat[]>>(queryKey);
@@ -141,11 +144,11 @@ const MainPage = () => {
   };
 
   useEffect(() => {
-    if (messages.length > prevMessagesLengthRef.current) {
+    if (messages.length > 0 && isNewMessage) {
       scrollToBottom();
+      setIsNewMessage(false);
     }
-    prevMessagesLengthRef.current = messages.length;
-  }, [messages]);
+  }, [messages, isNewMessage]);
 
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
@@ -192,8 +195,9 @@ const MainPage = () => {
             isPending={postChat.isPending}
             messageEndRef={messageEndRef}
             hasNextPage={!!chatting?.pages[chatting.pages.length - 1]?.length}
-            isLoading={!chatting}
+            isFetchingNextChat={isFetchingNextChat}
             lastElementRef={messageLastElementRef}
+            isThrottled={isThrottled}
           />
           <div className={styles.bottomContainer}>
             <GuideBar guideBar={CHAT_GUIDE} setInputValue={setInputValue} />
