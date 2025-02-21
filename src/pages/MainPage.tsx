@@ -4,14 +4,17 @@ import GuideBar from "../components/main/GuideBar";
 import { CHAT_GUIDE } from "../data/chatGuide";
 import ChatInput from "../components/main/ChatInput";
 import { useState, useEffect, useRef } from "react";
-import { InfiniteData, useMutation, useQueryClient } from "@tanstack/react-query";
+import {
+  InfiniteData,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
 import CustomAxios from "../api/CustomAxios";
 import { getChatting, getChatRoomList } from "../service/getChatting";
 import Sidebar from "../components/main/Sidebar";
 import { useSidebarStore } from "../store/SideBarStatusStore";
 import { useInfiniteScroll } from "../hook/useInfiniteScroll";
 import MessageContainer from "../components/main/MessageContainer";
-
 const MainPage = () => {
   const [inputValue, setInputValue] = useState("");
   const [messages, setMessages] = useState<Chat[]>([]);
@@ -31,7 +34,7 @@ const MainPage = () => {
     queryKey: ["chatting", chatRoomId],
     queryFn: getChatting,
     getNextPageParam: (lastPage, allPages) => {
-      return lastPage.length === 10 ? allPages.length + 1 : undefined
+      return lastPage.length === 10 ? allPages.length + 1 : undefined;
     },
   });
 
@@ -57,36 +60,41 @@ const MainPage = () => {
       setIsNewMessage(true);
       queryKeys.forEach((queryKey) => {
         if (queryKey[0] === "chatting") {
-          const value = queryClient.getQueryData<InfiniteData<Chat[]>>(queryKey);
-          
+          const value =
+            queryClient.getQueryData<InfiniteData<Chat[]>>(queryKey);
+
           if (value) {
             const newUserMessage: Chat = {
               id: Date.now() + 1,
               sender: "user",
               text: inputValue,
             };
-            
+
             const newLumiMessage: Chat = {
               id: Date.now() + 2,
               sender: "lumi",
               text: "",
             };
-    
+
             // 첫 번째 페이지에 새 메시지 추가
-            const updatedFirstPage = [newLumiMessage, newUserMessage, ...value.pages[0]];
-            
+            const updatedFirstPage = [
+              newLumiMessage,
+              newUserMessage,
+              ...value.pages[0],
+            ];
+
             const newData = {
               pages: [updatedFirstPage, ...value.pages.slice(1)],
-              pageParams: [...value.pageParams]
+              pageParams: [...value.pageParams],
             };
-    
+
             queryClient.setQueryData(queryKey, newData);
             setMessages(newData.pages.flat());
           }
         }
       });
     },
-    
+
     onSuccess: (response) => {
       const recomment = response.data.result;
       const lumiResponse: Chat = {
@@ -95,24 +103,25 @@ const MainPage = () => {
         text: recomment.text,
         location: recomment.location,
       };
-    
+
       const queryCache = queryClient.getQueryCache();
       const queryKeys = queryCache.getAll().map((cache) => cache.queryKey);
       setIsNewMessage(true); // 새 메시지임을 표시
       queryKeys.forEach((queryKey) => {
         if (queryKey[0] === "chatting") {
-          const value = queryClient.getQueryData<InfiniteData<Chat[]>>(queryKey);
-          
+          const value =
+            queryClient.getQueryData<InfiniteData<Chat[]>>(queryKey);
+
           if (value) {
             // 첫 번째 페이지의 두 번째 메시지(빈 AI 메시지)를 업데이트
             const updatedFirstPage = [...value.pages[0]];
             updatedFirstPage[0] = lumiResponse;
-    
+
             const newData = {
               pages: [updatedFirstPage, ...value.pages.slice(1)],
-              pageParams: [...value.pageParams]
+              pageParams: [...value.pageParams],
             };
-    
+
             queryClient.setQueryData(queryKey, newData);
             setMessages(newData.pages.flat());
           }
