@@ -2,6 +2,7 @@ import { RefObject } from "react";
 import AIMessage from "./AIMessage";
 import UserMessage from "./UserMessage";
 import styles from "../../styles/main/MainPage.module.less";
+import LoadingSpinner from "../LoadingSpinner";
 
 const MessageContainer = ({
   messages,
@@ -11,7 +12,6 @@ const MessageContainer = ({
   lastElementRef,
   isFetchingNextChat,
   isThrottled,
-  containerRef,
 }: {
   messages: Chat[];
   isPending: boolean;
@@ -20,15 +20,16 @@ const MessageContainer = ({
   lastElementRef: (node: HTMLElement | null) => void;
   isFetchingNextChat: boolean;
   isThrottled: boolean;
-  containerRef: RefObject<HTMLDivElement | null>;
 }) => {
   const reversedMessages = [...messages].reverse();
 
   return (
     <div className={styles.messageContainer}>
-      <div className={styles.messagesWrapper} ref={containerRef}>
+      <div className={styles.messagesWrapper}>
         {hasNextPage && !isFetchingNextChat && !isThrottled && (
-          <div ref={lastElementRef} className={styles.loadingTrigger} />
+          <div ref={lastElementRef} className={styles.loadingTrigger}>
+            <LoadingSpinner size={'sm'} />
+          </div>
         )}
         {reversedMessages.map((message, index) => {
           if (message.sender === "user") {

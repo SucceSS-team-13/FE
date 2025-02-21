@@ -17,12 +17,10 @@ const MainPage = () => {
   const [messages, setMessages] = useState<Chat[]>([]);
   const [isNewMessage, setIsNewMessage] = useState(false);
   const messageEndRef = useRef<HTMLDivElement>(null);
-  const scrollPositionRef = useRef<number>(0);
-  const messageContainerRef = useRef<HTMLDivElement | null>(null);
   const queryClient = useQueryClient();
   const { sideBarStatus, toggleSidebar } = useSidebarStore();
 
-  const chatRoomId = 1;
+  const chatRoomId = 1; //msw용 chatRoomId(0: 빈 채팅방, 1: 내용 있는 채팅방)
 
   const {
     data: chatting,
@@ -39,23 +37,9 @@ const MainPage = () => {
 
   useEffect(() => {
     if (chatting) {
-      // 현재 스크롤 위치와 전체 높이 저장
-      const container = messageContainerRef.current;
-      if (container) {
-        const prevScrollHeight = container.scrollHeight;
-        const prevScrollTop = container.scrollTop;
-  
-        const flattenedMessages = chatting.pages.flat();
-        setIsNewMessage(false);
-        setMessages(flattenedMessages);
-  
-        // 다음 렌더링 사이클에서 스크롤 위치 조정
-        requestAnimationFrame(() => {
-          const newScrollHeight = container.scrollHeight;
-          const heightDiff = newScrollHeight - prevScrollHeight;
-          container.scrollTop = prevScrollTop + heightDiff;
-        });
-      }
+      const flattenedMessages = chatting.pages.flat();
+      setIsNewMessage(false);
+      setMessages(flattenedMessages);
     }
   }, [chatting]);
 
@@ -214,7 +198,6 @@ const MainPage = () => {
             isFetchingNextChat={isFetchingNextChat}
             lastElementRef={messageLastElementRef}
             isThrottled={isThrottled}
-            containerRef={messageContainerRef}
           />
           <div className={styles.bottomContainer}>
             <GuideBar guideBar={CHAT_GUIDE} setInputValue={setInputValue} />

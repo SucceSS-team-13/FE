@@ -6,7 +6,7 @@ export const useInfiniteScroll = <T, TQueryKey extends readonly unknown[]>({
   queryKey,
   queryFn,
   getNextPageParam,
-  throttleMs = 1000,
+  throttleMs = 3000,
 }: UseInfiniteScrollProps<T, TQueryKey> & { throttleMs?: number }) => {
   const [isThrottled, setIsThrottled] = useState(false);
 
