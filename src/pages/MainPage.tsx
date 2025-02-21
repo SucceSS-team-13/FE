@@ -15,6 +15,7 @@ import Sidebar from "../components/main/Sidebar";
 import { useSidebarStore } from "../store/SideBarStatusStore";
 import { useInfiniteScroll } from "../hook/useInfiniteScroll";
 import MessageContainer from "../components/main/MessageContainer";
+import ActionIcon from "../components/main/ActionIcon";
 const MainPage = () => {
   const [inputValue, setInputValue] = useState("");
   const [messages, setMessages] = useState<Chat[]>([]);
@@ -177,16 +178,16 @@ const MainPage = () => {
         )}
         {!sideBarStatus && (
           <div className={styles.menuBarItem}>
-            <span>
-              <button onClick={toggleSidebar}>
-                <img src="/image/showSidepanel.png" />
-              </button>
-            </span>
-            <span>
-              <button>
-                <img src="/image/newChat.png" className={styles.newChat} />
-              </button>
-            </span>
+            <ActionIcon
+              icon="/image/showSidepanel.png"
+              onClick={toggleSidebar}
+              size="medium"
+            />
+            <ActionIcon
+              icon="/image/newChat.png"
+              onClick={() => {}}
+              size="small"
+            />
           </div>
         )}
       </div>
