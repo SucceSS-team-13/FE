@@ -1,0 +1,35 @@
+@import "../GlobalStyle.module.less";
+
+.container {
+  width: 35px;
+  height: 35px;
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 35px;
+    height: 35px;
+    button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+
+      border: none;
+      background-color: transparent;
+      img {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
+      }
+      &:hover {
+        cursor: pointer;
+        border-radius: 0.5rem;
+        background-color: darken(@mainGray, 10%);
+      }
+    }
+  }
+}
