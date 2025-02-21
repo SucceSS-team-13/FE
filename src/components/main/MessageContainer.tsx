@@ -8,22 +8,24 @@ const MessageContainer = ({
   isPending,
   messageEndRef,
   hasNextPage,
-  isLoading,
   lastElementRef,
+  isFetchingNextChat,
+  isThrottled,
 }: {
   messages: Chat[];
   isPending: boolean;
   messageEndRef: RefObject<HTMLDivElement | null>;
   hasNextPage: boolean | undefined;
-  isLoading: boolean;
   lastElementRef: (node: HTMLElement | null) => void;
+  isFetchingNextChat: boolean;
+  isThrottled: boolean;
 }) => {
   const reversedMessages = [...messages].reverse();
 
   return (
     <div className={styles.messageContainer}>
       <div className={styles.messagesWrapper}>
-        {hasNextPage && !isLoading && (
+        {hasNextPage && !isFetchingNextChat && !isThrottled && (
           <div ref={lastElementRef} className={styles.loadingTrigger} />
         )}
         {reversedMessages.map((message, index) => {

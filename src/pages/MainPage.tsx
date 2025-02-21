@@ -25,6 +25,8 @@ const MainPage = () => {
   const {
     data: chatting,
     lastElementRef: messageLastElementRef,
+    isFetchingNextPage: isFetchingNextChat,
+    isThrottled,
   } = useInfiniteScroll<Chat[], [string, number]>({
     queryKey: ["chatting", chatRoomId],
     queryFn: getChatting,
@@ -192,8 +194,9 @@ const MainPage = () => {
             isPending={postChat.isPending}
             messageEndRef={messageEndRef}
             hasNextPage={!!chatting?.pages[chatting.pages.length - 1]?.length}
-            isLoading={!chatting}
+            isFetchingNextChat={isFetchingNextChat}
             lastElementRef={messageLastElementRef}
+            isThrottled={isThrottled}
           />
           <div className={styles.bottomContainer}>
             <GuideBar guideBar={CHAT_GUIDE} setInputValue={setInputValue} />
