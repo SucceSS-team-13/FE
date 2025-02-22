@@ -5,6 +5,7 @@ import { useInfiniteScroll } from "../../hook/useInfiniteScroll";
 import { getSearchChatRoomList } from "../../service/getChatting";
 import { groupChatsByDate } from "../../utils/dateUtils";
 import Loading from "../../components/Loading";
+import { motion } from "framer-motion";
 
 const SearchModal = ({
   setSearchModal,
@@ -66,7 +67,14 @@ const SearchModal = ({
   const groupedChats = groupChatsByDate(searchChatRoomList);
   return (
     <div className={styles.container}>
-      <div ref={modalRef} className={styles.searchModal}>
+      <motion.div
+        initial={{ y: 100, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: 100, opacity: 0 }}
+        transition={{ duration: 0.3 }}
+        ref={modalRef}
+        className={styles.searchModal}
+      >
         <div className={styles.searchModalHeader}>
           <input
             type="text"
@@ -130,7 +138,7 @@ const SearchModal = ({
             </ul>
           )}
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };
