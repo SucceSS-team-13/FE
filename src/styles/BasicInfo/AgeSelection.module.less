@@ -1,3 +1,5 @@
+@import "../GlobalStyle.module.less";
+
 .container {
   width: 100%;
   padding-left: 1rem;
@@ -5,7 +7,7 @@
   margin-left: auto;
   margin-right: auto;
   box-sizing: border-box;
-  
+
   @media (min-width: 768px) {
     padding-left: 2rem;
     padding-right: 2rem;
@@ -30,7 +32,7 @@
 .subtitle {
   margin-top: 0.5rem;
   font-size: 0.875rem;
-  color: #4B5563;
+  color: #4b5563;
   margin-bottom: 2rem;
 }
 
@@ -110,14 +112,14 @@
 }
 
 .selectedButton {
-  background-color: #3B82F6;
-  color: white;
-  border: 1px solid #3B82F6;
+  background-color: @subBlue;
+  color: @mainWhite;
+  border: none;
   transform: translateY(-2px);
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 
   &:hover {
-    background-color: #2563EB;
+    cursor: pointer;
   }
 
   .icon {
@@ -128,16 +130,17 @@
 .unselectedButton {
   background-color: white;
   color: #374151;
-  border: 1px solid #D1D5DB;
+  border: 1px solid #d1d5db;
 
   &:hover {
-    background-color: #F9FAFB;
+    background-color: #f9fafb;
     transform: translateY(-1px);
     box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.05);
+    cursor: pointer;
   }
 
   .icon {
-    color: #6B7280;
+    color: #6b7280;
   }
 }
 
@@ -154,23 +157,24 @@
   border-radius: 0.5rem;
   font-size: 1.125rem;
   font-weight: 500;
-  color: white;
+  color: @mainWhite;
   border: none;
   transition: all 0.2s;
 }
 
 .activeSubmit {
-  background: linear-gradient(135deg, #6366F1, #2563EB);
+  background-color: @subBlue;
   box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.2);
 
   &:hover {
-    background: linear-gradient(135deg, #4F46E5, #1D4ED8);
+    background: linear-gradient(135deg, @subBlue, @mainBlue);
     box-shadow: 0 6px 8px -1px rgba(79, 70, 229, 0.25);
     transform: translateY(-1px);
+    cursor: pointer;
   }
 }
 
 .inactiveSubmit {
-  background-color: #D1D5DB;
+  background-color: #d1d5db;
   cursor: not-allowed;
 }

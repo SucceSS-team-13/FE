@@ -1,3 +1,5 @@
+@import "../GlobalStyle.module.less";
+
 .container {
   width: 100%;
   margin: 0 auto;
@@ -5,12 +7,12 @@
   box-sizing: border-box;
   position: relative;
   animation: slideIn 0.5s ease-in-out;
-  
+
   @media (min-width: 640px) {
     width: 90%;
     max-width: 480px;
   }
-  
+
   @media (min-width: 1024px) {
     width: 90%;
     max-width: 640px;
@@ -43,7 +45,7 @@
   margin-top: 8px;
   margin-bottom: 32px;
   font-size: 14px;
-  color: #4B5563;
+  color: #4b5563;
 }
 
 .form {
@@ -62,14 +64,14 @@
 .input {
   flex: 1;
   padding: 12px 16px;
-  border: 1px solid #D1D5DB;
+  border: 1px solid #d1d5db;
   border-radius: 8px;
   font-size: 16px;
   outline: none;
   transition: all 0.2s;
-  
+
   &:focus {
-    border-color: #3B82F6;
+    border-color: #3b82f6;
     box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
   }
 
@@ -86,14 +88,15 @@
   border-radius: 8px;
   border: none;
   color: white;
-  background-color: #3B82F6;
+  background-color: @subBlue;
   transition: all 0.2s;
   display: flex;
   align-items: center;
   justify-content: center;
 
   &:hover {
-    background-color: #2563EB;
+    background-color: @mainBlue;
+    cursor: pointer;
   }
 
   @media (min-width: 1024px) {
@@ -108,7 +111,7 @@
 
 .resultsTitle {
   font-size: 14px;
-  color: #4B5563;
+  color: #4b5563;
   margin-bottom: 8px;
 
   @media (min-width: 1024px) {
@@ -118,27 +121,27 @@
 
 .resultsList {
   background-color: white;
-  border: 1px solid #D1D5DB;
+  border: 1px solid #d1d5db;
   border-radius: 8px;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   max-height: 300px;
   overflow-y: auto;
-  
+
   &::-webkit-scrollbar {
     width: 6px;
   }
-  
+
   &::-webkit-scrollbar-track {
-    background: #F3F4F6;
+    background: #f3f4f6;
     border-radius: 3px;
   }
-  
+
   &::-webkit-scrollbar-thumb {
-    background: #D1D5DB;
+    background: #d1d5db;
     border-radius: 3px;
-    
+
     &:hover {
-      background: #9CA3AF;
+      background: #9ca3af;
     }
   }
 
@@ -154,7 +157,7 @@
   border: none;
   color: #374151;
   transition: all 0.2s;
-  border-bottom: 1px solid #F9FAFB;
+  border-bottom: 1px solid #f9fafb;
   font-size: 14px;
 
   &:last-child {
@@ -162,7 +165,8 @@
   }
 
   &:hover {
-    background-color: #E5E7EB;
+    background-color: #e5e7eb;
+    cursor: pointer;
   }
 
   @media (min-width: 1024px) {
@@ -172,8 +176,8 @@
 }
 
 .selectedAddress {
-  background-color: #EFF6FF;
-  color: #1D4ED8;
+  background-color: #eff6ff;
+  color: #1d4ed8;
   font-weight: 500;
 }
 
@@ -189,14 +193,16 @@
   font-size: 18px;
   font-weight: 500;
   color: white;
-  background: linear-gradient(135deg, #6366F1, #2563EB);
+
   transition: all 0.2s;
   box-shadow: 0 4px 6px -1px rgba(99, 102, 241, 0.2);
+  background-color: @subBlue;
 
   &:hover {
-    background: linear-gradient(135deg, #4F46E5, #1D4ED8);
+    background: linear-gradient(135deg, @subBlue, @mainBlue);
     box-shadow: 0 6px 8px -1px rgba(79, 70, 229, 0.25);
     transform: translateY(-1px);
+    cursor: pointer;
   }
 
   @media (min-width: 1024px) {
