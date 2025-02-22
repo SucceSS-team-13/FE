@@ -52,11 +52,7 @@ export const handlers = [
       result: {
         id: Date.now() + 2,
         text: "많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요!",
-        location: [
-          "서울특별시 구로구 연동로 320",
-          "서울특별시 용산구 청파로47길 100",
-          "서울특별시 성북구 보문로34다길 2",
-        ]
+        location: "서울특별시 구로구 연동로 320",
       },
     });
   }),
@@ -120,6 +116,8 @@ export const handlers = [
               text: `많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요! ${page}-1`,
               location: [
                 "서울특별시 구로구 연동로 320",
+                "서울특별시 용산구 청파로47길 100",
+                "서울특별시 성북구 보문로34다길 2",
               ],
             },
             {
@@ -131,9 +129,7 @@ export const handlers = [
               id: Date.now() + 3,
               sender: "lumi",
               text: `많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요! ${page}-2`,
-              location: [
-                "서울특별시 구로구 연동로 320",
-              ],
+              location: ["서울특별시 구로구 연동로 320"],
             },
             {
               id: Date.now() + 4,
@@ -144,9 +140,7 @@ export const handlers = [
               id: Date.now() + 5,
               sender: "lumi",
               text: `많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요! ${page}-3`,
-              location: [
-                "서울특별시 구로구 연동로 320",
-              ],
+              location: ["서울특별시 구로구 연동로 320"],
             },
             {
               id: Date.now() + 6,
@@ -157,9 +151,7 @@ export const handlers = [
               id: Date.now() + 7,
               sender: "lumi",
               text: `많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요! ${page}-4`,
-              location: [
-                "서울특별시 구로구 연동로 320",
-              ],
+              location: ["서울특별시 구로구 연동로 320"],
             },
             {
               id: Date.now() + 8,
@@ -170,9 +162,7 @@ export const handlers = [
               id: Date.now() + 9,
               sender: "lumi",
               text: `많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요! ${page}-5`,
-              location: [
-                "서울특별시 구로구 연동로 320",
-              ],
+              location: ["서울특별시 구로구 연동로 320"],
             },
             {
               id: Date.now() + 10,
