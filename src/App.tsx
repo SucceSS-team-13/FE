@@ -9,6 +9,7 @@ function App() {
     <Routes>
       <Route path="/oauth" element={<AuthPage />} />
       <Route path="/survey" element={<BasicInfoPage />} />
+      <Route path="/main/:chatRoomId" element={<MainPage />} />
       <Route path="/main" element={<MainPage />} />
       <Route path="/" element={<LandingPage />} />
     </Routes>
