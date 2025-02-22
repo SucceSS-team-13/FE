@@ -1,0 +1,150 @@
+@import "../GlobalStyle.module.less";
+
+.container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  .searchModal {
+    width: 45%;
+    height: 55%;
+    box-shadow: 0 14px 62px 0 rgba(0, 0, 0, 0.25);
+    border-radius: 1rem;
+    background-color: @mainWhite;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    .searchModalHeader {
+      padding: 1.5rem;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 15%;
+      input {
+        width: 100%;
+        height: 100%;
+        border: none;
+        outline: none;
+        background-color: transparent;
+      }
+      border-bottom: 1px solid #ccc;
+    }
+    .newChatContainer {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      padding: 0.5rem;
+      box-sizing: border-box;
+
+      .newChatButton {
+        width: 100%;
+        height: 100%;
+        padding: 0.5rem;
+        box-sizing: border-box;
+        border-radius: 0.5rem;
+        button {
+          width: 100%;
+          height: 100%;
+          border: none;
+          outline: none;
+          display: flex;
+          align-items: center;
+          justify-content: start;
+          background-color: transparent;
+          img {
+            width: 20px;
+            height: 20px;
+          }
+          span {
+            color: @gray;
+            padding-left: 0.7rem;
+          }
+          &:hover {
+            cursor: pointer;
+          }
+        }
+        &:hover {
+          background-color: darken(@mainWhite, 12%);
+          cursor: pointer;
+        }
+      }
+    }
+    .chatListContainer {
+      width: 100%;
+      height: calc(100% - 28%);
+      overflow-y: auto;
+      border-bottom-right-radius: 1rem;
+      border-bottom-left-radius: 1rem;
+      ul {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        list-style: none;
+        .chatRoomListGroup {
+          width: 100%;
+          height: auto;
+          margin-bottom: 2rem;
+          .endRef {
+            // 인피니트 스코롤 끝 div 사이드바와 구조가 동일하지만 인피니트 스크롤이 동작하지 않아 적용
+            width: 100%;
+            height: 1px;
+          }
+        }
+        .chatRoomDate {
+          width: 100%;
+          padding: 0.5rem 1rem;
+          font-size: 0.9rem;
+          color: darken(@mainWhite, 80%);
+          font-weight: bold;
+        }
+        .chatRoom {
+          width: 100%;
+          height: 3rem;
+          display: flex;
+          align-items: center;
+          background-color: @mainWhite;
+          padding: 0.5rem 1rem;
+          box-sizing: border-box;
+          img {
+            width: 20px;
+            height: 20px;
+          }
+          .chatRoomLink {
+            width: 100%;
+            height: 100%;
+            text-decoration: none;
+            color: darken(@mainWhite, 70%);
+            display: flex;
+            align-items: center;
+            padding-left: 0.5rem;
+          }
+          &:hover {
+            background-color: darken(@mainGray, 3%);
+            cursor: pointer;
+          }
+        }
+        .loading {
+          width: 100%;
+          height: 3rem;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+    }
+  }
+}
+
+.searchTextTrue {
+  height: 0%;
+}
+.searchTextFalse {
+  height: 13%;
+}
