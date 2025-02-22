@@ -73,13 +73,34 @@ export const handlers = [
       totalPages: Math.ceil(chatRooms.length / PAGE_SIZE),
     });
   }),
+  http.get(`/api/searchChatRoomList`, async ({ request }) => {
+    await delay(3000);
+    const url = new URL(request.url);
+    const searchText = url.searchParams.get("search")?.toLowerCase() || "";
+
+    const page = parseInt(url.searchParams.get("page") || "1", 10);
+    const filteredChatRooms = chatRooms.filter(
+      (room) => room.title.toLowerCase().includes(searchText) // 검색어가 없을 경우 모든 채팅방 리스트 반환
+    );
+
+    const start = (page - 1) * PAGE_SIZE;
+    const end = start + PAGE_SIZE;
+    const paginatedSearchChatRooms = filteredChatRooms.slice(start, end);
+    const nextPage = end < filteredChatRooms.length ? page + 1 : undefined;
+
+    return HttpResponse.json({
+      result: paginatedSearchChatRooms,
+      nextPage,
+      totalItems: filteredChatRooms.length,
+      totalPages: Math.ceil(filteredChatRooms.length / PAGE_SIZE),
+    });
+  }),
   http.get(`/api/chat/room/:chatRoomId`, async ({ params, request }) => {
-    
     const { chatRoomId } = params;
     const url = new URL(request.url);
     const page = parseInt(url.searchParams.get("page") || "1", 10);
 
-    if(chatRoomId === "0") {
+    if (chatRoomId === "0") {
       return HttpResponse.json({
         result: {
           content: [],
@@ -91,62 +112,62 @@ export const handlers = [
           content: [
             {
               id: Date.now() + 1,
-              sender: 'lumi',
+              sender: "lumi",
               text: `많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요! ${page}-1`,
               location: "서울특별시 구로구 연동로 320",
             },
             {
               id: Date.now() + 2,
-              sender: 'user',
+              sender: "user",
               text: "많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요!",
             },
             {
               id: Date.now() + 3,
-              sender: 'lumi',
+              sender: "lumi",
               text: `많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요! ${page}-2`,
               location: "서울특별시 구로구 연동로 320",
             },
             {
               id: Date.now() + 4,
-              sender: 'user',
+              sender: "user",
               text: "많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요!",
             },
             {
               id: Date.now() + 5,
-              sender: 'lumi',
+              sender: "lumi",
               text: `많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요! ${page}-3`,
               location: "서울특별시 구로구 연동로 320",
             },
             {
               id: Date.now() + 6,
-              sender: 'user',
+              sender: "user",
               text: "많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요!",
             },
             {
               id: Date.now() + 7,
-              sender: 'lumi',
+              sender: "lumi",
               text: `많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요! ${page}-4`,
               location: "서울특별시 구로구 연동로 320",
             },
             {
               id: Date.now() + 8,
-              sender: 'user',
+              sender: "user",
               text: "많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요!",
             },
             {
               id: Date.now() + 9,
-              sender: 'lumi',
+              sender: "lumi",
               text: `많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요! ${page}-5`,
               location: "서울특별시 구로구 연동로 320",
             },
             {
               id: Date.now() + 10,
-              sender: 'user',
+              sender: "user",
               text: "많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요!",
             },
-          ]
-        }
-      })
+          ],
+        },
+      });
     }
-  })
+  }),
 ];
