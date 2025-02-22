@@ -15,7 +15,7 @@ const AIMessage = ({
 }: { 
   message: string;
   isLoading: boolean;
-  location?: string;
+  location?: string[];
 }) => {
   const mapRef = useRef<HTMLDivElement>(null);
 

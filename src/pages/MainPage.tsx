@@ -47,7 +47,8 @@ const MainPage = () => {
     mutationFn: async () => {
       const messageText = inputValue;
       setInputValue("");
-      return CustomAxios.post(`/api/chatting/${1}`, {
+      return CustomAxios.post(`/user/chat`, {
+        chatRoomId: 1,
         text: messageText,
       });
     },
