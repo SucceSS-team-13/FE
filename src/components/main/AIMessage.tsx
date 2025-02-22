@@ -1,6 +1,6 @@
+import React, { useEffect, useRef, useState } from "react";
 import styles from "../../styles/main/AIMessage.module.less";
 import LoadingSpinner from "../LoadingSpinner";
-import { useEffect, useRef } from "react";
 
 declare global {
   interface Window {
@@ -18,23 +18,48 @@ const AIMessage = ({
   location?: string[];
 }) => {
   const mapRef = useRef<HTMLDivElement>(null);
+  const [map, setMap] = useState<any>(null);
+  const [bounds, setBounds] = useState<any>(null);
 
   useEffect(() => {
-    if (!isLoading && location && mapRef.current) {
+    if (!isLoading && location && location.length > 0 && mapRef.current) {
       const geocoder = new window.kakao.maps.services.Geocoder();
+      const bounds = new window.kakao.maps.LatLngBounds();
       
-      geocoder.addressSearch(location, (result: any, status: any) => {
+      // Initialize map with first location
+      geocoder.addressSearch(location[0], (result: any, status: any) => {
         if (status === window.kakao.maps.services.Status.OK) {
-          const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
+          const firstCoords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
           
-          const map = new window.kakao.maps.Map(mapRef.current, {
-            center: coords,
+          const newMap = new window.kakao.maps.Map(mapRef.current, {
+            center: firstCoords,
             level: 3
           });
           
-          new window.kakao.maps.Marker({
-            position: coords,
-            map: map
+          setMap(newMap);
+          setBounds(bounds);
+          
+          // Process all locations
+          location.forEach((address) => {
+            geocoder.addressSearch(address, (result: any, status: any) => {
+              if (status === window.kakao.maps.services.Status.OK) {
+                const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
+                
+                // Create marker
+                new window.kakao.maps.Marker({
+                  position: coords,
+                  map: newMap
+                });
+                
+                // Add location to bounds
+                bounds.extend(coords);
+                
+                // After processing the last location, fit map to bounds
+                if (address === location[location.length - 1]) {
+                  newMap.setBounds(bounds);
+                }
+              }
+            });
           });
         }
       });
