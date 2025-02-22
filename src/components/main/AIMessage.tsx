@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import styles from "../../styles/main/AIMessage.module.less";
 import LoadingSpinner from "../LoadingSpinner";
+import ContentInfo from "./ContentInfo";
 
 declare global {
   interface Window {
@@ -20,11 +21,18 @@ const AIMessage = ({
   const mapRef = useRef<HTMLDivElement>(null);
   const [map, setMap] = useState<any>(null);
   const [bounds, setBounds] = useState<any>(null);
+  const [infowindow, setInfowindow] = useState<any>(null);
 
   useEffect(() => {
     if (!isLoading && location && location.length > 0 && mapRef.current) {
       const geocoder = new window.kakao.maps.services.Geocoder();
       const bounds = new window.kakao.maps.LatLngBounds();
+      
+      const infowindow = new window.kakao.maps.InfoWindow({
+        removable: false,
+        zIndex: 1
+      });
+      setInfowindow(infowindow);
       
       // Initialize map with first location
       geocoder.addressSearch(location[0], (result: any, status: any) => {
@@ -46,9 +54,28 @@ const AIMessage = ({
                 const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
                 
                 // Create marker
-                new window.kakao.maps.Marker({
+                const marker = new window.kakao.maps.Marker({
                   position: coords,
                   map: newMap
+                });
+
+                // Get place name from the result
+                const placeName = result[0].road_address 
+                  ? result[0].road_address.building_name || result[0].address_name
+                  : result[0].address_name;
+
+                const content = ContentInfo({
+                  placeName: placeName,
+                  address: result[0].address_name
+                });
+
+                window.kakao.maps.event.addListener(marker, 'mouseover', () => {
+                  infowindow.setContent(content);
+                  infowindow.open(newMap, marker);
+                });
+
+                window.kakao.maps.event.addListener(marker, 'mouseout', () => {
+                  infowindow.close();
                 });
                 
                 // Add location to bounds
@@ -63,6 +90,13 @@ const AIMessage = ({
           });
         }
       });
+
+      // Cleanup function
+      return () => {
+        if (infowindow) {
+          infowindow.close();
+        }
+      };
     }
   }, [location, isLoading]);
 
