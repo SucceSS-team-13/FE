@@ -3,7 +3,7 @@ interface Chat {
   id: number;
   sender?: "user" | "lumi";
   text: string;
-  location?: string;
+  location?: string[];
 }
 interface GuideBar {
   // 가이드 바 데이터 타입
