@@ -16,6 +16,7 @@ import { useSidebarStore } from "../store/SideBarStatusStore";
 import { useInfiniteScroll } from "../hook/useInfiniteScroll";
 import MessageContainer from "../components/main/MessageContainer";
 import ActionIcon from "../components/main/ActionIcon";
+import SearchModal from "../components/main/SearchModal";
 const MainPage = () => {
   const [inputValue, setInputValue] = useState("");
   const [messages, setMessages] = useState<Chat[]>([]);
@@ -23,6 +24,7 @@ const MainPage = () => {
   const messageEndRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
   const { sideBarStatus, toggleSidebar } = useSidebarStore();
+  const [searchModal, setSearchModal] = useState(false);
 
   const chatRoomId = 1; //msw용 chatRoomId(0: 빈 채팅방, 1: 내용 있는 채팅방)
 
@@ -167,9 +169,16 @@ const MainPage = () => {
 
   return (
     <div className={styles.container}>
+      {searchModal && (
+        <SearchModal
+          setSearchModal={setSearchModal}
+          searchModal={searchModal}
+        />
+      )}
       <div className={`${styles.sideBar} ${!sideBarStatus ? "" : styles.open}`}>
         {sideBarStatus && (
           <Sidebar
+            setSearchModal={setSearchModal}
             toggleSidebar={toggleSidebar}
             chatRoomList={chatRooms}
             lastElementRef={chatRoomLastElementRef}
