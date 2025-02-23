@@ -4,43 +4,49 @@ import styles from "../../styles/BasicInfo/AgeSelection.module.less";
 import useThemeStore from "../../store/themeStore";
 type Props = {
   onNext: () => void;
-  selectedAge: number;
-  setSelectedAge: (age: number) => void;
+  selectedAge: string;
+  setSelectedAge: (age: string) => void;
 };
 
 type AgeOption = {
-  value: number;
+  value: string;
   icon: React.ReactNode;
   label: string;
+  ageGroup: string;
 };
 
 const AgeSelection = ({ onNext, selectedAge, setSelectedAge }: Props) => {
   const isDarkMode = useThemeStore((state) => state.isDarkMode);
   const ageOptions: AgeOption[] = [
     {
-      value: 10,
+      value: 'TEENS',
       icon: <School size={24} />,
       label: "학생",
+      ageGroup: "10대",
     },
     {
-      value: 20,
+      value: 'TWENTIES',
       icon: <GraduationCap size={24} />,
       label: "청년",
+      ageGroup: "20대",
     },
     {
-      value: 30,
+      value: 'THIRTIES',
       icon: <Briefcase size={24} />,
       label: "직장인",
+      ageGroup: "30대",
     },
     {
-      value: 40,
+      value: 'FORTIES',
       icon: <Users size={24} />,
       label: "중년",
+      ageGroup: "40대",
     },
     {
-      value: 50,
+      value: 'FIFTIES_AND_ABOVE',
       icon: <Heart size={24} />,
       label: "장년",
+      ageGroup: "50대+",
     },
   ];
 
@@ -82,9 +88,7 @@ const AgeSelection = ({ onNext, selectedAge, setSelectedAge }: Props) => {
               <div className={styles.buttonContent}>
                 <span className={styles.icon}>{option.icon}</span>
                 <span className={styles.ageValue}>
-                  {option.value === 50
-                    ? `${option.value}대+`
-                    : `${option.value}대`}
+                  {option.ageGroup}
                 </span>
                 <span className={styles.ageLabel}>{option.label}</span>
               </div>

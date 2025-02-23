@@ -11,12 +11,13 @@ import useThemeStore from "../store/themeStore";
 
 const BasicInfoPage = () => {
   const [currentStep, setCurrentStep] = useState<number>(1);
-  const [selectedAge, setSelectedAge] = useState<number>(0); //연령대
+  const [selectedAge, setSelectedAge] = useState<string>(""); //연령대
   const [selectedAddress, setSelectedAddress] = useState<string>(""); //거주지
   const [energyType, setEnergyType] = useState<string>(""); //에너지 성향(E, I)
   const [decisionType, setDecisionType] = useState<string>(""); //판단 결정(T, F)
-  const [selectedHobbies, setSelectedHobbies] = useState<string[]>([]); //취미 목록
+  const [selectedHobbies, setSelectedHobbies] = useState<Hobby[]>([]); //취미 목록
   const [result, setResult] = useState<string>("");
+  const [nickname, setNickname] = useState<string>("");
   const isDarkMode = useThemeStore((state) => state.isDarkMode);
 
   return (
@@ -73,12 +74,17 @@ const BasicInfoPage = () => {
           energyType={energyType}
           decisionType={decisionType}
           selectedHobbies={selectedHobbies}
+          setNickname={setNickname}
           setResult={setResult}
         />
       )}
 
       {currentStep === 6 && (
-        <Result onChatStart={() => setCurrentStep(1)} result={result} />
+        <Result 
+          onChatStart={() => setCurrentStep(1)} 
+          result={result}
+          nickname={nickname}
+        />
       )}
     </div>
   );

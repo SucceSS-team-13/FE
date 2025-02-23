@@ -49,9 +49,9 @@ const PersonalitySelection = ({
               <div className={styles.buttonGrid}>
                 <button
                   type="button"
-                  onClick={() => setEnergyType("외향형")}
+                  onClick={() => setEnergyType("EXTROVERT")}
                   className={`${styles.typeButton} ${
-                    energyType === "외향형" ? styles.selected : ""
+                    energyType === "EXTROVERT" ? styles.selected : ""
                   }`}
                 >
                   <div className={styles.leftContent}>
@@ -65,9 +65,9 @@ const PersonalitySelection = ({
 
                 <button
                   type="button"
-                  onClick={() => setEnergyType("내향형")}
+                  onClick={() => setEnergyType("INTROVERT")}
                   className={`${styles.typeButton} ${
-                    energyType === "내향형" ? styles.selected : ""
+                    energyType === "INTROVERT" ? styles.selected : ""
                   }`}
                 >
                   <div className={styles.leftContent}>
@@ -87,9 +87,9 @@ const PersonalitySelection = ({
               <div className={styles.buttonGrid}>
                 <button
                   type="button"
-                  onClick={() => setDecisionType("감정형")}
+                  onClick={() => setDecisionType("EMOTIONAL")}
                   className={`${styles.typeButton} ${
-                    decisionType === "감정형" ? styles.selected : ""
+                    decisionType === "EMOTIONAL" ? styles.selected : ""
                   }`}
                 >
                   <div className={styles.leftContent}>
@@ -103,14 +103,14 @@ const PersonalitySelection = ({
 
                 <button
                   type="button"
-                  onClick={() => setDecisionType("사고형")}
+                  onClick={() => setDecisionType("LOGICAL")}
                   className={`${styles.typeButton} ${
-                    decisionType === "사고형" ? styles.selected : ""
+                    decisionType === "LOGICAL" ? styles.selected : ""
                   }`}
                 >
                   <div className={styles.leftContent}>
                     <Brain className={styles.icon} />
-                    <span className={styles.buttonTitle}>사고형</span>
+                    <span className={styles.buttonTitle}>이성형</span>
                   </div>
                   <span className={styles.rightContent}>
                     논리와 데이터로 무장한 이성적인 해결사!
