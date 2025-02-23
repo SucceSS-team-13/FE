@@ -11,7 +11,7 @@ import useThemeStore from "../store/themeStore";
 
 const BasicInfoPage = () => {
   const [currentStep, setCurrentStep] = useState<number>(1);
-  const [selectedAge, setSelectedAge] = useState<number>(0); //연령대
+  const [selectedAge, setSelectedAge] = useState<string>(""); //연령대
   const [selectedAddress, setSelectedAddress] = useState<string>(""); //거주지
   const [energyType, setEnergyType] = useState<string>(""); //에너지 성향(E, I)
   const [decisionType, setDecisionType] = useState<string>(""); //판단 결정(T, F)

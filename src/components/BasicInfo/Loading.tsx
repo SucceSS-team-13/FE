@@ -7,7 +7,7 @@ import CustomAxios from "../../api/CustomAxios";
 
 type Props = {
   onNext: () => void;
-  selectedAge: number;
+  selectedAge: string;
   selectedAddress: string;
   energyType: string;
   decisionType: string;
