@@ -2,10 +2,16 @@ import styles from "../../styles/landing/Product.module.less";
 import { motion } from "framer-motion";
 import ChatPreview from "./ChatPreview";
 import { CHAT_RESPONSES } from "../../data/chatResponses";
+import useThemeStore from "../../store/themeStore";
 
 const Product = ({ productInView }: { productInView: boolean }) => {
+  const isDarkMode = useThemeStore((state) => state.isDarkMode);
   return (
-    <div className={styles.container}>
+    <div
+      className={`${styles.container} ${
+        isDarkMode ? styles.dark : styles.light
+      }`}
+    >
       <div className={styles.inforContainer}>
         <div className={styles.textContainer}>
           <div className={styles.title}>

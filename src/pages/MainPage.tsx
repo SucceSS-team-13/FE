@@ -17,6 +17,7 @@ import { useInfiniteScroll } from "../hook/useInfiniteScroll";
 import MessageContainer from "../components/main/MessageContainer";
 import ActionIcon from "../components/main/ActionIcon";
 import SearchModal from "../components/main/SearchModal";
+import useThemeStore from "../store/themeStore";
 const MainPage = () => {
   const [inputValue, setInputValue] = useState("");
   const [messages, setMessages] = useState<Chat[]>([]);
@@ -25,7 +26,7 @@ const MainPage = () => {
   const queryClient = useQueryClient();
   const { sideBarStatus, toggleSidebar } = useSidebarStore();
   const [searchModal, setSearchModal] = useState(false);
-
+  const isDarkMode = useThemeStore((state) => state.isDarkMode);
   const chatRoomId = 1; //msw용 chatRoomId(0: 빈 채팅방, 1: 내용 있는 채팅방)
 
   const {
@@ -169,14 +170,22 @@ const MainPage = () => {
   };
 
   return (
-    <div className={styles.container}>
+    <div
+      className={`${styles.container} ${
+        isDarkMode ? styles.dark : styles.light
+      }`}
+    >
       {searchModal && (
         <SearchModal
           setSearchModal={setSearchModal}
           searchModal={searchModal}
         />
       )}
-      <div className={`${styles.sideBar} ${!sideBarStatus ? "" : styles.open}`}>
+      <div
+        className={`${styles.sideBar} ${!sideBarStatus ? "" : styles.open} ${
+          isDarkMode ? styles.dark : styles.light
+        }`}
+      >
         {sideBarStatus && (
           <Sidebar
             setSearchModal={setSearchModal}
@@ -201,8 +210,16 @@ const MainPage = () => {
           </div>
         )}
       </div>
-      <div className={styles.mainContainer}>
-        <div className={styles.header}>
+      <div
+        className={`${styles.mainContainer} ${
+          isDarkMode ? styles.dark : styles.light
+        }`}
+      >
+        <div
+          className={`${styles.header} ${
+            isDarkMode ? styles.darkHeader : styles.lightHeader
+          }`}
+        >
           <Header />
         </div>
         <div

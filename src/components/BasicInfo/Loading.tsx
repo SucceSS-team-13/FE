@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Logo from "../Logo";
 import styles from "../../styles/BasicInfo/Loading.module.less";
 import axios from "axios";
+import useThemeStore from "../../store/themeStore";
 
 type Props = {
   onNext: () => void;
@@ -12,28 +13,40 @@ type Props = {
   decisionType: string;
   selectedHobbies: string[];
   setResult: (result: string) => void;
-}
+};
 
-const Loading = ({ onNext, selectedAge, selectedAddress, energyType, decisionType, selectedHobbies, setResult }: Props) => {
+const Loading = ({
+  onNext,
+  selectedAge,
+  selectedAddress,
+  energyType,
+  decisionType,
+  selectedHobbies,
+  setResult,
+}: Props) => {
   const [isExiting, setIsExiting] = useState<boolean>(false);
   const navigate = useNavigate();
-  
+  const isDarkMode = useThemeStore((state) => state.isDarkMode);
+
   useEffect(() => {
     const sendSurveyData = async () => {
       try {
-        const res = await axios.post(`${import.meta.env.VITE_BASE_URL}/api/survey`, {
-          age: selectedAge,
-          address: selectedAddress,
-          energyType,
-          decisionType,
-          hobbies: selectedHobbies
-        });
+        const res = await axios.post(
+          `${import.meta.env.VITE_BASE_URL}/api/survey`,
+          {
+            age: selectedAge,
+            address: selectedAddress,
+            energyType,
+            decisionType,
+            hobbies: selectedHobbies,
+          }
+        );
 
         setResult(res.data.result);
       } catch (error) {
-        alert('데이터를 가져오는 중 문제가 발생했습니다.');
-        navigate('/');
-        console.error('Failed to send survey data:', error);
+        alert("데이터를 가져오는 중 문제가 발생했습니다.");
+        navigate("/");
+        console.error("Failed to send survey data:", error);
       }
     };
 
@@ -49,15 +62,23 @@ const Loading = ({ onNext, selectedAge, selectedAddress, energyType, decisionTyp
   }, [navigate]);
 
   return (
-    <div className={`${styles.container} ${isExiting ? styles.exit : ''}`}>
+    <div
+      className={`${styles.container} ${isExiting ? styles.exit : ""} ${
+        isDarkMode ? styles.dark : styles.light
+      }`}
+    >
       <div className={styles.content}>
         {/* 로고 */}
         <div className={styles.logoContainer}>
           <Logo />
         </div>
-        
+
         {/* 로딩 메시지 */}
-        <div className={styles.messageContainer}>
+        <div
+          className={`${styles.messageContainer} ${
+            isDarkMode ? styles.darkMessage : styles.lightMessage
+          }`}
+        >
           사용자의 성향을 분석 중이에요
           <span className={styles.dots}>
             <span className={styles.dot1}>.</span>

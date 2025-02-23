@@ -6,8 +6,10 @@ import { GROWTH_INFORMATION } from "../../data/growthInformation";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import useThemeStore from "../../store/themeStore";
 
 const Growth = ({ growthInView }: { growthInView: boolean }) => {
+  const isDarkMode = useThemeStore((state) => state.isDarkMode);
   const sliderRef = useRef<Slider>(null); // 슬라이더를 제어하기 위한 ref
 
   const settings = {
@@ -27,7 +29,11 @@ const Growth = ({ growthInView }: { growthInView: boolean }) => {
     sliderRef.current?.slickNext();
   };
   return (
-    <div className={styles.container}>
+    <div
+      className={`${styles.container} ${
+        isDarkMode ? styles.dark : styles.light
+      }`}
+    >
       <div className={styles.inforContainer}>
         <div className={styles.textContainer}>
           <div className={styles.title}>
@@ -65,11 +71,32 @@ const Growth = ({ growthInView }: { growthInView: boolean }) => {
         >
           <Slider {...settings} className={styles.slider} ref={sliderRef}>
             {GROWTH_INFORMATION.map((growth) => (
-              <div key={growth.itemNum} className={styles.slideItem}>
+              <div
+                key={growth.itemNum}
+                className={`${styles.slideItem} ${
+                  isDarkMode ? styles.darkSlideItem : styles.lightSlideItem
+                }`}
+              >
                 <div className={styles.leftContainer}>
                   <div className={styles.titleBox}>
-                    <p className={styles.titleText}>{growth.title}</p>
-                    <p className={styles.inforText}>{growth.explanation}</p>
+                    <p
+                      className={`${styles.titleText} ${
+                        isDarkMode
+                          ? styles.darkTitleText
+                          : styles.lightTitleText
+                      }`}
+                    >
+                      {growth.title}
+                    </p>
+                    <p
+                      className={`${styles.inforText} ${
+                        isDarkMode
+                          ? styles.darkInforText
+                          : styles.lightInforText
+                      }`}
+                    >
+                      {growth.explanation}
+                    </p>
                   </div>
                 </div>
                 <div className={styles.rightContainer}>

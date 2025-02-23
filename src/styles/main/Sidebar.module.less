@@ -3,7 +3,6 @@
 .container {
   width: 100%;
   height: 100vh;
-  background-color: @mainGray;
   .menuBar {
     width: 100%;
     height: 65px;
@@ -31,7 +30,7 @@
     width: 100%;
     height: calc(100% - 65px);
     box-sizing: border-box;
-    background-color: @mainGray;
+
     overflow: auto;
     ul {
       margin: 0;
@@ -54,7 +53,7 @@
       .chatRoom {
         width: 100%;
         height: 3rem;
-        background-color: @mainGray;
+
         display: flex;
         align-items: center;
         padding: 0.5rem 1rem;
@@ -81,4 +80,34 @@
       }
     }
   }
+}
+
+.dark {
+  background-color: @subBlack;
+  color: @mainWhite;
+}
+
+.light {
+  background-color: @mainGray;
+  color: #000;
+}
+
+.darkChatRoomList {
+  background-color: @subBlack;
+  color: @mainWhite;
+}
+
+.lightChatRoomList {
+  background-color: @mainGray;
+  color: #000;
+}
+
+.darkChatRoom {
+  background-color: @subBlack;
+  color: @mainWhite;
+}
+
+.lightChatRoom {
+  background-color: @mainGray;
+  color: #000;
 }

@@ -2,6 +2,7 @@ import { FormEvent, useState } from "react";
 import { Check } from "lucide-react";
 import styles from "../../styles/BasicInfo/HobbySelection.module.less";
 import { HOBBY_CATEGORIES } from "../../data/hobby";
+import useThemeStore from "../../store/themeStore";
 type Props = {
   onNext: () => void;
   selectedHobbies: string[];
@@ -15,6 +16,7 @@ const HobbySelection = ({
   selectedHobbies,
   setSelectedHobbies,
 }: Props) => {
+  const isDarkMode = useThemeStore((state) => state.isDarkMode);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const toggleHobby = (hobby: string) => {
@@ -33,7 +35,13 @@ const HobbySelection = ({
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h2 className={styles.title}>어떤 활동에서 즐거움을 느끼시나요?</h2>
+        <h2
+          className={`${styles.title} ${
+            isDarkMode ? styles.darkTitle : styles.lightTitle
+          }`}
+        >
+          어떤 활동에서 즐거움을 느끼시나요?
+        </h2>
         <p className={styles.subtitle}>
           당신이 관심 있는 활동들을 선택하시면 맞춤 제안을 준비할게요
         </p>
@@ -58,7 +66,13 @@ const HobbySelection = ({
                 }`}
               >
                 <img src={category.imageUrl} alt={category.title} />
-                <span className={styles.categoryTitle}>{category.title}</span>
+                <span
+                  className={`${styles.categoryTitle} ${
+                    isDarkMode ? styles.darkTitle : styles.lightTitle
+                  }`}
+                >
+                  {category.title}
+                </span>
               </button>
             );
           })}

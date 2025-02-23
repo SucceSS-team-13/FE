@@ -6,6 +6,7 @@ import { getSearchChatRoomList } from "../../service/getChatting";
 import { groupChatsByDate } from "../../utils/dateUtils";
 import Loading from "../../components/Loading";
 import { motion } from "framer-motion";
+import useThemeStore from "../../store/themeStore";
 
 const SearchModal = ({
   setSearchModal,
@@ -17,7 +18,7 @@ const SearchModal = ({
   const [searchText, setSearchText] = useState<string>("");
   const [debouncedSearchText, setDebouncedSearchText] = useState<string>("");
   const modalRef = useRef<HTMLDivElement>(null);
-
+  const isDarkMode = useThemeStore((state) => state.isDarkMode);
   // 디바운스 로직
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -73,7 +74,9 @@ const SearchModal = ({
         exit={{ y: 100, opacity: 0 }}
         transition={{ duration: 0.3 }}
         ref={modalRef}
-        className={styles.searchModal}
+        className={`${styles.searchModal} ${
+          isDarkMode ? styles.darkSearchModal : styles.lightSearchModal
+        }`}
       >
         <div className={styles.searchModalHeader}>
           <input
@@ -111,8 +114,17 @@ const SearchModal = ({
                 <div key={date} className={styles.chatRoomListGroup}>
                   <span className={styles.chatRoomDate}>{date}</span>
                   {chats.map((chat) => (
-                    <li key={chat.id} className={styles.chatRoom}>
-                      <img src="/image/searchChat.png" alt="chat" />
+                    <li
+                      key={chat.id}
+                      className={`${styles.chatRoom} ${
+                        isDarkMode ? styles.darkChatRoom : styles.lightChatRoom
+                      }`}
+                    >
+                      {isDarkMode ? (
+                        <img src="/image/darkChat.png" alt="chat" />
+                      ) : (
+                        <img src="/image/searchChat.png" alt="chat" />
+                      )}
                       <a
                         href={`/main/${chat.id}`}
                         className={styles.chatRoomLink}

@@ -5,8 +5,7 @@
   height: 3rem;
   display: flex;
   column-gap: 5%;
-  input {
-    background-color: @mainGray;
+  .chatInput {
     padding: 20px;
     box-sizing: border-box;
     width: 100%;
@@ -20,7 +19,7 @@
     width: auto;
     height: 100%;
     border: none;
-    background-color: @mainWhite;
+    background-color: transparent;
     img {
       width: 2rem;
       height: 2rem;
@@ -29,4 +28,14 @@
       cursor: pointer;
     }
   }
+}
+
+.darkChatInput {
+  background-color: @subBlack;
+  color: @mainWhite;
+}
+
+.lightChatInput {
+  background-color: @mainGray;
+  color: #000;
 }

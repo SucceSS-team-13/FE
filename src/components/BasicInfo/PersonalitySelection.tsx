@@ -1,17 +1,23 @@
-import { useState, FormEvent } from "react";
-import { Users, User, Heart, Brain } from 'lucide-react';
+import { FormEvent } from "react";
+import { Users, User, Heart, Brain } from "lucide-react";
 import styles from "../../styles/BasicInfo/PersonalitySelection.module.less";
-
+import useThemeStore from "../../store/themeStore";
 type Props = {
   onNext: () => void;
   energyType: string;
   setEnergyType: (type: string) => void;
   decisionType: string;
   setDecisionType: (type: string) => void;
-}
+};
 
-const PersonalitySelection = ({ onNext, energyType, setEnergyType, decisionType, setDecisionType }: Props) => {
-  
+const PersonalitySelection = ({
+  onNext,
+  energyType,
+  setEnergyType,
+  decisionType,
+  setDecisionType,
+}: Props) => {
+  const isDarkMode = useThemeStore((state) => state.isDarkMode);
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (energyType && decisionType && onNext) {
@@ -23,7 +29,11 @@ const PersonalitySelection = ({ onNext, energyType, setEnergyType, decisionType,
     <div className={styles.pageWrapper}>
       <div className={styles.container}>
         <div className={styles.header}>
-          <h2 className={styles.title}>
+          <h2
+            className={`${styles.title} ${
+              isDarkMode ? styles.darkTitle : styles.lightTitle
+            }`}
+          >
             당신만의 특별한 성향을 공유해주세요
           </h2>
           <p className={styles.subtitle}>
@@ -39,9 +49,9 @@ const PersonalitySelection = ({ onNext, energyType, setEnergyType, decisionType,
               <div className={styles.buttonGrid}>
                 <button
                   type="button"
-                  onClick={() => setEnergyType('외향형')}
+                  onClick={() => setEnergyType("외향형")}
                   className={`${styles.typeButton} ${
-                    energyType === '외향형' ? styles.selected : ''
+                    energyType === "외향형" ? styles.selected : ""
                   }`}
                 >
                   <div className={styles.leftContent}>
@@ -52,12 +62,12 @@ const PersonalitySelection = ({ onNext, energyType, setEnergyType, decisionType,
                     사람들과 수다 떨며 에너지를 충전하는 사교왕 스타일!
                   </span>
                 </button>
-                
+
                 <button
                   type="button"
-                  onClick={() => setEnergyType('내향형')}
+                  onClick={() => setEnergyType("내향형")}
                   className={`${styles.typeButton} ${
-                    energyType === '내향형' ? styles.selected : ''
+                    energyType === "내향형" ? styles.selected : ""
                   }`}
                 >
                   <div className={styles.leftContent}>
@@ -77,9 +87,9 @@ const PersonalitySelection = ({ onNext, energyType, setEnergyType, decisionType,
               <div className={styles.buttonGrid}>
                 <button
                   type="button"
-                  onClick={() => setDecisionType('감정형')}
+                  onClick={() => setDecisionType("감정형")}
                   className={`${styles.typeButton} ${
-                    decisionType === '감정형' ? styles.selected : ''
+                    decisionType === "감정형" ? styles.selected : ""
                   }`}
                 >
                   <div className={styles.leftContent}>
@@ -93,9 +103,9 @@ const PersonalitySelection = ({ onNext, energyType, setEnergyType, decisionType,
 
                 <button
                   type="button"
-                  onClick={() => setDecisionType('사고형')}
+                  onClick={() => setDecisionType("사고형")}
                   className={`${styles.typeButton} ${
-                    decisionType === '사고형' ? styles.selected : ''
+                    decisionType === "사고형" ? styles.selected : ""
                   }`}
                 >
                   <div className={styles.leftContent}>
@@ -115,7 +125,9 @@ const PersonalitySelection = ({ onNext, energyType, setEnergyType, decisionType,
               type="submit"
               disabled={!energyType || !decisionType}
               className={`${styles.submitButton} ${
-                !(energyType && decisionType) ? styles.inactiveSubmit : styles.activeSubmit
+                !(energyType && decisionType)
+                  ? styles.inactiveSubmit
+                  : styles.activeSubmit
               }`}
             >
               다음

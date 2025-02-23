@@ -28,7 +28,6 @@ const Logo: React.FC = () => {
 
       // 씬 설정
       scene = new THREE.Scene();
-      scene.background = new THREE.Color(0xfffffff);
 
       // 지오메트리 설정 (조각을 촘촘하게 만들기 위해 vertexCount 증가)
       const vertexCount = 10 * 3; // 조각을 더 촘촘하게
