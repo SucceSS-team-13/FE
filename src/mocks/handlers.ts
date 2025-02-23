@@ -26,8 +26,8 @@ export const handlers = [
 
     return HttpResponse.json({
       isSuccess: true,
-      code: 200,
-      message: 'ok',
+      code: 2000,
+      message: 'Ok',
       result: {
         memberId: 1,
         nickname: "홍길동",
@@ -51,6 +51,19 @@ export const handlers = [
 
         앞으로도 자신만의 페이스를 유지하면서 차근차근 성장해 나가시면 좋을 것 같아요. 혹시 고민이 있으시다면 언제든 저에게 이야기해 주세요.
       `,
+      },
+    });
+  }),
+  // 채팅방 생성
+  http.post(`/api/chat/room`, () => {
+    return HttpResponse.json({
+      isSuccess: true,
+      code: 2000,
+      message: 'Ok',
+      result: {
+        chatRoomId: 1,
+        memberId: 1,
+        title: "New Chat",
       },
     });
   }),
