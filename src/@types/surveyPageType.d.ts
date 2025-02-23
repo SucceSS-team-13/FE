@@ -1,8 +1,12 @@
-interface HobbyCategory {
+interface HobbyCategoryData {
   id: string;
   title: string;
+  displayTitle: string;
   imageUrl: string;
-  subCategories: string[];
+  subCategories: {
+    code: string;
+    displayName: string;
+  }[];
 }
 
 interface Hobby {
