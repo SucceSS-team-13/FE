@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import LandingPage from "./pages/LandingPage";
 import AuthPage from "./pages/AuthPage";
 import MainPage from "./pages/MainPage";
-
+import LoginPage from "./pages/LoginPage";
 function App() {
   return (
     <Routes>
@@ -11,6 +11,7 @@ function App() {
       <Route path="/survey" element={<BasicInfoPage />} />
       <Route path="/main/:chatRoomId" element={<MainPage />} />
       <Route path="/main" element={<MainPage />} />
+      <Route path="/login" element={<LoginPage />} />
       <Route path="/" element={<LandingPage />} />
     </Routes>
   );
