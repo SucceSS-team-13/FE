@@ -70,7 +70,7 @@ const Sidebar = ({
                     }`}
                   >
                     <a
-                      href={`/main/${chat.id}`}
+                      href={`/main?chatRoomId=${chat.id}`}
                       className={styles.chatRoomLink}
                     >
                       {chat.title}

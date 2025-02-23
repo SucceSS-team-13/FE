@@ -21,13 +21,14 @@ const delay = (ms: number) =>
   });
 
 export const handlers = [
+  //설문조사 정보 입력
   http.patch("/api/members/profile/update", async ({ request }) => {
     const body = await request.json() as SurveyRequest;
 
     return HttpResponse.json({
       isSuccess: true,
-      code: 200,
-      message: 'ok',
+      code: 2000,
+      message: 'Ok',
       result: {
         memberId: 1,
         nickname: "홍길동",
@@ -40,6 +41,7 @@ export const handlers = [
       },
     });
   }),
+  //설문조사 결과 조회 
   http.get("/api/members/profile", () => {
     return HttpResponse.json({
       result: {
@@ -54,11 +56,16 @@ export const handlers = [
       },
     });
   }),
-  // 채팅 내용 가져오기
-  http.get(`/api/chatting/:chatRoomId`, () => {
+  // 채팅방 생성
+  http.post(`/api/chat/room`, () => {
     return HttpResponse.json({
+      isSuccess: true,
+      code: 2000,
+      message: 'Ok',
       result: {
-        chatting: [],
+        chatRoomId: 1,
+        memberId: 1,
+        title: "New Chat",
       },
     });
   }),
@@ -126,6 +133,7 @@ export const handlers = [
       totalPages: Math.ceil(filteredChatRooms.length / PAGE_SIZE),
     });
   }),
+  //채팅 내역 조회
   http.get(`/api/chat/room/:chatRoomId`, async ({ params, request }) => {
     const { chatRoomId } = params;
     const url = new URL(request.url);

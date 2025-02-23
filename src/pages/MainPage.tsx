@@ -4,6 +4,7 @@ import GuideBar from "../components/main/GuideBar";
 import { CHAT_GUIDE } from "../data/chatGuide";
 import ChatInput from "../components/main/ChatInput";
 import { useState, useEffect, useRef } from "react";
+import { useSearchParams } from "react-router-dom";
 import {
   InfiniteData,
   useMutation,
@@ -19,15 +20,40 @@ import ActionIcon from "../components/main/ActionIcon";
 import SearchModal from "../components/main/SearchModal";
 import useThemeStore from "../store/themeStore";
 const MainPage = () => {
+  const [searchParams] = useSearchParams();
   const [inputValue, setInputValue] = useState("");
   const [messages, setMessages] = useState<Chat[]>([]);
   const [isNewMessage, setIsNewMessage] = useState(false);
+  const [chatRoomId, setChatRoomId] = useState<number | null>(null);
   const messageEndRef = useRef<HTMLDivElement>(null);
   const queryClient = useQueryClient();
   const { sideBarStatus, toggleSidebar } = useSidebarStore();
   const [searchModal, setSearchModal] = useState(false);
   const isDarkMode = useThemeStore((state) => state.isDarkMode);
-  const chatRoomId = 1; //msw용 chatRoomId(0: 빈 채팅방, 1: 내용 있는 채팅방)
+  // const chatRoomId = 1; //msw용 chatRoomId(0: 빈 채팅방, 1: 내용 있는 채팅방)
+
+  useEffect(() => {
+    const initializeChatRoom = async () => {
+      try {
+        const urlChatRoomId = searchParams.get('chatRoomId');
+        
+        if (urlChatRoomId) {
+          // URL에 chatRoomId가 있는 경우
+          setChatRoomId(parseInt(urlChatRoomId));
+        } else {
+          // URL에 chatRoomId가 없는 경우 새로운 채팅방 생성
+          const response = await CustomAxios.post('/api/chat/room');
+          const newChatRoomId = response.data.result.chatRoomId;
+          setChatRoomId(newChatRoomId);
+        }
+      } catch (error) {
+        console.error("Failed to initialize chat room:", error);
+        alert("채팅방을 초기화하는데 실패했습니다.");
+      }
+    };
+
+    initializeChatRoom();
+  }, [searchParams]);
 
   const {
     data: chatting,
@@ -35,8 +61,11 @@ const MainPage = () => {
     isFetchingNextPage: isFetchingNextChat,
     isThrottled,
   } = useInfiniteScroll<Chat[], [string, number]>({
-    queryKey: ["chatting", chatRoomId],
-    queryFn: getChatting,
+    queryKey: ["chatting", chatRoomId!],
+    queryFn: async (context) => { // chatRoomId가 null일 때 빈 배열을 반환
+      if (!chatRoomId) return [];
+      return getChatting(context);
+    },
     getNextPageParam: (lastPage, allPages) => {
       return lastPage.length === 10 ? allPages.length + 1 : undefined;
     },
@@ -55,7 +84,7 @@ const MainPage = () => {
       const messageText = inputValue;
       setInputValue("");
       return CustomAxios.post(`/user/chat`, {
-        chatRoomId: 1,
+        chatRoomId: chatRoomId,
         text: messageText,
       });
     },
