@@ -4,9 +4,10 @@ import useThemeStore from "../../store/themeStore";
 type Props = {
   onChatStart: () => void;
   result: string;
+  nickname: string;
 };
 
-const Result = ({ onChatStart, result }: Props) => {
+const Result = ({ onChatStart, result, nickname }: Props) => {
   const isDarkMode = useThemeStore((state) => state.isDarkMode);
   return (
     <div
@@ -22,7 +23,7 @@ const Result = ({ onChatStart, result }: Props) => {
               isDarkMode ? styles.darkTitle : styles.lightTitle
             }`}
           >
-            홍길동 님의 성향 분석 결과
+            {nickname} 님의 성향 분석 결과
           </h1>
           <p className={styles.subtitle}>AI가 분석한 맞춤형 결과입니다</p>
         </div>

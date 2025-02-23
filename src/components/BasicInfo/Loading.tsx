@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from "../Logo";
 import styles from "../../styles/BasicInfo/Loading.module.less";
-import axios from "axios";
 import useThemeStore from "../../store/themeStore";
+import CustomAxios from "../../api/CustomAxios";
 
 type Props = {
   onNext: () => void;
@@ -12,6 +12,7 @@ type Props = {
   energyType: string;
   decisionType: string;
   selectedHobbies: Hobby[];
+  setNickname: (nickname: string) => void;
   setResult: (result: string) => void;
 };
 
@@ -22,6 +23,7 @@ const Loading = ({
   energyType,
   decisionType,
   selectedHobbies,
+  setNickname,
   setResult,
 }: Props) => {
   const [isExiting, setIsExiting] = useState<boolean>(false);
@@ -31,8 +33,8 @@ const Loading = ({
   useEffect(() => {
     const sendSurveyData = async () => {
       try {
-        const res = await axios.post(
-          `${import.meta.env.VITE_BASE_URL}/api/survey`,
+        const patchRes = await CustomAxios.patch(
+          `/api/members/profile/update/${1}`, //memberId는 추후 수정 예정
           {
             ageGroup: selectedAge,
             location: selectedAddress,
@@ -42,11 +44,26 @@ const Loading = ({
           }
         );
 
-        setResult(res.data.result);
+        if(!patchRes.data.isSuccess) {
+          throw new Error(`Patch request failed: ${patchRes.data.message}`);
+        }
+
+        setNickname(patchRes.data.result.nickname);
+
+        try {
+          const getRes = await CustomAxios.get(`/api/members/profile/${1}`); //memberId는 추후 수정 예정
+          setResult(getRes.data.result.message);
+
+        } catch(getError) {
+          console.error("Failed to get result data:", getError);
+          alert("결과를 가져오는데 실패했습니다.");
+          navigate("/");
+        }
+
       } catch (error) {
-        alert("데이터를 가져오는 중 문제가 발생했습니다.");
-        navigate("/");
         console.error("Failed to send survey data:", error);
+        alert("데이터를 전송하는 중 문제가 발생했습니다.");
+        navigate("/");
       }
     };
 

@@ -17,6 +17,7 @@ const BasicInfoPage = () => {
   const [decisionType, setDecisionType] = useState<string>(""); //판단 결정(T, F)
   const [selectedHobbies, setSelectedHobbies] = useState<Hobby[]>([]); //취미 목록
   const [result, setResult] = useState<string>("");
+  const [nickname, setNickname] = useState<string>("");
   const isDarkMode = useThemeStore((state) => state.isDarkMode);
 
   return (
@@ -73,12 +74,17 @@ const BasicInfoPage = () => {
           energyType={energyType}
           decisionType={decisionType}
           selectedHobbies={selectedHobbies}
+          setNickname={setNickname}
           setResult={setResult}
         />
       )}
 
       {currentStep === 6 && (
-        <Result onChatStart={() => setCurrentStep(1)} result={result} />
+        <Result 
+          onChatStart={() => setCurrentStep(1)} 
+          result={result}
+          nickname={nickname}
+        />
       )}
     </div>
   );
