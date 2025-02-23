@@ -21,8 +21,7 @@ const delay = (ms: number) =>
   });
 
 export const handlers = [
-  http.patch("/api/members/profile/update/:memberId", async ({ request, params }) => {
-    const {memberId} = params;
+  http.patch("/api/members/profile/update", async ({ request }) => {
     const body = await request.json() as SurveyRequest;
 
     return HttpResponse.json({
@@ -30,8 +29,8 @@ export const handlers = [
       code: 200,
       message: 'ok',
       result: {
-        memberId: memberId,
-        nickname: "윈터",
+        memberId: 1,
+        nickname: "홍길동",
         age: body.ageGroup, 
         location: body.location,
         personalityType_energy: body.personalityEnergy,
@@ -41,7 +40,7 @@ export const handlers = [
       },
     });
   }),
-  http.get("/api/members/profile/:memberId", () => {
+  http.get("/api/members/profile", () => {
     return HttpResponse.json({
       result: {
         message: `안녕하세요, 홍길동 님! 성향 분석 결과를 알려드릴게요.

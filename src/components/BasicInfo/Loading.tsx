@@ -34,7 +34,7 @@ const Loading = ({
     const sendSurveyData = async () => {
       try {
         const patchRes = await CustomAxios.patch(
-          `/api/members/profile/update/${1}`, //memberId는 추후 수정 예정
+          `/api/members/profile/update`,
           {
             ageGroup: selectedAge,
             location: selectedAddress,
@@ -51,7 +51,7 @@ const Loading = ({
         setNickname(patchRes.data.result.nickname);
 
         try {
-          const getRes = await CustomAxios.get(`/api/members/profile/${1}`); //memberId는 추후 수정 예정
+          const getRes = await CustomAxios.get(`/api/members/profile`); 
           setResult(getRes.data.result.message);
 
         } catch(getError) {
