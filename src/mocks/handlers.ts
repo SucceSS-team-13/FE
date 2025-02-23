@@ -52,7 +52,9 @@ export const handlers = [
       result: {
         id: Date.now() + 2,
         text: "많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요!",
-        location: "서울특별시 구로구 연동로 320",
+        location: [
+          "서울특별시 구로구 연동로 320",
+        ]
       },
     });
   }),
