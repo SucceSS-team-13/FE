@@ -1,4 +1,4 @@
-@import "/src/styles/GlobalStyle.module.less";
+@import "../GlobalStyle.module.less";
 
 .container {
   width: 100%;
@@ -49,6 +49,7 @@
           margin: 0;
           font-size: 1.5rem;
           font-weight: bold;
+          color: #000;
         }
         .personContainer {
           width: 100%;
@@ -71,6 +72,7 @@
               height: 20%;
               background-color: @mainWhite;
               position: absolute;
+              color: #000;
               top: -15%;
               left: 70%;
               transform: translate(-50%);
@@ -84,4 +86,14 @@
       }
     }
   }
+}
+
+.dark {
+  background-color: #000;
+  color: @mainWhite;
+}
+
+.light {
+  background-color: @mainWhite;
+  color: #000;
 }

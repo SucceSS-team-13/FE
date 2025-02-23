@@ -1,4 +1,4 @@
-@import "/src/styles/GlobalStyle.module.less";
+@import "../GlobalStyle.module.less";
 
 .container {
   overflow-y: scroll;
@@ -12,7 +12,6 @@
     z-index: 1;
     padding: 0 5%;
     box-sizing: border-box;
-    background-color: @mainWhite;
   }
   .firstContainer {
     width: 100%;
@@ -60,4 +59,14 @@
     padding: 5%;
     box-sizing: border-box;
   }
+}
+
+.dark {
+  background-color: #000;
+  color: @mainWhite;
+}
+
+.light {
+  background-color: @mainWhite;
+  color: #000;
 }

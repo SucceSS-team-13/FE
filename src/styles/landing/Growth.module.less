@@ -44,6 +44,7 @@
       .slider {
         width: 100%;
         height: 100%;
+
         :global {
           .slick-slider,
           .slick-list,
@@ -71,12 +72,11 @@
               margin: 0;
               .titleText {
                 font-size: 1.5rem;
-                color: @mainBlack;
+
                 font-weight: 500;
               }
               .inforText {
                 font-size: 1.2rem;
-                color: @gray;
               }
             }
           }
@@ -121,4 +121,40 @@
       }
     }
   }
+}
+
+.dark {
+  background-color: #000;
+  color: @mainWhite;
+}
+
+.light {
+  background-color: @mainWhite;
+  color: #000;
+}
+
+.darkSlideItem {
+  background-color: @subBlack;
+  color: @mainWhite;
+}
+
+.lightSlideItem {
+  background-color: @mainWhite;
+  color: #000;
+}
+
+.darkTitleText {
+  color: @mainWhite;
+}
+
+.lightTitleText {
+  color: #000;
+}
+
+.darkInforText {
+  color: @mainWhite;
+}
+
+.lightInforText {
+  color: @gray;
 }

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from "../styles/BasicInfo/BasicInfoPage.module.less"
+import styles from "../styles/BasicInfo/BasicInfoPage.module.less";
 import ProgressBar from "../components/BasicInfo/ProgressBar";
 import AgeSelection from "../components/BasicInfo/AgeSelection";
 import AddressSelection from "../components/BasicInfo/AddressSelection";
@@ -7,44 +7,49 @@ import PersonalitySelection from "../components/BasicInfo/PersonalitySelection";
 import HobbySelection from "../components/BasicInfo/HobbySelection";
 import Loading from "../components/BasicInfo/Loading";
 import Result from "../components/BasicInfo/Result";
+import useThemeStore from "../store/themeStore";
 
 const BasicInfoPage = () => {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [selectedAge, setSelectedAge] = useState<number>(0); //연령대
-  const [selectedAddress, setSelectedAddress] = useState<string>(''); //거주지
-  const [energyType, setEnergyType] = useState<string>(''); //에너지 성향(E, I)
-  const [decisionType, setDecisionType] = useState<string>(''); //판단 결정(T, F)
+  const [selectedAddress, setSelectedAddress] = useState<string>(""); //거주지
+  const [energyType, setEnergyType] = useState<string>(""); //에너지 성향(E, I)
+  const [decisionType, setDecisionType] = useState<string>(""); //판단 결정(T, F)
   const [selectedHobbies, setSelectedHobbies] = useState<string[]>([]); //취미 목록
-  const [result, setResult] = useState<string>('');
-
+  const [result, setResult] = useState<string>("");
+  const isDarkMode = useThemeStore((state) => state.isDarkMode);
 
   return (
-    <div className={styles.container}>
+    <div
+      className={`${styles.container} ${
+        isDarkMode ? styles.dark : styles.light
+      }`}
+    >
       {![5, 6].includes(currentStep) && ( //로딩, 결과 페이지에서는 숨김
         <div className={styles.wrapper}>
-          <ProgressBar currentStep={currentStep}/>
+          <ProgressBar currentStep={currentStep} />
         </div>
       )}
 
       {currentStep === 1 && (
-        <AgeSelection 
-          onNext={() => setCurrentStep(2)} 
+        <AgeSelection
+          onNext={() => setCurrentStep(2)}
           selectedAge={selectedAge}
           setSelectedAge={setSelectedAge}
         />
       )}
 
       {currentStep === 2 && (
-        <AddressSelection 
-          onNext={() => setCurrentStep(3)} 
+        <AddressSelection
+          onNext={() => setCurrentStep(3)}
           selectedAddress={selectedAddress}
           setSelectedAddress={setSelectedAddress}
         />
       )}
 
       {currentStep == 3 && (
-        <PersonalitySelection 
-          onNext={() => setCurrentStep(4)} 
+        <PersonalitySelection
+          onNext={() => setCurrentStep(4)}
           energyType={energyType}
           setEnergyType={setEnergyType}
           decisionType={decisionType}
@@ -53,16 +58,16 @@ const BasicInfoPage = () => {
       )}
 
       {currentStep === 4 && (
-        <HobbySelection 
-          onNext={() => setCurrentStep(5)} 
+        <HobbySelection
+          onNext={() => setCurrentStep(5)}
           selectedHobbies={selectedHobbies}
           setSelectedHobbies={setSelectedHobbies}
         />
       )}
 
       {currentStep === 5 && (
-        <Loading 
-          onNext={() => setCurrentStep(6)} 
+        <Loading
+          onNext={() => setCurrentStep(6)}
           selectedAge={selectedAge}
           selectedAddress={selectedAddress}
           energyType={energyType}
@@ -73,13 +78,10 @@ const BasicInfoPage = () => {
       )}
 
       {currentStep === 6 && (
-        <Result 
-          onChatStart={() => setCurrentStep(1)}
-          result={result}
-        />
+        <Result onChatStart={() => setCurrentStep(1)} result={result} />
       )}
     </div>
-  )
-}
+  );
+};
 
 export default BasicInfoPage;

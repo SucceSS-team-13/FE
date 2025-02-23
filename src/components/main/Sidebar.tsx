@@ -3,6 +3,7 @@ import styles from "../../styles/main/Sidebar.module.less";
 import Loading from "../Loading";
 import ActionIcon from "./ActionIcon";
 import { groupChatsByDate } from "../../utils/dateUtils";
+import useThemeStore from "../../store/themeStore";
 
 const Sidebar = ({
   toggleSidebar,
@@ -18,9 +19,13 @@ const Sidebar = ({
   setSearchModal: (status: boolean) => void;
 }) => {
   const groupedChats = groupChatsByDate(chatRoomList);
-
+  const isDarkMode = useThemeStore((state) => state.isDarkMode);
   return (
-    <div className={styles.container}>
+    <div
+      className={`${styles.container} ${
+        isDarkMode ? styles.dark : styles.light
+      }`}
+    >
       <div className={styles.menuBar}>
         <div className={styles.menuBarItem}>
           <ActionIcon
@@ -42,7 +47,11 @@ const Sidebar = ({
           />
         </div>
       </div>
-      <div className={styles.chatRoomList}>
+      <div
+        className={`${styles.chatRoomList} ${
+          isDarkMode ? styles.darkChatRoomList : styles.lightChatRoomList
+        }`}
+      >
         {!chatRoomList.length ? (
           <Loading
             text="루미가 샅샅이 뒤졌는데… 아무것도 없네요!"
@@ -54,7 +63,12 @@ const Sidebar = ({
               <div key={date} className={styles.chatRoomListGroup}>
                 <span className={styles.chatRoomDate}>{date}</span>
                 {chats.map((chat) => (
-                  <li key={chat.id} className={styles.chatRoom}>
+                  <li
+                    key={chat.id}
+                    className={`${styles.chatRoom} ${
+                      isDarkMode ? styles.darkChatRoom : styles.lightChatRoom
+                    }`}
+                  >
                     <a
                       href={`/main/${chat.id}`}
                       className={styles.chatRoomLink}

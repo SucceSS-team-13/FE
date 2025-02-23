@@ -12,6 +12,7 @@ import Features from "../components/landing/Features";
 import Growth from "../components/landing/Growth";
 import Typewriter from "react-typewriter-effect";
 import { useRef, useState, useEffect } from "react";
+import useThemeStore from "../store/themeStore";
 
 const LandingPage = () => {
   const helpRef = useRef<HTMLDivElement>(null);
@@ -22,7 +23,7 @@ const LandingPage = () => {
   const [productInView, setProductInView] = useState(false);
   const [featuresInView, setFeaturesInView] = useState(false);
   const [growthInView, setGrowthInView] = useState(false);
-
+  const isDarkMode = useThemeStore((state) => state.isDarkMode);
   useEffect(() => {
     const helpObserver = new IntersectionObserver(
       ([entry]) => {
@@ -73,10 +74,18 @@ const LandingPage = () => {
 
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
+      <div
+        className={`${styles.header} ${
+          isDarkMode ? styles.dark : styles.light
+        }`}
+      >
         <Header />
       </div>
-      <div className={styles.firstContainer}>
+      <div
+        className={`${styles.firstContainer} ${
+          isDarkMode ? styles.dark : styles.light
+        }`}
+      >
         <div className={styles.logoContainer}>
           <Logo />
         </div>
@@ -85,7 +94,7 @@ const LandingPage = () => {
             <div className={styles.textLarge}>
               <Typewriter
                 text="당신의 오늘 하루는 어떠셨나요?"
-                cursorColor="#fff"
+                cursorColor={isDarkMode ? "#000" : "#fff"}
                 typeSpeed={100}
                 startDelay={500}
                 eraseSpeed={50}
@@ -96,12 +105,12 @@ const LandingPage = () => {
             <div className={styles.textSmall}>
               <Typewriter
                 text='따뜻한 위로로 마음을 살피고, 더 나은 내일을 함께하는 AI 심리상담 서비스, "오늘 어땠어"'
-                cursorColor="#000"
                 typeSpeed={100}
                 startDelay={2500}
                 eraseSpeed={50}
                 eraseDelay={1000}
                 typingDelay={500}
+                cursorColor={isDarkMode ? "#fff" : "#000"}
               />
             </div>
           </div>

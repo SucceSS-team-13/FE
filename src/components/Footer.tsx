@@ -1,8 +1,13 @@
 import styles from "../styles/Footer.module.less";
-
+import useThemeStore from "../store/themeStore";
 const Footer = () => {
+  const isDarkMode = useThemeStore((state) => state.isDarkMode);
   return (
-    <div className={styles.container}>
+    <div
+      className={`${styles.container} ${
+        isDarkMode ? styles.dark : styles.light
+      }`}
+    >
       <div className={styles.textContainer}>
         <span className={styles.devText}>오늘도 고생 많으셨습니다.</span>
         <span className={styles.devText}>

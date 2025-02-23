@@ -1,21 +1,32 @@
 import styles from "../styles/Header.module.less";
-import { getKaKaoLoginURL } from "../service/UserService";
-
+import ThemeToggle from "./ThemeToggle";
+import useThemeStore from "../store/themeStore";
+import NavigationButton from "./NavigationButton";
+import { useNavigate } from "react-router-dom";
 const Header = () => {
-  const socialKaKaoLogin = () => {
-    window.localStorage.setItem("provider", "kakao");
-    window.location.href = getKaKaoLoginURL();
-  };
+  const isDarkMode = useThemeStore((state) => state.isDarkMode);
+  console.log(isDarkMode);
+  const navigate = useNavigate();
 
   return (
-    <div className={styles.container}>
+    <div
+      className={`${styles.container} ${
+        isDarkMode ? styles.dark : styles.light
+      }`}
+    >
       <div className={styles.itemContainer}>
         <div className={styles.logo}>
-          <img src="/image/logo.png" />
+          <img src="/image/transparentLogo.png" />
         </div>
         <div className={styles.item}>
-          <button>서비스</button>
-          <button onClick={socialKaKaoLogin}>로그인</button>
+          <ThemeToggle />
+          <NavigationButton
+            text="서비스"
+            onClick={() => {
+              navigate("/");
+            }}
+          />
+          <NavigationButton text="로그인" onClick={() => navigate("/login")} />
         </div>
       </div>
     </div>

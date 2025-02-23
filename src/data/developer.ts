@@ -12,7 +12,7 @@ export const DEVELOPERS: Developer[] = [
     university: "성공회대",
     role: "Frontend Developer",
     position: "",
-    image: "/image/developer1.png",
+    image: "/image/developer2.png",
     portfolio: "",
   },
   {
@@ -20,7 +20,7 @@ export const DEVELOPERS: Developer[] = [
     university: "숙명여대",
     role: "Backend Developer",
     position: "",
-    image: "/image/developer2.png",
+    image: "/image/developer3.png",
     portfolio: "",
   },
   {

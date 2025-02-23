@@ -1,6 +1,7 @@
+@import "../GlobalStyle.module.less";
+
 .container {
-  height: 100%;
-  background-color: white;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -13,7 +14,7 @@
   margin-left: auto;
   margin-right: auto;
   padding: 3rem 1rem 0;
-  
+
   @media (min-width: 640px) {
     padding-left: 1.5rem;
     padding-right: 1.5rem;
@@ -23,4 +24,14 @@
     padding-left: 2rem;
     padding-right: 2rem;
   }
+}
+
+.dark {
+  background-color: @subBlack;
+  color: @mainWhite;
+}
+
+.light {
+  background-color: @mainWhite;
+  color: #000;
 }

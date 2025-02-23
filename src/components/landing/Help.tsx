@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
+import useThemeStore from "../../store/themeStore";
 const Help = ({
   serviceInformation,
   helpInView,
@@ -10,6 +11,7 @@ const Help = ({
   serviceInformation: ServiceInformation[];
   helpInView: boolean;
 }) => {
+  const isDarkMode = useThemeStore((state) => state.isDarkMode);
   const settings = {
     dots: false,
     slidesToShow: 1,
@@ -24,7 +26,11 @@ const Help = ({
   };
 
   return (
-    <div className={styles.container}>
+    <div
+      className={`${styles.container} ${
+        isDarkMode ? styles.dark : styles.light
+      }`}
+    >
       <div className={styles.textContainer}>
         <div className={styles.word}>
           <motion.div
