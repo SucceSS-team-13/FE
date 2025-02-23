@@ -51,7 +51,7 @@ const Loading = ({
         setNickname(patchRes.data.result.nickname);
 
         try {
-          const getRes = await CustomAxios.get(`/api/members/profile`); 
+          const getRes = await CustomAxios.get(`/api/members/profle`); 
           setResult(getRes.data.result.message);
 
         } catch(getError) {

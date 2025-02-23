@@ -15,7 +15,7 @@ export const getChatting: QueryFunction<
     }
 
     const res = await CustomAxios.get(
-      `/api/chat/room/${chatRoomId}?page=${pageParam}&size=1`,
+      `/api/chat/room/${chatRoomId}?page=${pageParam}&size=10&sort=sendDate`,
       {
         headers: {
           "Cache-Control": "no-store",
