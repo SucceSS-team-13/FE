@@ -15,7 +15,7 @@ const BasicInfoPage = () => {
   const [selectedAddress, setSelectedAddress] = useState<string>(""); //거주지
   const [energyType, setEnergyType] = useState<string>(""); //에너지 성향(E, I)
   const [decisionType, setDecisionType] = useState<string>(""); //판단 결정(T, F)
-  const [selectedHobbies, setSelectedHobbies] = useState<string[]>([]); //취미 목록
+  const [selectedHobbies, setSelectedHobbies] = useState<Hobby[]>([]); //취미 목록
   const [result, setResult] = useState<string>("");
   const isDarkMode = useThemeStore((state) => state.isDarkMode);
 

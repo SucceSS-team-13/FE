@@ -1,4 +1,4 @@
-export const HOBBY_CATEGORIES: Hobby[] = [
+export const HOBBY_CATEGORIES: HobbyCategory[] = [
   {
     id: "exercise",
     title: "운동",

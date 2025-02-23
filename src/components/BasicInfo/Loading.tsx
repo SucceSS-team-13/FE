@@ -11,7 +11,7 @@ type Props = {
   selectedAddress: string;
   energyType: string;
   decisionType: string;
-  selectedHobbies: string[];
+  selectedHobbies: Hobby[];
   setResult: (result: string) => void;
 };
 
@@ -34,10 +34,10 @@ const Loading = ({
         const res = await axios.post(
           `${import.meta.env.VITE_BASE_URL}/api/survey`,
           {
-            age: selectedAge,
-            address: selectedAddress,
-            energyType,
-            decisionType,
+            ageGroup: selectedAge,
+            location: selectedAddress,
+            personalityEnergy: energyType,
+            personalityJudgement: decisionType,
             hobbies: selectedHobbies,
           }
         );
