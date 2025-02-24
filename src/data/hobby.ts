@@ -3,7 +3,7 @@ enum HobbyCategory {
   TRAVEL = "TRAVEL",
   READING = "READING",
   MOVIES = "MOVIES",
-  GAMES = "GAMES",
+  GAMING = "GAMES",
   CRAFT = "CRAFT"
 }
 
@@ -81,7 +81,7 @@ export const HOBBY_CATEGORIES: HobbyCategoryData[] = [
   },
   {
     id: "game",
-    title: HobbyCategory.GAMES,
+    title: HobbyCategory.GAMING,
     displayTitle: "게임",
     imageUrl: "/image/game.png",
     subCategories: [
