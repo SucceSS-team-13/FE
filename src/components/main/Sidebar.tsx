@@ -20,6 +20,10 @@ const Sidebar = ({
 }) => {
   const groupedChats = groupChatsByDate(chatRoomList);
   const isDarkMode = useThemeStore((state) => state.isDarkMode);
+
+  console.log("사이드바", chatRoomList[0]);
+  console.log("사이드바2", groupedChats);
+
   return (
     <div
       className={`${styles.container} ${
@@ -64,13 +68,13 @@ const Sidebar = ({
                 <span className={styles.chatRoomDate}>{date}</span>
                 {chats.map((chat) => (
                   <li
-                    key={chat.id}
+                    key={chat.chatRoomId}
                     className={`${styles.chatRoom} ${
                       isDarkMode ? styles.darkChatRoom : styles.lightChatRoom
                     }`}
                   >
                     <a
-                      href={`/main?chatRoomId=${chat.id}`}
+                      href={`/main?chatRoomId=${chat.chatRoomId}`}
                       className={styles.chatRoomLink}
                     >
                       {chat.title}
