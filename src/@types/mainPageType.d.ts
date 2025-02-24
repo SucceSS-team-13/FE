@@ -19,8 +19,10 @@ interface ChatRoom {
 }
 
 interface ChatRoomResponse {
-  result: ChatRoom[];
+  result: {
+    content: ChatRoom[];
+    totalElements: number;
+    totalPages: number;
+  };
   nextPage: number | undefined;
-  totalItems: number;
-  totalPages: number;
 }

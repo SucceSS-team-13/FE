@@ -182,7 +182,9 @@ const MainPage = () => {
     getNextPageParam: (lastPage) => lastPage.nextPage,
   });
 
-  const chatRooms = chatRoomData?.pages.flatMap((page) => page.result) || [];
+  console.log("chatRoomData", chatRoomData);
+  const chatRooms =
+    chatRoomData?.pages.flatMap((page) => page.result.content) || [];
 
   const scrollToBottom = () => {
     messageEndRef.current?.scrollIntoView({ behavior: "smooth" });
