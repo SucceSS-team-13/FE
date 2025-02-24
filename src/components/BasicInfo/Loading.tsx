@@ -3,18 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Logo from "../Logo";
 import styles from "../../styles/BasicInfo/Loading.module.less";
 import useThemeStore from "../../store/themeStore";
-import CustomAxios from "../../api/CustomAxios";
-
-type Props = {
-  onNext: () => void;
-  selectedAge: string;
-  selectedAddress: string;
-  energyType: string;
-  decisionType: string;
-  selectedHobbies: Hobby[];
-  setNickname: (nickname: string) => void;
-  setResult: (result: string) => void;
-};
+import { submitSurvey, getProfile } from "../../service/UserService";
 
 const Loading = ({
   onNext,
@@ -25,49 +14,55 @@ const Loading = ({
   selectedHobbies,
   setNickname,
   setResult,
-}: Props) => {
+}: SurveyProps) => {
   const [isExiting, setIsExiting] = useState<boolean>(false);
   const navigate = useNavigate();
   const isDarkMode = useThemeStore((state) => state.isDarkMode);
 
   useEffect(() => {
-    const sendSurveyData = async () => {
+    console.log(
+      "설문조사 데이터",
+      selectedAge,
+      selectedAddress,
+      energyType,
+      decisionType,
+      selectedHobbies
+    );
+    const handleSurveySubmission = async () => {
       try {
-        const patchRes = await CustomAxios.patch(
-          `/api/members/profile/update`,
-          {
-            ageGroup: selectedAge,
-            location: selectedAddress,
-            personalityEnergy: energyType,
-            personalityJudgement: decisionType,
-            hobbies: selectedHobbies,
-          }
+        const patchRes = await submitSurvey(
+          selectedAge,
+          selectedAddress,
+          energyType,
+          decisionType,
+          selectedHobbies
         );
 
-        if(!patchRes.data.isSuccess) {
-          throw new Error(`Patch request failed: ${patchRes.data.message}`);
+        if (!patchRes.data.isSuccess) {
+          throw new Error(`설문조사 전송 실패: ${patchRes.data.message}`);
         }
 
         setNickname(patchRes.data.result.nickname);
-
-        try {
-          const getRes = await CustomAxios.get(`/api/members/profle`); 
-          setResult(getRes.data.result.message);
-
-        } catch(getError) {
-          console.error("Failed to get result data:", getError);
-          alert("결과를 가져오는데 실패했습니다.");
-          navigate("/");
-        }
-
+        await fetchProfileData();
       } catch (error) {
         console.error("Failed to send survey data:", error);
-        alert("데이터를 전송하는 중 문제가 발생했습니다.");
-        navigate("/");
+        // alert("데이터를 전송하는 중 문제가 발생했습니다.");
+        // navigate("/");
       }
     };
 
-    sendSurveyData();
+    const fetchProfileData = async () => {
+      try {
+        const getRes = await getProfile();
+        setResult(getRes);
+      } catch (getError) {
+        console.error("결과를 가져오는데 실패했습니다:", getError);
+        // alert("결과를 가져오는데 실패했습니다.");
+        // navigate("/");
+      }
+    };
+
+    handleSurveySubmission();
 
     // 로딩 애니메이션 타이머(최소 5초)
     const timer = setTimeout(() => {
