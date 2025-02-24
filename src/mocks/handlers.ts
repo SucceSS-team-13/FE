@@ -57,7 +57,7 @@ export const handlers = [
     });
   }),
   // 채팅방 생성
-  http.post(`/api/chat/room`, () => {
+  http.post(`/api/chat`, () => {
     return HttpResponse.json({
       isSuccess: true,
       code: 2000,
