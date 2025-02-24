@@ -8,6 +8,7 @@ import HobbySelection from "../components/BasicInfo/HobbySelection";
 import Loading from "../components/BasicInfo/Loading";
 import Result from "../components/BasicInfo/Result";
 import useThemeStore from "../store/themeStore";
+import { useNavigate } from "react-router-dom";
 
 const BasicInfoPage = () => {
   const [currentStep, setCurrentStep] = useState<number>(1);
@@ -19,6 +20,7 @@ const BasicInfoPage = () => {
   const [result, setResult] = useState<string>("");
   const [nickname, setNickname] = useState<string>("");
   const isDarkMode = useThemeStore((state) => state.isDarkMode);
+  const navigate = useNavigate();
 
   return (
     <div
@@ -81,7 +83,7 @@ const BasicInfoPage = () => {
 
       {currentStep === 6 && (
         <Result 
-          onChatStart={() => setCurrentStep(1)} 
+          onChatStart={() => navigate('/main')} 
           result={result}
           nickname={nickname}
         />

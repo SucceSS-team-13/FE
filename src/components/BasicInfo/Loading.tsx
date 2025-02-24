@@ -46,8 +46,8 @@ const Loading = ({
         await fetchProfileData();
       } catch (error) {
         console.error("Failed to send survey data:", error);
-        // alert("데이터를 전송하는 중 문제가 발생했습니다.");
-        // navigate("/");
+        alert("데이터를 전송하는 중 문제가 발생했습니다.");
+        navigate("/");
       }
     };
 
@@ -57,8 +57,8 @@ const Loading = ({
         setResult(getRes);
       } catch (getError) {
         console.error("결과를 가져오는데 실패했습니다:", getError);
-        // alert("결과를 가져오는데 실패했습니다.");
-        // navigate("/");
+        alert("결과를 가져오는데 실패했습니다.");
+        navigate("/");
       }
     };
 
