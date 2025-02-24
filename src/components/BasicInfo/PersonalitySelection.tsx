@@ -45,7 +45,15 @@ const PersonalitySelection = ({
           <div className={styles.sectionsContainer}>
             {/* 에너지 방향 선택 */}
             <div className={styles.section}>
-              <p className={styles.sectionTitle}>1. 에너지 방향</p>
+              <p
+                className={`${styles.sectionTitle} ${
+                  isDarkMode
+                    ? styles.darkSectionTitle
+                    : styles.lightSectionTitle
+                }`}
+              >
+                1. 에너지 방향
+              </p>
               <div className={styles.buttonGrid}>
                 <button
                   type="button"
@@ -83,7 +91,15 @@ const PersonalitySelection = ({
 
             {/* 판단 결정 선택 */}
             <div className={styles.section}>
-              <p className={styles.sectionTitle}>2. 판단 결정</p>
+              <p
+                className={`${styles.sectionTitle} ${
+                  isDarkMode
+                    ? styles.darkSectionTitle
+                    : styles.lightSectionTitle
+                }`}
+              >
+                2. 판단 결정
+              </p>
               <div className={styles.buttonGrid}>
                 <button
                   type="button"
