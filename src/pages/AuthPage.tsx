@@ -13,7 +13,11 @@ const AuthPage = () => {
       try {
         const tokenResponse = await getToken(code);
         if (tokenResponse.success) {
-          navigate("/home");
+          if (tokenResponse.firstLogin) {
+            navigate("/survey");
+          } else {
+            navigate("/main");
+          }
         }
       } catch (error) {
         console.error("로그인 실패:", error);

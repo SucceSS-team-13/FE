@@ -37,9 +37,10 @@ export const getChatRoomList = async ({
 }) => {
   try {
     const response = await CustomAxios.get(
-      `/api/chatRoomList?page=${pageParam}`
+      // `/api/chatRoomList?page=${pageParam}`
+      `/api/chat/rooms?page=${pageParam}&size=10`
     );
-    console.log("채팅방 목록 ", response.data.result);
+    console.log("채팅방 목록 가져오기", response.data);
     return response.data;
   } catch (err) {
     console.error("Failed to fetch data", err);

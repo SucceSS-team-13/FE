@@ -35,14 +35,14 @@ const MainPage = () => {
   useEffect(() => {
     const initializeChatRoom = async () => {
       try {
-        const urlChatRoomId = searchParams.get('chatRoomId');
-        
+        const urlChatRoomId = searchParams.get("chatRoomId");
+
         if (urlChatRoomId) {
           // URL에 chatRoomId가 있는 경우
           setChatRoomId(parseInt(urlChatRoomId));
         } else {
           // URL에 chatRoomId가 없는 경우 새로운 채팅방 생성
-          const response = await CustomAxios.post('/api/chat/room');
+          const response = await CustomAxios.post("/api/chat/room");
           const newChatRoomId = response.data.result.chatRoomId;
           setChatRoomId(newChatRoomId);
         }
@@ -62,7 +62,8 @@ const MainPage = () => {
     isThrottled,
   } = useInfiniteScroll<Chat[], [string, number]>({
     queryKey: ["chatting", chatRoomId!],
-    queryFn: async (context) => { // chatRoomId가 null일 때 빈 배열을 반환
+    queryFn: async (context) => {
+      // chatRoomId가 null일 때 빈 배열을 반환
       if (!chatRoomId) return [];
       return getChatting(context);
     },
@@ -83,9 +84,10 @@ const MainPage = () => {
     mutationFn: async () => {
       const messageText = inputValue;
       setInputValue("");
-      return CustomAxios.post(`/user/chat`, {
+      return CustomAxios.post(`/api/chat`, {
         chatRoomId: chatRoomId,
         text: messageText,
+        sender: "user",
       });
     },
     onMutate() {

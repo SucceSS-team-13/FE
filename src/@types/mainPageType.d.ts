@@ -12,7 +12,8 @@ interface GuideBar {
 
 interface ChatRoom {
   // 채팅방 데이터 타입
-  id: number;
+  chatRoomId: number;
+  memberId: number;
   title: string;
   lastMessageDate: string;
 }
