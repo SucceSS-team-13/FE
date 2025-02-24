@@ -13,3 +13,14 @@ interface Hobby {
   hobby: string;
   detailedHobbies: string[];
 }
+
+interface SurveyProps {
+  onNext: () => void;
+  selectedAge: string;
+  selectedAddress: string;
+  energyType: string;
+  decisionType: string;
+  selectedHobbies: Hobby[];
+  setNickname: (nickname: string) => void;
+  setResult: (result: string) => void;
+}
