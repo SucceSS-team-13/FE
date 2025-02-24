@@ -21,9 +21,6 @@ const Sidebar = ({
   const groupedChats = groupChatsByDate(chatRoomList);
   const isDarkMode = useThemeStore((state) => state.isDarkMode);
 
-  console.log("사이드바", chatRoomList[0]);
-  console.log("사이드바2", groupedChats);
-
   return (
     <div
       className={`${styles.container} ${
