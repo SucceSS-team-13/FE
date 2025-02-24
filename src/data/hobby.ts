@@ -51,7 +51,7 @@ export const HOBBY_CATEGORIES: HobbyCategoryData[] = [
     imageUrl: "/image/reading.png",
     subCategories: [
       { code: "NOVEL", displayName: "소설" },
-      { code: "POEM", displayName: "시" },
+      { code: "POEM", displayName: "시집" },
       { code: "ESSAY", displayName: "에세이" },
       { code: "SELF_DEVELOPMENT", displayName: "자기계발" },
       { code: "HUMANITY", displayName: "인문" },
@@ -105,7 +105,7 @@ export const HOBBY_CATEGORIES: HobbyCategoryData[] = [
     subCategories: [
       { code: "KNITTING", displayName: "뜨개질" },
       { code: "EMBROIDERY", displayName: "자수" },
-      { code: "XERAMIC", displayName: "도자기" },
+      { code: "CERAMIC", displayName: "도자기" },
       { code: "LEATHER_CRAFT", displayName: "가죽공예" },
       { code: "WOOD_CRAFT", displayName: "목공예" },
       { code: "BEADS_CRAFT", displayName: "비즈공예" },

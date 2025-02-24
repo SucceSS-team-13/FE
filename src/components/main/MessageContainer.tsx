@@ -1,4 +1,4 @@
-import { RefObject } from "react";
+import { RefObject, useEffect } from "react";
 import AIMessage from "./AIMessage";
 import UserMessage from "./UserMessage";
 import styles from "../../styles/main/MainPage.module.less";
@@ -23,10 +23,14 @@ const MessageContainer = ({
 }) => {
   const reversedMessages = [...messages].reverse();
 
+  useEffect(() => {
+    console.log("hasNextPage: ", hasNextPage, ", isFetchingNextChat: ", isFetchingNextChat, ", isThrotteled: ", isThrottled);
+  }, [hasNextPage, isFetchingNextChat, isThrottled])
+
   return (
     <div className={styles.messageContainer}>
       <div className={styles.messagesWrapper}>
-        {hasNextPage && !isFetchingNextChat && !isThrottled && (
+        {reversedMessages.length >= 10 && hasNextPage && !isFetchingNextChat && !isThrottled && (
           <div ref={lastElementRef} className={styles.loadingTrigger}>
             <LoadingSpinner size={"sm"} />
           </div>
