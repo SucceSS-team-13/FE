@@ -3,7 +3,7 @@ enum HobbyCategory {
   TRAVEL = "TRAVEL",
   READING = "READING",
   MOVIES = "MOVIES",
-  GAMING = "GAMES",
+  GAMES = "GAMES",
   CRAFT = "CRAFT"
 }
 
@@ -51,7 +51,7 @@ export const HOBBY_CATEGORIES: HobbyCategoryData[] = [
     imageUrl: "/image/reading.png",
     subCategories: [
       { code: "NOVEL", displayName: "소설" },
-      { code: "POEM", displayName: "시" },
+      { code: "POEM", displayName: "시집" },
       { code: "ESSAY", displayName: "에세이" },
       { code: "SELF_DEVELOPMENT", displayName: "자기계발" },
       { code: "HUMANITY", displayName: "인문" },
@@ -81,7 +81,7 @@ export const HOBBY_CATEGORIES: HobbyCategoryData[] = [
   },
   {
     id: "game",
-    title: HobbyCategory.GAMING,
+    title: HobbyCategory.GAMES,
     displayTitle: "게임",
     imageUrl: "/image/game.png",
     subCategories: [
