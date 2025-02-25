@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { persist, createJSONStorage } from "zustand/middleware";
+import { persist } from "zustand/middleware";
 
 export const useAuthStore = create<AuthState>()(
   persist(
@@ -19,11 +19,11 @@ export const useAuthStore = create<AuthState>()(
           isAuthenticated: false,
         });
         localStorage.removeItem("accessToken");
+        localStorage.removeItem("refreshToken");
       },
     }),
     {
       name: "authData",
-      storage: createJSONStorage(() => localStorage),
     }
   )
 );
