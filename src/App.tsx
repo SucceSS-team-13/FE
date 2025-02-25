@@ -4,15 +4,23 @@ import LandingPage from "./pages/LandingPage";
 import AuthPage from "./pages/AuthPage";
 import MainPage from "./pages/MainPage";
 import LoginPage from "./pages/LoginPage";
+import useThemeStore from "./store/themeStore";
 function App() {
+  const isDarkMode = useThemeStore((state) => state.isDarkMode);
   return (
     <Routes>
       <Route path="/oauth" element={<AuthPage />} />
-      <Route path="/survey" element={<BasicInfoPage />} />
-      <Route path="/main/:chatRoomId" element={<MainPage />} />
-      <Route path="/main" element={<MainPage />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/" element={<LandingPage />} />
+      <Route
+        path="/survey"
+        element={<BasicInfoPage isDarkMode={isDarkMode} />}
+      />
+      <Route
+        path="/main/:chatRoomId"
+        element={<MainPage isDarkMode={isDarkMode} />}
+      />
+      <Route path="/main" element={<MainPage isDarkMode={isDarkMode} />} />
+      <Route path="/login" element={<LoginPage isDarkMode={isDarkMode} />} />
+      <Route path="/" element={<LandingPage isDarkMode={isDarkMode} />} />
     </Routes>
   );
 }

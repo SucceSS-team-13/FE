@@ -7,10 +7,10 @@ import PersonalitySelection from "../components/BasicInfo/PersonalitySelection";
 import HobbySelection from "../components/BasicInfo/HobbySelection";
 import Loading from "../components/BasicInfo/Loading";
 import Result from "../components/BasicInfo/Result";
-import useThemeStore from "../store/themeStore";
+
 import { useNavigate } from "react-router-dom";
 
-const BasicInfoPage = () => {
+const BasicInfoPage = ({ isDarkMode }: { isDarkMode: boolean }) => {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const [selectedAge, setSelectedAge] = useState<string>(""); //연령대
   const [selectedAddress, setSelectedAddress] = useState<string>(""); //거주지
@@ -19,7 +19,7 @@ const BasicInfoPage = () => {
   const [selectedHobbies, setSelectedHobbies] = useState<Hobby[]>([]); //취미 목록
   const [result, setResult] = useState<string>("");
   const [nickname, setNickname] = useState<string>("");
-  const isDarkMode = useThemeStore((state) => state.isDarkMode);
+
   const navigate = useNavigate();
 
   return (
@@ -82,8 +82,8 @@ const BasicInfoPage = () => {
       )}
 
       {currentStep === 6 && (
-        <Result 
-          onChatStart={() => navigate('/main')} 
+        <Result
+          onChatStart={() => navigate("/main")}
           result={result}
           nickname={nickname}
         />
