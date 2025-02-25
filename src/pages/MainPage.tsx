@@ -4,6 +4,7 @@ import GuideBar from "../components/main/GuideBar";
 import { CHAT_GUIDE } from "../data/chatGuide";
 import ChatInput from "../components/main/ChatInput";
 import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 import {
   InfiniteData,
@@ -34,6 +35,7 @@ const MainPage = () => {
   const { sideBarStatus, toggleSidebar } = useSidebarStore();
   const [searchModal, setSearchModal] = useState(false);
   const isDarkMode = useThemeStore((state) => state.isDarkMode);
+  const navigate = useNavigate();
   // const chatRoomId = 1; //msw용 chatRoomId(0: 빈 채팅방, 1: 내용 있는 채팅방)
 
   useEffect(() => {
@@ -48,6 +50,7 @@ const MainPage = () => {
           // URL에 chatRoomId가 없는 경우 새로운 채팅방 생성
           const newChatRoomId = await createChatRoom();
           setChatRoomId(newChatRoomId);
+          navigate(`/main?chatRoomId=${newChatRoomId}`);
         }
       } catch (error) {
         console.error("채팅방 생성 실패:", error);
