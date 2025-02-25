@@ -23,10 +23,16 @@ export const useInfiniteScroll = <T, TQueryKey extends readonly unknown[]>({
 
   const lastElementRef = useCallback(
     (node: HTMLElement | null) => {
-      if (isFetchingNextPage || isFetching || isThrottled ) return; // // 데이터를 가져오는 중이거나 throttle 중이면 observer 설정하지 않음
+      if (isFetchingNextPage || isFetching || isThrottled) return; // // 데이터를 가져오는 중이거나 throttle 중이면 observer 설정하지 않음
       if (observer.current) observer.current.disconnect(); // 이미 존재하는 observer가 있다면 제거
       observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && hasNextPage && !isThrottled && !isFetchingNextPage && !isFetching) {
+        if (
+          entries[0].isIntersecting &&
+          hasNextPage &&
+          !isThrottled &&
+          !isFetchingNextPage &&
+          !isFetching
+        ) {
           setIsThrottled(true);
           // 마지막 요소가 보이고 데이터가 더 있다면
           fetchNextPage(); // 다음 페이지 데이터 가져오기
@@ -34,7 +40,7 @@ export const useInfiniteScroll = <T, TQueryKey extends readonly unknown[]>({
           if (throttleTimer.current) {
             clearTimeout(throttleTimer.current);
           }
-          
+
           throttleTimer.current = setTimeout(() => {
             setIsThrottled(false);
           }, throttleMs);
