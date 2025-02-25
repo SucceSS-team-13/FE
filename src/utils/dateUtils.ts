@@ -4,17 +4,24 @@ export const calculateDaysDifference = (dateStr: string): number => {
   const today = new Date();
   const date = new Date(dateStr);
 
-  const todayWithoutTime = Date.UTC(
-    today.getUTCFullYear(),
-    today.getUTCMonth(),
-    today.getUTCDate()
-  );
-
-  const dateWithoutTime = Date.UTC(
+  // 서버의 UTC 날짜를 로컬 시간대로 변환
+  const localDate = new Date(
     date.getUTCFullYear(),
     date.getUTCMonth(),
     date.getUTCDate()
   );
+
+  const todayWithoutTime = new Date(
+    today.getFullYear(),
+    today.getMonth(),
+    today.getDate()
+  ).getTime();
+
+  const dateWithoutTime = new Date(
+    localDate.getFullYear(),
+    localDate.getMonth(),
+    localDate.getDate()
+  ).getTime();
 
   return Math.floor(
     (todayWithoutTime - dateWithoutTime) / MILLISECONDS_PER_DAY

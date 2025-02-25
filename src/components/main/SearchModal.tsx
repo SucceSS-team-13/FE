@@ -2,11 +2,13 @@ import styles from "../../styles/main/SearchModal.module.less";
 import ActionIcon from "./ActionIcon";
 import { useState, useEffect, useRef } from "react";
 import { useInfiniteScroll } from "../../hook/useInfiniteScroll";
-import { getSearchChatRoomList } from "../../service/getChatting";
+import { getSearchChatRoomList } from "../../service/ChattingService";
 import { groupChatsByDate } from "../../utils/dateUtils";
 import Loading from "../../components/Loading";
 import { motion } from "framer-motion";
 import useThemeStore from "../../store/themeStore";
+import { useNavigate } from "react-router-dom";
+import { handleCreateChatRoom } from "../../utils/chatUtils";
 
 const SearchModal = ({
   setSearchModal,
@@ -15,6 +17,7 @@ const SearchModal = ({
   setSearchModal: (status: boolean) => void;
   searchModal: boolean;
 }) => {
+  const navigate = useNavigate();
   const [searchText, setSearchText] = useState<string>("");
   const [debouncedSearchText, setDebouncedSearchText] = useState<string>("");
   const modalRef = useRef<HTMLDivElement>(null);
@@ -64,7 +67,7 @@ const SearchModal = ({
     getNextPageParam: (lastPage) => lastPage.nextPage,
   });
   const searchChatRoomList =
-    searchChatRoomData?.pages.flatMap((page) => page.result || []) || [];
+    searchChatRoomData?.pages.flatMap((page) => page.result.content) || [];
   const groupedChats = groupChatsByDate(searchChatRoomList);
   return (
     <div className={styles.container}>
@@ -98,7 +101,12 @@ const SearchModal = ({
         >
           {!debouncedSearchText && (
             <div className={styles.newChatButton}>
-              <button>
+              <button
+                onClick={() => {
+                  handleCreateChatRoom(navigate);
+                  setSearchModal(false);
+                }}
+              >
                 <img src="/image/newChat.png" alt="newChat" />
                 <span>새 채팅</span>
               </button>
@@ -115,7 +123,7 @@ const SearchModal = ({
                   <span className={styles.chatRoomDate}>{date}</span>
                   {chats.map((chat) => (
                     <li
-                      key={chat.id}
+                      key={chat.chatRoomId}
                       className={`${styles.chatRoom} ${
                         isDarkMode ? styles.darkChatRoom : styles.lightChatRoom
                       }`}
@@ -126,7 +134,7 @@ const SearchModal = ({
                         <img src="/image/searchChat.png" alt="chat" />
                       )}
                       <a
-                        href={`/main/${chat.id}`}
+                        href={`/main?chatRoomId=${chat.chatRoomId}`}
                         className={styles.chatRoomLink}
                       >
                         {chat.title}
