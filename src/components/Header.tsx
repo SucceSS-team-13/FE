@@ -1,13 +1,12 @@
 import styles from "../styles/Header.module.less";
 import ThemeToggle from "./ThemeToggle";
-import useThemeStore from "../store/themeStore";
 import NavigationButton from "./NavigationButton";
 import { useNavigate } from "react-router-dom";
-const Header = () => {
-  const isDarkMode = useThemeStore((state) => state.isDarkMode);
-  console.log(isDarkMode);
+import useAuthStore from "../store/auth/AuthStore";
+const Header = ({ isDarkMode }: { isDarkMode: boolean }) => {
   const navigate = useNavigate();
-
+  const { user, logout } = useAuthStore();
+  console.log(user);
   return (
     <div
       className={`${styles.container} ${
@@ -26,7 +25,26 @@ const Header = () => {
               navigate("/");
             }}
           />
-          <NavigationButton text="로그인" onClick={() => navigate("/login")} />
+          {user && (
+            <div className={styles.userContainer}>
+              <img src={user.profileImgUrl} alt="프로필" />
+              <p>{user.nickname}</p>
+            </div>
+          )}
+          {user ? (
+            <NavigationButton
+              text="로그아웃"
+              onClick={() => {
+                logout();
+                navigate("/");
+              }}
+            />
+          ) : (
+            <NavigationButton
+              text="로그인"
+              onClick={() => navigate("/login")}
+            />
+          )}
         </div>
       </div>
     </div>
