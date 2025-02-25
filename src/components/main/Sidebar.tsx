@@ -1,10 +1,10 @@
 import styles from "../../styles/main/Sidebar.module.less";
-
 import Loading from "../Loading";
 import ActionIcon from "./ActionIcon";
 import { groupChatsByDate } from "../../utils/dateUtils";
 import useThemeStore from "../../store/themeStore";
-
+import { handleCreateChatRoom } from "../../utils/chatUtils";
+import { useNavigate } from "react-router-dom";
 const Sidebar = ({
   toggleSidebar,
   chatRoomList,
@@ -18,6 +18,7 @@ const Sidebar = ({
   isFetchingNextPage: boolean;
   setSearchModal: (status: boolean) => void;
 }) => {
+  const navigate = useNavigate();
   const groupedChats = groupChatsByDate(chatRoomList);
   const isDarkMode = useThemeStore((state) => state.isDarkMode);
 
@@ -43,7 +44,7 @@ const Sidebar = ({
           />
           <ActionIcon
             icon="/image/newChat.png"
-            onClick={() => {}}
+            onClick={() => handleCreateChatRoom(navigate)}
             size="small"
           />
         </div>
