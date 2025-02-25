@@ -1,8 +1,7 @@
 interface AuthUser {
-  id: string;
-  name: string;
-  profileImage?: string;
-  email?: string;
+  nickname: string;
+  profileImgUrl: string;
+  firstLogIn: boolean;
 }
 
 interface AuthState {

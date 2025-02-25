@@ -1,4 +1,5 @@
 import CustomAxios from "../api/CustomAxios";
+import useAuthStore from "../store/auth/AuthStore";
 
 export const getKaKaoLoginURL = () => {
   return `https://kauth.kakao.com/oauth/authorize?client_id=${
@@ -16,14 +17,28 @@ export const getToken = async (
 
     if (response.status === 200) {
       console.log(response);
-      const accessToken = response.data.result.accessToken;
-      const refreshToken = response.data.result.refreshToken;
-      const firstLogin = response.data.result.firstLogIn;
-      console.log("첫 로그인", firstLogin);
-      console.log("액세스 토큰", accessToken, "리프레쉬토큰", refreshToken);
-      window.localStorage.setItem("accessToken", accessToken);
-      window.localStorage.setItem("refreshToken", refreshToken);
-      window.localStorage.setItem("message", response.data.message);
+
+      const userData = response.data.result;
+      console.log("사용자 정보", userData);
+
+      useAuthStore.setState((state) => ({
+        ...state,
+        user: {
+          nickname: userData.nickname,
+          profileImgUrl: userData.profileImgUrl,
+          firstLogIn: userData.firstLogIn,
+        },
+        isAuthenticated: true,
+      }));
+      const firstLogin = userData.firstLogIn;
+      window.localStorage.setItem("accessToken", userData.accessToken);
+      window.localStorage.setItem("refreshToken", userData.refreshToken);
+      console.log(
+        "액세스 토큰",
+        userData.accessToken,
+        "리프레쉬토큰",
+        userData.refreshToken
+      );
 
       return { success: true, firstLogin };
     }
