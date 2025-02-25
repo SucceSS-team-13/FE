@@ -92,7 +92,7 @@ const LandingPage = ({ isDarkMode }: { isDarkMode: boolean }) => {
             <div className={styles.textLarge}>
               <Typewriter
                 text="당신의 오늘 하루는 어떠셨나요?"
-                cursorColor={isDarkMode ? "#000" : "#fff"}
+                cursorColor={isDarkMode ? "#121212" : "#fff"}
                 typeSpeed={100}
                 startDelay={500}
                 eraseSpeed={50}
