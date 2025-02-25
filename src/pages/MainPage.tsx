@@ -114,9 +114,9 @@ const MainPage = () => {
 
             // 첫 번째 페이지에 새 메시지 추가
             const updatedFirstPage = [
-              newLumiMessage,
-              newUserMessage,
               ...value.pages[0],
+              newUserMessage,
+              newLumiMessage,
             ];
 
             const newData = {
@@ -151,7 +151,7 @@ const MainPage = () => {
           if (value) {
             // 첫 번째 페이지의 두 번째 메시지(빈 AI 메시지)를 업데이트
             const updatedFirstPage = [...value.pages[0]];
-            updatedFirstPage[0] = lumiResponse;
+            updatedFirstPage[updatedFirstPage.length - 1] = lumiResponse;
 
             const newData = {
               pages: [updatedFirstPage, ...value.pages.slice(1)],
