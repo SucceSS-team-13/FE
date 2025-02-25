@@ -77,7 +77,7 @@ const LandingPage = ({ isDarkMode }: { isDarkMode: boolean }) => {
           isDarkMode ? styles.dark : styles.light
         }`}
       >
-        <Header />
+        <Header isDarkMode={isDarkMode} />
       </div>
       <div
         className={`${styles.firstContainer} ${

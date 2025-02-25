@@ -257,7 +257,7 @@ const MainPage = ({ isDarkMode }: { isDarkMode: boolean }) => {
             isDarkMode ? styles.darkHeader : styles.lightHeader
           }`}
         >
-          <Header />
+          <Header isDarkMode={isDarkMode} />
         </div>
         <div
           className={`${styles.chatContainer} ${
