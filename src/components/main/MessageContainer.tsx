@@ -23,10 +23,6 @@ const MessageContainer = ({
 }) => {
   const reversedMessages = [...messages].reverse();
 
-  useEffect(() => {
-    console.log("hasNextPage: ", hasNextPage, ", isFetchingNextChat: ", isFetchingNextChat, ", isThrotteled: ", isThrottled);
-  }, [hasNextPage, isFetchingNextChat, isThrottled])
-
   return (
     <div className={styles.messageContainer}>
       <div className={styles.messagesWrapper}>
