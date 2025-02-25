@@ -21,17 +21,16 @@ const MessageContainer = ({
   isFetchingNextChat: boolean;
   isThrottled: boolean;
 }) => {
-  const reversedMessages = [...messages].reverse();
 
   return (
     <div className={styles.messageContainer}>
       <div className={styles.messagesWrapper}>
-        {reversedMessages.length >= 10 && hasNextPage && !isFetchingNextChat && !isThrottled && (
+        {messages.length >= 10 && hasNextPage && !isFetchingNextChat && !isThrottled && (
           <div ref={lastElementRef} className={styles.loadingTrigger}>
             <LoadingSpinner size={"sm"} />
           </div>
         )}
-        {reversedMessages.map((message, index) => {
+        {messages.map((message, index) => {
           if (message.sender === "user") {
             return (
               <UserMessage message={message.text} key={message.id || index} />

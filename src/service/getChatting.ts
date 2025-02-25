@@ -38,7 +38,7 @@ export const getChatRoomList = async ({
   try {
     const response = await CustomAxios.get(
       // `/api/chatRoomList?page=${pageParam}`
-      `/api/chat/rooms?page=${pageParam}&size=10`
+      `/api/chat/rooms?page=${pageParam}&size=10&sort=sendDate`
     );
 
     console.log("채팅방 목록 가져오기", response.data.result.content);
