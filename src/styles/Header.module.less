@@ -25,6 +25,26 @@
       justify-content: end;
       width: 70%;
       height: 100%;
+      .userContainer {
+        padding: 1px 6px;
+        box-sizing: border-box;
+        min-width: 3rem;
+        width: auto;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        column-gap: 0.2rem;
+        img {
+          width: 20px;
+          height: 20px;
+          border-radius: 50%;
+        }
+        p {
+          color: @gray;
+          font-size: 1rem;
+        }
+      }
       button {
         background-color: transparent;
         border: none;
@@ -35,13 +55,9 @@
 }
 
 .dark {
-  .container {
-    background-color: @mainBlack;
-  }
+  background-color: @mainBlack;
 }
 
 .light {
-  .container {
-    background-color: @mainWhite;
-  }
+  background-color: @mainWhite;
 }
