@@ -67,3 +67,14 @@ export const getSearchChatRoomList = async ({
     throw err;
   }
 };
+
+export const createChatRoom = async () => {
+  try {
+    const response = await CustomAxios.post("/api/chat/room");
+    console.log("채팅방 생성 성공", response.data.result.chatRoomId);
+    return response.data.result.chatRoomId;
+  } catch (err) {
+    console.error("채팅방 생성 실패", err);
+    throw err;
+  }
+};
