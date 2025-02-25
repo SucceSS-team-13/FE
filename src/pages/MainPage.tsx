@@ -11,7 +11,11 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import CustomAxios from "../api/CustomAxios";
-import { getChatting, getChatRoomList } from "../service/getChatting";
+import {
+  getChatting,
+  getChatRoomList,
+  createChatRoom,
+} from "../service/ChattingService";
 import Sidebar from "../components/main/Sidebar";
 import { useSidebarStore } from "../store/SideBarStatusStore";
 import { useInfiniteScroll } from "../hook/useInfiniteScroll";
@@ -42,12 +46,11 @@ const MainPage = () => {
           setChatRoomId(parseInt(urlChatRoomId));
         } else {
           // URL에 chatRoomId가 없는 경우 새로운 채팅방 생성
-          const response = await CustomAxios.post("/api/chat/room");
-          const newChatRoomId = response.data.result.chatRoomId;
+          const newChatRoomId = await createChatRoom();
           setChatRoomId(newChatRoomId);
         }
       } catch (error) {
-        console.error("Failed to initialize chat room:", error);
+        console.error("채팅방 생성 실패:", error);
         alert("채팅방을 초기화하는데 실패했습니다.");
       }
     };
