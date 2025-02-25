@@ -23,8 +23,7 @@ import { useInfiniteScroll } from "../hook/useInfiniteScroll";
 import MessageContainer from "../components/main/MessageContainer";
 import ActionIcon from "../components/main/ActionIcon";
 import SearchModal from "../components/main/SearchModal";
-import useThemeStore from "../store/themeStore";
-const MainPage = () => {
+const MainPage = ({ isDarkMode }: { isDarkMode: boolean }) => {
   const [searchParams] = useSearchParams();
   const [inputValue, setInputValue] = useState("");
   const [messages, setMessages] = useState<Chat[]>([]);
@@ -34,7 +33,6 @@ const MainPage = () => {
   const queryClient = useQueryClient();
   const { sideBarStatus, toggleSidebar } = useSidebarStore();
   const [searchModal, setSearchModal] = useState(false);
-  const isDarkMode = useThemeStore((state) => state.isDarkMode);
   const navigate = useNavigate();
   // const chatRoomId = 1; //msw용 chatRoomId(0: 빈 채팅방, 1: 내용 있는 채팅방)
 

@@ -1,14 +1,12 @@
 import Logo from "../components/Logo";
 import styles from "../styles/LoginPage.module.less";
 import { getKaKaoLoginURL } from "../service/UserService";
-import useThemeStore from "../store/themeStore";
 
 const socialKaKaoLogin = () => {
   window.localStorage.setItem("provider", "kakao");
   window.location.href = getKaKaoLoginURL();
 };
-const LoginPage = () => {
-  const isDarkMode = useThemeStore((state) => state.isDarkMode);
+const LoginPage = ({ isDarkMode }: { isDarkMode: boolean }) => {
   return (
     <div
       className={`${styles.container} ${

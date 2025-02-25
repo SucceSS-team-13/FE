@@ -12,9 +12,8 @@ import Features from "../components/landing/Features";
 import Growth from "../components/landing/Growth";
 import Typewriter from "react-typewriter-effect";
 import { useRef, useState, useEffect } from "react";
-import useThemeStore from "../store/themeStore";
 
-const LandingPage = () => {
+const LandingPage = ({ isDarkMode }: { isDarkMode: boolean }) => {
   const helpRef = useRef<HTMLDivElement>(null);
   const productRef = useRef<HTMLDivElement>(null);
   const featuresRef = useRef<HTMLDivElement>(null);
@@ -23,7 +22,6 @@ const LandingPage = () => {
   const [productInView, setProductInView] = useState(false);
   const [featuresInView, setFeaturesInView] = useState(false);
   const [growthInView, setGrowthInView] = useState(false);
-  const isDarkMode = useThemeStore((state) => state.isDarkMode);
   useEffect(() => {
     const helpObserver = new IntersectionObserver(
       ([entry]) => {
