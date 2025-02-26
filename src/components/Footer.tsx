@@ -1,5 +1,5 @@
 import styles from "../styles/Footer.module.less";
-import useThemeStore from "../store/themeStore";
+import useThemeStore from "../store/ThemeStore";
 const Footer = () => {
   const isDarkMode = useThemeStore((state) => state.isDarkMode);
   return (

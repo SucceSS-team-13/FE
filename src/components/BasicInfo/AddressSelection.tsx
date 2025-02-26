@@ -1,7 +1,7 @@
 import { useState, FormEvent, ChangeEvent, useEffect } from "react";
 import { Search } from "lucide-react";
 import styles from "../../styles/BasicInfo/AddressSelection.module.less";
-import useThemeStore from "../../store/themeStore";
+import useThemeStore from "../../store/ThemeStore";
 declare global {
   interface Window {
     kakao: any;
@@ -25,14 +25,6 @@ const AddressSelection = ({
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isSDKLoaded, setIsSDKLoaded] = useState<boolean>(false);
   const isDarkMode = useThemeStore((state) => state.isDarkMode);
-
-  const dummyAddresses = [
-    "서울특별시 강남구 테헤란로 123",
-    "서울특별시 강남구 테헤란로 456 멋진빌딩",
-    "서울특별시 강남구 테헤란로 789 아름다운타워",
-    "서울특별시 서초구 서초대로 111",
-    "서울특별시 서초구 서초대로 222 행복빌딩",
-  ];
 
   useEffect(() => {
     const loadKakaoSDK = () => {

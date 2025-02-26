@@ -4,7 +4,7 @@ import LandingPage from "./pages/LandingPage";
 import AuthPage from "./pages/AuthPage";
 import MainPage from "./pages/MainPage";
 import LoginPage from "./pages/LoginPage";
-import useThemeStore from "./store/themeStore";
+import useThemeStore from "./store/ThemeStore";
 function App() {
   const isDarkMode = useThemeStore((state) => state.isDarkMode);
   return (
