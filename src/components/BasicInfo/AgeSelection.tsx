@@ -1,7 +1,7 @@
 import { FormEvent } from "react";
 import { GraduationCap, Briefcase, Users, Heart, School } from "lucide-react";
 import styles from "../../styles/BasicInfo/AgeSelection.module.less";
-import useThemeStore from "../../store/themeStore";
+import useThemeStore from "../../store/ThemeStore";
 type Props = {
   onNext: () => void;
   selectedAge: string;
