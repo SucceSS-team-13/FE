@@ -6,7 +6,7 @@ export const useInfiniteScroll = <T, TQueryKey extends readonly unknown[]>({
   queryKey,
   queryFn,
   getNextPageParam,
-  throttleMs = 3000,
+  throttleMs = 10000,
 }: UseInfiniteScrollProps<T, TQueryKey> & { throttleMs?: number }) => {
   const [isThrottled, setIsThrottled] = useState(false);
 
@@ -15,7 +15,7 @@ export const useInfiniteScroll = <T, TQueryKey extends readonly unknown[]>({
       queryKey: queryKey,
       queryFn: queryFn as QueryFunction<T, TQueryKey, number>,
       getNextPageParam,
-      initialPageParam: 1,
+      initialPageParam: 0,
     });
 
   const observer = useRef<IntersectionObserver | null>(null); // 마지막 요소인지 확인하기 위한 ref
@@ -66,7 +66,7 @@ export const useInfiniteScroll = <T, TQueryKey extends readonly unknown[]>({
     return () => cleanup();
   }, [cleanup]);
 
-  return { data, lastElementRef, isFetchingNextPage, isThrottled }; // 데이터, 마지막 요소 ref, 데이터를 가져오는 중인지 여부 반환
+  return { data, lastElementRef, isFetchingNextPage, isThrottled, hasNextPage }; // 데이터, 마지막 요소 ref, 데이터를 가져오는 중인지 여부 반환
 };
 
 interface UseInfiniteScrollProps<T, TQueryKey extends readonly unknown[]> {
