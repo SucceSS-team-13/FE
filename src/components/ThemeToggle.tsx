@@ -1,4 +1,4 @@
-import useThemeStore from "../store/themeStore";
+import useThemeStore from "../store/ThemeStore";
 import styles from "../styles/ThemeToggle.module.less";
 const ThemeToggle = () => {
   const { isDarkMode, toggleTheme } = useThemeStore();
