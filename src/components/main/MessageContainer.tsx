@@ -1,4 +1,4 @@
-import { RefObject, useEffect } from "react";
+import { RefObject } from "react";
 import AIMessage from "./AIMessage";
 import UserMessage from "./UserMessage";
 import styles from "../../styles/main/MainPage.module.less";
@@ -11,7 +11,6 @@ const MessageContainer = ({
   hasNextPage,
   lastElementRef,
   isFetchingNextChat,
-  isThrottled,
 }: {
   messages: Chat[];
   isPending: boolean;
@@ -19,16 +18,15 @@ const MessageContainer = ({
   hasNextPage: boolean | undefined;
   lastElementRef: (node: HTMLElement | null) => void;
   isFetchingNextChat: boolean;
-  isThrottled: boolean;
 }) => {
   const reversedMessages = [...messages].reverse();
 
   return (
     <div className={styles.messageContainer}>
       <div className={styles.messagesWrapper}>
-        {reversedMessages.length >= 10 && hasNextPage && !isFetchingNextChat && !isThrottled && (
+        {hasNextPage && (
           <div ref={lastElementRef} className={styles.loadingTrigger}>
-            <LoadingSpinner size={"sm"} />
+            {isFetchingNextChat && <LoadingSpinner size={"sm"} />}
           </div>
         )}
         {reversedMessages.map((message, index) => {

@@ -63,20 +63,18 @@ const MainPage = ({ isDarkMode }: { isDarkMode: boolean }) => {
     data: chatting,
     lastElementRef: messageLastElementRef,
     isFetchingNextPage: isFetchingNextChat,
-    isThrottled,
+    hasNextPage,
   } = useInfiniteScroll<Chat[], [string, number]>({
     queryKey: ["chatting", chatRoomId!],
-    queryFn: async (context) => {
-      // chatRoomId가 null일 때 빈 배열을 반환
-      if (!chatRoomId) return [];
-      return getChatting(context);
-    },
+    queryFn: getChatting,
     getNextPageParam: (lastPage, allPages) => {
-      return lastPage.length === 10 ? allPages.length + 1 : undefined;
+       //데이터가 10개 보다 적으면 다음 페이지 없음(undefined)
+       if(lastPage.length < 10) {
+        return undefined;
+       }
+       return allPages.length;
     },
   });
-
-  console.log("chatRoomId: ", chatRoomId, "chatting: ", chatting);
 
   useEffect(() => {
     if (chatting) {
@@ -192,7 +190,6 @@ const MainPage = ({ isDarkMode }: { isDarkMode: boolean }) => {
     },
   });
 
-  console.log("chatRoomData", chatRoomData);
   const chatRooms =
     chatRoomData?.pages.flatMap((page) => page.result.content) || [];
 
@@ -274,10 +271,9 @@ const MainPage = ({ isDarkMode }: { isDarkMode: boolean }) => {
             messages={messages}
             isPending={postChat.isPending}
             messageEndRef={messageEndRef}
-            hasNextPage={!!chatting?.pages[chatting.pages.length - 1]?.length}
+            hasNextPage={hasNextPage}
             isFetchingNextChat={isFetchingNextChat}
             lastElementRef={messageLastElementRef}
-            isThrottled={isThrottled}
           />
           <div className={styles.bottomContainer}>
             <GuideBar guideBar={CHAT_GUIDE} setInputValue={setInputValue} />
