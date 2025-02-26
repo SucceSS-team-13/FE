@@ -30,7 +30,7 @@ interface ChatRoomResponse {
       // paged: boolean;
       // unpaged: boolean;
     };
-    // last: boolean;
+    last: boolean;
     // first: boolean;
     // numberOfElements: number;
     // empty: boolean;

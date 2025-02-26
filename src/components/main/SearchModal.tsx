@@ -64,7 +64,11 @@ const SearchModal = ({
       });
       return response;
     },
-    getNextPageParam: (lastPage) => lastPage.result.pageable.pageNumber + 1,
+    getNextPageParam: (lastPage) => {
+      return !lastPage.result.last
+        ? lastPage.result.pageable.pageNumber + 1
+        : undefined;
+    },
   });
   const searchChatRoomList =
     searchChatRoomData?.pages.flatMap((page) => page.result.content) || [];
