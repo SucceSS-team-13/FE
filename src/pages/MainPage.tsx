@@ -183,7 +183,7 @@ const MainPage = ({ isDarkMode }: { isDarkMode: boolean }) => {
       const response = await getChatRoomList({ pageParam });
       return response;
     },
-    getNextPageParam: (lastPage) => lastPage.nextPage,
+    getNextPageParam: (lastPage) => lastPage.result.pageable.pageNumber + 1,
   });
 
   console.log("chatRoomData", chatRoomData);

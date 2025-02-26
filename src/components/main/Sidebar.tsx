@@ -79,7 +79,7 @@ const Sidebar = ({
                     </a>
                   </li>
                 ))}
-                <div ref={lastElementRef}></div>
+                <div ref={lastElementRef} className={styles.endRef}></div>
               </div>
             ))}
             {isFetchingNextPage && (
