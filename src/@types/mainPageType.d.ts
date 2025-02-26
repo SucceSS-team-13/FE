@@ -23,6 +23,16 @@ interface ChatRoomResponse {
     content: ChatRoom[];
     totalElements: number;
     totalPages: number;
+    pageable: {
+      pageNumber: number;
+      // pageSize: number; // 현재 미사용 타입이지만 서버 응답구조에 맞춘 타입 정의
+      // offset: number;
+      // paged: boolean;
+      // unpaged: boolean;
+    };
+    // last: boolean;
+    // first: boolean;
+    // numberOfElements: number;
+    // empty: boolean;
   };
-  nextPage: number | undefined;
 }
