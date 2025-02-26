@@ -10,7 +10,6 @@ const CustomAxios = axios.create({
 CustomAxios.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("accessToken");
-    console.log("저장된 토큰:", token);
 
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
