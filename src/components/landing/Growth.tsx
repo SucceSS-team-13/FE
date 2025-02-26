@@ -6,7 +6,7 @@ import { GROWTH_INFORMATION } from "../../data/growthInformation";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import useThemeStore from "../../store/themeStore";
+import useThemeStore from "../../store/ThemeStore";
 
 const Growth = ({ growthInView }: { growthInView: boolean }) => {
   const isDarkMode = useThemeStore((state) => state.isDarkMode);

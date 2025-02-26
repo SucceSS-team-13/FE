@@ -2,7 +2,7 @@ import { FormEvent, useState } from "react";
 import { Check } from "lucide-react";
 import styles from "../../styles/BasicInfo/HobbySelection.module.less";
 import { HOBBY_CATEGORIES } from "../../data/hobby";
-import useThemeStore from "../../store/themeStore";
+import useThemeStore from "../../store/ThemeStore";
 
 type Props = {
   onNext: () => void;

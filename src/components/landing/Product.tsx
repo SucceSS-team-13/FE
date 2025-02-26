@@ -2,7 +2,7 @@ import styles from "../../styles/landing/Product.module.less";
 import { motion } from "framer-motion";
 import ChatPreview from "./ChatPreview";
 import { CHAT_RESPONSES } from "../../data/chatResponses";
-import useThemeStore from "../../store/themeStore";
+import useThemeStore from "../../store/ThemeStore";
 
 const Product = ({ productInView }: { productInView: boolean }) => {
   const isDarkMode = useThemeStore((state) => state.isDarkMode);

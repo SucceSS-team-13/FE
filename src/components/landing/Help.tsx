@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import useThemeStore from "../../store/themeStore";
+import useThemeStore from "../../store/ThemeStore";
 const Help = ({
   serviceInformation,
   helpInView,

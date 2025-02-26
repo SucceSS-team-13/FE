@@ -2,7 +2,7 @@ import styles from "../../styles/landing/Features.module.less";
 import { motion } from "framer-motion";
 import ChatPreview from "./ChatPreview";
 import { CHAT_SOLUTION } from "../../data/chatSolution";
-import useThemeStore from "../../store/themeStore";
+import useThemeStore from "../../store/ThemeStore";
 
 const Features = ({ featuresInView }: { featuresInView: boolean }) => {
   const isDarkMode = useThemeStore((state) => state.isDarkMode);

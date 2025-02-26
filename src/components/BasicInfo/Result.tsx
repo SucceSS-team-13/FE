@@ -1,6 +1,6 @@
 import { MessageCircle } from "lucide-react";
 import styles from "../../styles/BasicInfo/Result.module.less";
-import useThemeStore from "../../store/themeStore";
+import useThemeStore from "../../store/ThemeStore";
 type Props = {
   onChatStart: () => void;
   result: string;

@@ -2,7 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import styles from "../../styles/main/AIMessage.module.less";
 import LoadingSpinner from "../LoadingSpinner";
 import ContentInfo from "./ContentInfo";
-import useThemeStore from "../../store/themeStore";
+import useThemeStore from "../../store/ThemeStore";
+
 declare global {
   interface Window {
     kakao: any;
@@ -20,20 +21,20 @@ const AIMessage = ({
 }) => {
   const isDarkMode = useThemeStore((state) => state.isDarkMode);
   const mapRef = useRef<HTMLDivElement>(null);
-  const [map, setMap] = useState<any>(null);
-  const [bounds, setBounds] = useState<any>(null);
+  const mapInstance = useRef<any>(null);
+  const boundsInstance = useRef<any>(null);
   const [infowindow, setInfowindow] = useState<any>(null);
 
   useEffect(() => {
     if (!isLoading && location && location.length > 0 && mapRef.current) {
       const geocoder = new window.kakao.maps.services.Geocoder();
-      const bounds = new window.kakao.maps.LatLngBounds();
+      const newBounds = new window.kakao.maps.LatLngBounds();
 
-      const infowindow = new window.kakao.maps.InfoWindow({
+      const newInfowindow = new window.kakao.maps.InfoWindow({
         removable: false,
         zIndex: 1,
       });
-      setInfowindow(infowindow);
+      setInfowindow(newInfowindow);
 
       // 첫 번째 위치로 지도 초기화
       geocoder.addressSearch(location[0], (result: any, status: any) => {
@@ -48,8 +49,9 @@ const AIMessage = ({
             level: 3,
           });
 
-          setMap(newMap);
-          setBounds(bounds);
+          // ref로 인스턴스 참조를 저장
+          mapInstance.current = newMap;
+          boundsInstance.current = newBounds;
 
           // 모든 위치 처리
           location.forEach((address) => {
@@ -79,12 +81,12 @@ const AIMessage = ({
 
                 // 마커 마우스오버 이벤트 처리
                 window.kakao.maps.event.addListener(marker, "mouseover", () => {
-                  infowindow.setContent(content);
-                  infowindow.open(newMap, marker);
+                  newInfowindow.setContent(content);
+                  newInfowindow.open(newMap, marker);
                 });
 
                 window.kakao.maps.event.addListener(marker, "mouseout", () => {
-                  infowindow.close();
+                  newInfowindow.close();
                 });
 
                 // 카카오맵으로 이동하는 클릭 이벤트 추가
@@ -96,11 +98,11 @@ const AIMessage = ({
                 });
 
                 // 위치를 경계에 추가
-                bounds.extend(coords);
+                newBounds.extend(coords);
 
                 // 마지막 위치 처리 후 지도 경계 설정
                 if (address === location[location.length - 1]) {
-                  newMap.setBounds(bounds);
+                  newMap.setBounds(newBounds);
                 }
               }
             });
@@ -115,7 +117,7 @@ const AIMessage = ({
         }
       };
     }
-  }, [location, isLoading]);
+  }, [location, isLoading]); 
 
   return (
     <div className={styles.container}>

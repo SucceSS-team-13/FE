@@ -1,7 +1,7 @@
 import { FormEvent } from "react";
 import { Users, User, Heart, Brain } from "lucide-react";
 import styles from "../../styles/BasicInfo/PersonalitySelection.module.less";
-import useThemeStore from "../../store/themeStore";
+import useThemeStore from "../../store/ThemeStore";
 type Props = {
   onNext: () => void;
   energyType: string;

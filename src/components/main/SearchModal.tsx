@@ -6,7 +6,7 @@ import { getSearchChatRoomList } from "../../service/ChattingService";
 import { groupChatsByDate } from "../../utils/dateUtils";
 import Loading from "../../components/Loading";
 import { motion } from "framer-motion";
-import useThemeStore from "../../store/themeStore";
+import useThemeStore from "../../store/ThemeStore";
 import { useNavigate } from "react-router-dom";
 import { handleCreateChatRoom } from "../../utils/chatUtils";
 

@@ -2,7 +2,7 @@ import styles from "../../styles/main/Sidebar.module.less";
 import Loading from "../Loading";
 import ActionIcon from "./ActionIcon";
 import { groupChatsByDate } from "../../utils/dateUtils";
-import useThemeStore from "../../store/themeStore";
+import useThemeStore from "../../store/ThemeStore";
 import { handleCreateChatRoom } from "../../utils/chatUtils";
 import { useNavigate } from "react-router-dom";
 const Sidebar = ({

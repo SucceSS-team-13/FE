@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Logo from "../Logo";
 import styles from "../../styles/BasicInfo/Loading.module.less";
-import useThemeStore from "../../store/themeStore";
+import useThemeStore from "../../store/ThemeStore";
 import { submitSurvey, getProfile } from "../../service/UserService";
 
 const Loading = ({

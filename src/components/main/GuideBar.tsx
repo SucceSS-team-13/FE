@@ -1,5 +1,5 @@
 import styles from "../../styles/main/GuideBar.module.less";
-import useThemeStore from "../../store/themeStore";
+import useThemeStore from "../../store/ThemeStore";
 
 const GuideBar = ({
   guideBar,

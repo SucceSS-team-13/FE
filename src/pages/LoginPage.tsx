@@ -27,7 +27,7 @@ const LoginPage = ({ isDarkMode }: { isDarkMode: boolean }) => {
               로그인을 통해 오늘 어땠어? 서비스를 만나보세요!
             </p>
             <button onClick={socialKaKaoLogin}>
-              <img src="../../public/image/kakao.png" />
+              <img src="/image/kakao.png" />
             </button>
           </div>
         </div>

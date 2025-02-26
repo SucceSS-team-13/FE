@@ -1,5 +1,5 @@
 import styles from "../../styles/main/ChatInput.module.less";
-import useThemeStore from "../../store/themeStore";
+import useThemeStore from "../../store/ThemeStore";
 const ChatInput = ({
   handleSendMessage,
   inputValue,
