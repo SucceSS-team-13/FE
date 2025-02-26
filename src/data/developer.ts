@@ -52,7 +52,7 @@ export const DEVELOPERS: Developer[] = [
     university: "성신여대",
     role: "AI/ML Developer",
     position: "",
-    image: "/image/developer1.png",
+    image: "/image/developer7.png",
     portfolio: "",
   },
 ];
