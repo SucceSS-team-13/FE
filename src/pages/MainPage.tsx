@@ -76,6 +76,8 @@ const MainPage = ({ isDarkMode }: { isDarkMode: boolean }) => {
     },
   });
 
+  console.log("chatRoomId: ", chatRoomId, "chatting: ", chatting);
+
   useEffect(() => {
     if (chatting) {
       const flattenedMessages = chatting.pages.flat();
@@ -118,9 +120,9 @@ const MainPage = ({ isDarkMode }: { isDarkMode: boolean }) => {
 
             // 첫 번째 페이지에 새 메시지 추가
             const updatedFirstPage = [
-              ...value.pages[0],
-              newUserMessage,
               newLumiMessage,
+              newUserMessage,
+              ...value.pages[0],
             ];
 
             const newData = {
@@ -155,7 +157,7 @@ const MainPage = ({ isDarkMode }: { isDarkMode: boolean }) => {
           if (value) {
             // 첫 번째 페이지의 두 번째 메시지(빈 AI 메시지)를 업데이트
             const updatedFirstPage = [...value.pages[0]];
-            updatedFirstPage[updatedFirstPage.length - 1] = lumiResponse;
+            updatedFirstPage[0] = lumiResponse;
 
             const newData = {
               pages: [updatedFirstPage, ...value.pages.slice(1)],
