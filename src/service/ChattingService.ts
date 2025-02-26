@@ -37,11 +37,8 @@ export const getChatRoomList = async ({
 }) => {
   try {
     const response = await CustomAxios.get(
-      // `/api/chatRoomList?page=${pageParam}`
       `/api/chat/rooms?page=${pageParam}&size=10`
     );
-
-    // console.log("채팅방 목록 가져오기", response.data.result.content);
     return response.data;
   } catch (err) {
     console.error("Failed to fetch data", err);
@@ -58,9 +55,8 @@ export const getSearchChatRoomList = async ({
 }) => {
   try {
     const response = await CustomAxios.get(
-      `/api/searchChatRoomList?page=${pageParam}&search=${searchText}`
+      `/api/chat/rooms?page=${pageParam}&size=10&keyword=${searchText}`
     );
-    console.log("검색 api 호출", response.data.result);
     return response.data;
   } catch (err) {
     console.error("Failed to fetch data", err);
@@ -71,7 +67,6 @@ export const getSearchChatRoomList = async ({
 export const createChatRoom = async () => {
   try {
     const response = await CustomAxios.post("/api/chat/room");
-    console.log("채팅방 생성 성공", response.data.result.chatRoomId);
     return response.data.result.chatRoomId;
   } catch (err) {
     console.error("채팅방 생성 실패", err);
