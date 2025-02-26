@@ -16,10 +16,8 @@ export const getToken = async (
     );
 
     if (response.status === 200) {
-      console.log(response);
 
       const userData = response.data.result;
-      console.log("사용자 정보", userData);
 
       useAuthStore.setState((state) => ({
         ...state,
@@ -33,12 +31,6 @@ export const getToken = async (
       const firstLogin = userData.firstLogIn;
       window.localStorage.setItem("accessToken", userData.accessToken);
       window.localStorage.setItem("refreshToken", userData.refreshToken);
-      console.log(
-        "액세스 토큰",
-        userData.accessToken,
-        "리프레쉬토큰",
-        userData.refreshToken
-      );
 
       return { success: true, firstLogin };
     }

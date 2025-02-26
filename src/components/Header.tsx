@@ -6,7 +6,6 @@ import useAuthStore from "../store/auth/AuthStore";
 const Header = ({ isDarkMode }: { isDarkMode: boolean }) => {
   const navigate = useNavigate();
   const { user, logout } = useAuthStore();
-  console.log(user);
   return (
     <div
       className={`${styles.container} ${
