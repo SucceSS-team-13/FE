@@ -1,0 +1,9 @@
+{
+  "rewrites": [{ "source": "/(.*)", "destination": "/" }],
+  "headers": [
+    {
+      "source": "/(.*)\\.tsx",
+      "headers": [{ "key": "Content-Type", "value": "application/typescript" }]
+    }
+  ]
+}
