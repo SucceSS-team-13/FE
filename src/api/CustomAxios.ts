@@ -1,8 +1,7 @@
 import axios from "axios";
 
 const CustomAxios = axios.create({
-  // SSL 인증서 발급받으면 다시 사용할 예정
-  // baseURL: import.meta.env.VITE_BASE_URL,
+  baseURL: import.meta.env.VITE_BASE_URL,
   headers: {
     "Content-Type": "application/json",
   },
