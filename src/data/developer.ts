@@ -28,7 +28,7 @@ export const DEVELOPERS: Developer[] = [
     university: "숙명여대",
     role: "Backend Developer",
     position: "",
-    image: "/image/developer1.png",
+    image: "/image/developer4.png",
     portfolio: "",
   },
   {
