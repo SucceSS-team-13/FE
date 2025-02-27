@@ -15,29 +15,51 @@ export const getToken = async (
       `/api/auth/sign-in/kakao?code=${authCode}`
     );
 
-    if (response.status === 200) {
-
+    if (response.status === 200 && response.data && response.data.result) {
       const userData = response.data.result;
+      
+      // 응답 데이터 구조 디버깅
+      console.log("Response data structure:", JSON.stringify(response.data, null, 2));
+      
+      // userData가 있고 필요한 속성들이 존재하는지 확인
+      if (userData) {
+        // 안전하게 상태 업데이트
+        useAuthStore.setState((state) => ({
+          ...state,
+          user: {
+            nickname: userData.nickname || '',  // 기본값 제공
+            profileImgUrl: userData.profileImgUrl || '',
+            firstLogIn: userData.firstLogIn || false,
+          },
+          isAuthenticated: true,
+        }));
+        
+        const firstLogin = userData.firstLogIn || false;
+        
+        // 토큰이 있는 경우에만 저장
+        if (userData.accessToken) {
+          window.localStorage.setItem("accessToken", userData.accessToken);
+        } else {
+          console.warn("Access token is missing in the response");
+        }
+        
+        if (userData.refreshToken) {
+          window.localStorage.setItem("refreshToken", userData.refreshToken);
+        } else {
+          console.warn("Refresh token is missing in the response");
+        }
 
-      useAuthStore.setState((state) => ({
-        ...state,
-        user: {
-          nickname: userData.nickname,
-          profileImgUrl: userData.profileImgUrl,
-          firstLogIn: userData.firstLogIn,
-        },
-        isAuthenticated: true,
-      }));
-      const firstLogin = userData.firstLogIn;
-      window.localStorage.setItem("accessToken", userData.accessToken);
-      window.localStorage.setItem("refreshToken", userData.refreshToken);
-
-      return { success: true, firstLogin };
+        return { success: true, firstLogin };
+      } else {
+        console.error("User data is undefined or incomplete in the response");
+        return { success: false, firstLogin: false };
+      }
     }
 
+    console.error("Response unsuccessful or missing data", response);
     return { success: false, firstLogin: false };
   } catch (error) {
-    console.log(error);
+    console.error("Error in getToken:", error);
     return { success: false, firstLogin: false };
   }
 };
