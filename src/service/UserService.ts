@@ -4,7 +4,7 @@ import useAuthStore from "../store/auth/AuthStore";
 export const getKaKaoLoginURL = () => {
   return `https://kauth.kakao.com/oauth/authorize?client_id=${
     import.meta.env.VITE_KAKAO_CLIENT_ID
-  }&redirect_uri=${import.meta.env.VITE_KAKAO_REDIRECT_URI}&response_type=code&prompt=login`;
+  }&redirect_uri=${import.meta.env.VITE_KAKAO_REDIRECT_URI}&response_type=code`;
 };
 
 export const getToken = async (
