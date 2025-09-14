@@ -1,50 +1,108 @@
-# React + TypeScript + Vite
+# 🌱 AI 심리 상담 서비스 "오늘 어땠어"
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/093697af-0ccf-49a2-88ea-d2b453ddde19" width="25%">
+</div>
 
-Currently, two official plugins are available:
+- 배포 URL : https://hairwhere.vercel.app](https://how-was-your-day.vercel.app
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+⚠️ 현재는 랜딩 페이지(로그인 전 화면)만 열람하실 수 있습니다.
 
-## Expanding the ESLint configuration
+<br>
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+## 프로젝트 소개
 
-- Configure the top-level `parserOptions` property like this:
+오늘 어땠어는 마음속 이야기를 편하게 털어놓을 수 있는 AI 심리 상담 서비스입니다.<br>
+대표 아이콘인 **루미**는 빛에 반사된 깨진 유리 조각을 형상화했으며, 이는 각기 다른 모양의 조각처럼 사람마다 품고 있는 고민도 저마다 다르다는 의미를 담고 있습니다.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+서비스 속 루미는 접속할 때마다 조금씩 다른 형태로 표현됩니다. 이는 각자의 고민이 다르듯, 루미 역시 늘 같은 모습이 아니라는 것을 상징합니다.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+오늘 어땠어는 말하기 어려운 감정을 AI에게 솔직하게 전하고, 따뜻한 공감과 위로를 받을 수 있도록 돕습니다.<br>
+인간관계의 부담 없이 자신의 감정을 정리하고, 필요한 조언과 해결책을 얻을 수 있도록 AI 루미가 함께합니다.
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
+작은 대화 하나가 더 나은 하루를 만드는 데 도움이 되기를 바랍니다.
+언제든 오늘 어땠어는 당신의 이야기를 들어줄 준비가 되어 있습니다.
 
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+<br>
+
+## 팀원 구성
+
+<h3 align="center">Frontend</h3>
+
+<div align="center">
+
+| **김산호** | **이만재** |
+| :------: |  :------: |
+| [<img src="https://github.com/coral0723.png" height=150 width=150> <br/> @coral0723](https://github.com/coral0723) | [<img src="https://github.com/leemanjae02.png" height=150 width=150> <br/> @leemanjae02](https://github.com/leemanjae02) | 
+</div>
+
+<br>
+
+## 1. 개발 스택
+
+<br>
+
+<div align="center">
+  <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black" alt="React" />
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/TanStack%20Query-FF4154?style=for-the-badge&logo=react-query&logoColor=white" alt="TanStack Query" />
+  <img src="https://img.shields.io/badge/Zustand-333333?style=for-the-badge&logo=zustand&logoColor=white" alt="Zustand" />
+  <img src="https://img.shields.io/badge/Less-1D365D?style=for-the-badge&logo=less&logoColor=white" alt="Less" />
+  <img src="https://img.shields.io/badge/MSW-84A3FD?style=for-the-badge&logo=mock-service-worker&logoColor=white" alt="Mock Service Worker" />
+  <img src="https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white" alt="Vite" />
+<img src="https://img.shields.io/badge/Axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white" alt="Axios" />
+  <img src="https://img.shields.io/badge/Vercel-000000?style=for-the-badge&logo=vercel&logoColor=white" alt="Vercel" />
+  <img src="https://img.shields.io/badge/Kakao%20API-FFCD00?style=for-the-badge&logo=kakao&logoColor=black" alt="Kakao API" />
+</div>
+
+<br>
+
+## 2. 브랜치 전략
+
+- Git-flow 전략을 기반으로 main, develop 브랜치와 feature, fix, style 등의 보조 브랜치를 운용했습니다.
+- main, develop 브랜치로 나누고 develop 브랜치에서 이슈의 종류에 맞는 브랜치를 다시 나누어 개발을 하였습니다.
+    - **main** 브랜치는 배포 단계에서만 사용하는 브랜치입니다.
+    - **develop** 브랜치는 개발 단계에서 git-flow의 master 역할을 하는 브랜치입니다.
+    - **feature**, **fix**, **style** 브랜치는 기능 단위로 독립적인 개발 환경을 위하여 사용하고 merge 후 각 브랜치를 삭제해주었습니다.
+
+<br>
+
+## 3. 담당 기능
+
+### 💪이만재
+
+- **로그인 페이지**
+  - 카카오 소셜 로그인 구현
+- **랜딩 페이지**
+  - Three.js를 사용한 3D 로고 구현
+  - Help, Product, Features, Growth, Developer, Guide 컴포넌트 구현
+  - Header, Footer 컴포넌트 구현
+- **채팅 페이지**
+  - SideBar 컴포넌트 구현 및 인피니트 스크롤 적용
+  - 채팅 검색 모달 컴포넌트 구현 및 인피니트 스크롤, 디바운스 적용
+- **전역 상태 관리**
+  - 로그인 상태 관리
+  - SideBar 상태 관리
+  - 테마 상태 관리
+- **다크모드 구현**
+
+<br>
+
+### 🪸김산호
+- **설문조사 페이지**
+    - 나이, 거주지, 성향, 취미 설문 조사 컴포넌트 구현
+- **설문조사 분석 결과 페이지**
+    - 3D 로고를 사용한 로딩 컴포넌트 구현
+    - 설문조사 분석 결과 컴포넌트 구현
+- **채팅 페이지**
+    - 채팅 전송 기능 구현
+    - 채팅 내역 인피니트 스크롤링 적용
+    - 카카오 맵 API를 활용한 솔루션 기능 구현
+- **MSW 환경 구축**
+- **Vercel을 사용한 배포**
+    
+    
+<br>
+
+
+<br>
