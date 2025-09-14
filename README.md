@@ -113,6 +113,7 @@
 
 <br>
 <br>
+<br>
 
 <p align="center">
   <img width="1442" height="608" alt="Image" src="https://github.com/user-attachments/assets/9cdb38db-2418-4061-8aee-43b56c84150a" />
@@ -122,6 +123,9 @@
 - 연령대 정보를 기반으로, 각 나이대가 즐겨 하는 활동이나 선호도를 반영한 맞춤형 솔루션을 제공합니다.
 
 <br>
+<br>
+<br>
+
 
 <p align="center">
   <img width="1444" height="395" alt="Image" src="https://github.com/user-attachments/assets/19c175b8-bcfe-4b9e-8b58-e8569930ef31" />
@@ -130,6 +134,8 @@
 - 사용자의 주소를 입력받아, 거주지와 가까운 활동 장소나 도움 받을 수 있는 공간을 추천합니다.
 - 이를 통해 상담이 단순한 위로에 그치지 않고, 실제 생활에 도움이 되는 솔루션을 제공합니다.
 
+<br>
+<br>
 <br>
 
 <p align="center">
@@ -142,6 +148,8 @@
 - 감정형은 따뜻한 위로 중심의 대답을, 이성형은 현실적이고 실질적인 조언을 받을 수 있습니다.
 
 <br>
+<br>
+<br>
 
 <p align="center">
   <img width="1444" height="764" alt="Image" src="https://github.com/user-attachments/assets/35bd3baa-2f38-41c9-b509-571e83258cc1" />
@@ -151,6 +159,8 @@
 - 입력된 취미에 따라, 사용자에게 보다 개인화된 추천과 솔루션을 제공합니다.
 
 <br>
+<br>
+<br>
 
 <div align="center">
   <img src="https://github.com/user-attachments/assets/06f83029-cd11-4555-8cb4-2c4051d13529" width="100%">
@@ -159,5 +169,50 @@
 - 사용자가 입력한 정보를 바탕으로 루미가 성향 분석 결과를 제공합니다.
 - 이를 통해 이후에는 루미와 본격적인 상담을 진행할 수 있습니다.
 
+<br>
 
+### [💬 채팅 상담 페이지]
 
+<p align="center">
+  <img width="1445" height="764" alt="Image" src="https://github.com/user-attachments/assets/9ddf0211-1993-450f-9879-d2fead23c634" />
+</p>
+
+- 사용자는 AI 루미와 자유롭게 대화를 나눌 수 있습니다.
+- 채팅 입력창 위의 메시지 버튼을 누르면, 자동으로 예시 메시지가 입력창에 채워져 간편하게 대화를 시작할 수 있습니다.
+
+<br>
+<br>
+<br>
+
+<p align="center">
+  <img width="1445" height="764" alt="Image" src="https://github.com/user-attachments/assets/7e13a4bc-b6d4-485c-8856-58fb3cceea06" />
+</p>
+
+- **루미**는 대화 내용을 분석해 단순한 대화만으로 해결이 어렵다고 판단될 경우, 사용자가 입력한 주소 정보를 기반으로 지도를 함께 보여주며 외부 활동 장소를 추천합니다.
+- 이를 통해 상담이 단순한 공감을 넘어, 실질적인 해결책으로 이어질 수 있습니다.
+
+<br>
+<br>
+<br>
+
+<p align="center">
+  <img width="1445" height="764" alt="Image" src="https://github.com/user-attachments/assets/31a3f587-832b-4733-8be5-1026f27e411a" />
+</p>
+
+- 좌측 사이드바에서 최근 채팅 내역을 확인할 수 있습니다.
+  - 🔍 돋보기 버튼 : 채팅 내역 검색
+  - ✏️ 연필 버튼 : 새로운 채팅방 생성
+
+<br>
+<br>
+<br>
+
+<p align="center">
+  <img width="1445" height="764" alt="Image" src="https://github.com/user-attachments/assets/1b04d3d0-ff13-49cf-aeca-6b1e4b6b159c" />
+</p>
+
+- 우측 상단의 아이콘을 클릭하면 다크 모드로 전환할 수 있어, 사용자 취향에 맞는 환경에서 상담을 이어갈 수 있습니다.
+
+<br>
+<br>
+<br>
