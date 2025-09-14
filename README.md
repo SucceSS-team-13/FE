@@ -216,3 +216,26 @@
 <br>
 <br>
 <br>
+
+## 5. 프로젝트 구조
+
+```
+src/
+├── @types/            # 프로젝트 전반에서 사용하는 타입 정의 (.d.ts)
+├── api/               # API 관련 설정 (예: CustomAxios.ts)
+├── components/        # 각 페이지 및 공통 UI 컴포넌트
+├── constants/         # 상수 모음 (날짜 그룹, 밀리초 단위 등)
+├── data/              # MSW용 더미 데이터 및 페이지별 데이터
+├── hook/              # 커스텀 훅
+├── mocks/             # MSW(Mock Service Worker) 관련 파일
+├── pages/             # 페이지 컴포넌트 (AuthPage, BasicInfoPage, LandingPage, LoginPage, MainPage 등)
+├── service/           # API 요청 함수
+├── store/             # 전역 상태 관리 (zustand) — 로그인 사용자 정보 등
+├── styles/            # 스타일 파일 (Less)
+├── utils/             # 공용 유틸 함수
+├── App.tsx            # 라우팅 처리 (URL 식별 후 페이지 연결)
+├── main.tsx           # 진입 파일
+└── vite-env.d.ts      # Vite 환경 타입 정의
+```
+
+<br>
