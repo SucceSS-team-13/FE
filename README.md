@@ -104,5 +104,60 @@
     
 <br>
 
+## 4. 주요 기능
+
+### [📝 맞춤형 초기 설문 페이지]
+
+회원가입 후 가장 먼저 진행하는 단계로, 사용자의 나이, 주소, 성향, 취미를 입력받습니다.<br>
+이는 단순히 대화를 이어가는 데 그치지 않고, 사용자에게 실질적인 맞춤형 솔루션을 제공하기 위해 필요한 과정입니다. 
 
 <br>
+<br>
+
+<p align="center">
+  <img width="1442" height="608" alt="Image" src="https://github.com/user-attachments/assets/9cdb38db-2418-4061-8aee-43b56c84150a" />
+</p>
+
+- 사용자의 연령대를 10대, 20대, 30대, 40대, 50대+ 중에서 입력받습니다.
+- 연령대 정보를 기반으로, 각 나이대가 즐겨 하는 활동이나 선호도를 반영한 맞춤형 솔루션을 제공합니다.
+
+<br>
+
+<p align="center">
+  <img width="1444" height="395" alt="Image" src="https://github.com/user-attachments/assets/19c175b8-bcfe-4b9e-8b58-e8569930ef31" />
+</p>
+
+- 사용자의 주소를 입력받아, 거주지와 가까운 활동 장소나 도움 받을 수 있는 공간을 추천합니다.
+- 이를 통해 상담이 단순한 위로에 그치지 않고, 실제 생활에 도움이 되는 솔루션을 제공합니다.
+
+<br>
+
+<p align="center">
+  <img width="1445" height="764" alt="Image" src="https://github.com/user-attachments/assets/add86b2c-1dfc-425f-bd7d-1d6477812a1f" />
+</p>
+
+- **에너지 방향** : 외향형(활동적·사교적) / 내향형(개인적·조용한 활동)
+- **판단 방식** : 감정형(공감·위로 중심) / 이성형(현실적·해결 중심)
+- 성향 입력을 통해, 외향형 사용자는 외부 활동 중심 솔루션을, 내향형 사용자는 혼자 즐길 수 있는 활동을 제안합니다.
+- 감정형은 따뜻한 위로 중심의 대답을, 이성형은 현실적이고 실질적인 조언을 받을 수 있습니다.
+
+<br>
+
+<p align="center">
+  <img width="1444" height="764" alt="Image" src="https://github.com/user-attachments/assets/35bd3baa-2f38-41c9-b509-571e83258cc1" />
+</p>
+
+- 운동, 여행, 독서, 영화, 게임, 공예 등 다양한 취미 카테고리 중 선택할 수 있습니다.
+- 입력된 취미에 따라, 사용자에게 보다 개인화된 추천과 솔루션을 제공합니다.
+
+<br>
+
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/06f83029-cd11-4555-8cb4-2c4051d13529" width="100%">
+</div>
+
+- 사용자가 입력한 정보를 바탕으로 루미가 성향 분석 결과를 제공합니다.
+- 이를 통해 이후에는 루미와 본격적인 상담을 진행할 수 있습니다.
+
+
+
