@@ -4,7 +4,7 @@
   <img src="https://github.com/user-attachments/assets/093697af-0ccf-49a2-88ea-d2b453ddde19" width="25%">
 </div>
 
-- 배포 URL : https://hairwhere.vercel.app](https://how-was-your-day.vercel.app
+- 배포 URL : https://how-was-your-day.vercel.app
 
 ⚠️ 현재는 랜딩 페이지(로그인 전 화면)만 열람하실 수 있습니다.
 
