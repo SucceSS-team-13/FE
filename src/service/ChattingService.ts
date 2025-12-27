@@ -1,17 +1,11 @@
-import { QueryFunction } from "@tanstack/react-query";
 import CustomAxios from "../api/CustomAxios";
 
-export const getChatting: QueryFunction<
-  Chat[],
-  [_1: string, number],
-  number
-> = async ({ queryKey, pageParam }) => {
+export const getChatting = async (
+  chatRoomId: number , pageParam: number
+): Promise<Chat[]> => {
   try {
-    const chatRoomId = queryKey[1];
-
-    if (chatRoomId === undefined || chatRoomId === null) {
-      // id가 없다면 예외 처리
-      throw new Error("chatRoomId is required");
+    if (!chatRoomId) {
+      throw new Error("id is required");
     }
 
     const res = await CustomAxios.get(
@@ -24,11 +18,24 @@ export const getChatting: QueryFunction<
     );
 
     return res.data.result.content;
+
   } catch (err) {
     console.error("Failed to fetch data", err);
     throw err;
   }
-};
+}
+
+export const postChat = async (
+  text: string, chatRoomId: number, sender: string
+): Promise<Chat> => {
+  const res = await CustomAxios.post(`/api/chat`, {
+    chatRoomId,
+    text,
+    sender
+  });
+
+  return res.data.result;
+}
 
 export const getChatRoomList = async ({
   pageParam,

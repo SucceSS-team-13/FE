@@ -1,46 +1,79 @@
-import { RefObject } from "react";
+import { RefObject, useEffect, useRef } from "react";
 import AIMessage from "./AIMessage";
 import UserMessage from "./UserMessage";
 import styles from "../../styles/main/MainPage.module.less";
 import LoadingSpinner from "../LoadingSpinner";
+import type { Message } from "react-optimistic-chat";
+
+type TMessage = Message<{
+  location?: string[];
+}>;
 
 const MessageContainer = ({
   messages,
   isPending,
   messageEndRef,
+  fetchNextPage,
   hasNextPage,
-  lastElementRef,
-  isFetchingNextChat,
+  isFetchingNextPage,
 }: {
-  messages: Chat[];
+  messages: TMessage[];
   isPending: boolean;
   messageEndRef: RefObject<HTMLDivElement | null>;
-  hasNextPage: boolean | undefined;
-  lastElementRef: (node: HTMLElement | null) => void;
-  isFetchingNextChat: boolean;
+  fetchNextPage?: () => void;
+  hasNextPage?: boolean;
+  isFetchingNextPage: boolean;
 }) => {
-  const reversedMessages = [...messages].reverse();
+  const scrollRef = useRef<HTMLDivElement>(null);
+  
+  // 스크롤 이벤트 처리
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+
+    const handleScroll = async () => {
+      // 최상단 도달 시 과거 메시지 로딩
+      if (
+        el.scrollTop === 0 &&
+        hasNextPage &&
+        !isFetchingNextPage &&
+        fetchNextPage
+      ) {
+        const prevScrollHeight = el.scrollHeight;
+
+        await fetchNextPage();
+        
+        requestAnimationFrame(() => {
+          const newScrollHeight = el.scrollHeight;
+          el.scrollTop = newScrollHeight - prevScrollHeight;
+        });
+      }
+    };
+
+    el.addEventListener("scroll", handleScroll, { passive: true });
+    return () => el.removeEventListener("scroll", handleScroll);
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   return (
-    <div className={styles.messageContainer}>
+    <div ref={scrollRef} className={styles.messageContainer}>
       <div className={styles.messagesWrapper}>
-        {hasNextPage && (
-          <div ref={lastElementRef} className={styles.loadingTrigger}>
-            {isFetchingNextChat && <LoadingSpinner size={"sm"} />}
+        {hasNextPage && isFetchingNextPage && (
+          <div className={styles.loadingTrigger}>
+            <LoadingSpinner size={"sm"} />
           </div>
         )}
-        {reversedMessages.map((message, index) => {
-          if (message.sender === "user") {
+        {messages.map((message, index) => {
+          if (message.role === "USER") {
             return (
-              <UserMessage message={message.text} key={message.id || index} />
+              <UserMessage message={message.content} key={message.id || index} />
             );
           } else {
             return (
               <AIMessage
-                message={message.text}
+                message={message.content}
                 key={message.id}
                 isLoading={
-                  message.sender === "lumi" && message.text === "" && isPending
+                  message.role === "AI" && message.content === "" && isPending
                 }
                 location={message.location}
               />

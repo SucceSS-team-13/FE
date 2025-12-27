@@ -57,20 +57,20 @@ export const handlers = [
     });
   }),
   // 채팅방 생성
-  http.post(`/api/chat`, () => {
+  http.post(`/api/chat/room`, () => {
     return HttpResponse.json({
       isSuccess: true,
       code: 2000,
       message: 'Ok',
       result: {
-        chatRoomId: 1,
+        chatRoomId: 0,
         memberId: 1,
         title: "New Chat",
       },
     });
   }),
   // 채팅 전송
-  http.post(`/user/chat`, async ({ request }) => {
+  http.post(`/api/chat`, async ({ request }) => {
     await delay(2000);
     const requestData = (await request.json()) as ChatRequest;
     const userMessage = requestData.text;
@@ -139,6 +139,7 @@ export const handlers = [
     const url = new URL(request.url);
     const page = parseInt(url.searchParams.get("page") || "1", 10);
 
+    await delay(3000);
     if (chatRoomId === "0") {
       return HttpResponse.json({
         result: {
@@ -151,8 +152,13 @@ export const handlers = [
           content: [
             {
               id: Date.now() + 1,
+              sender: "user",
+              text: "많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요!",
+            },
+            {
+              id: Date.now() + 2,
               sender: "lumi",
-              text: `많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요! ${page}-1`,
+              text: `많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요! ${page}-5`,
               location: [
                 "서울특별시 구로구 연동로 320",
                 "서울특별시 용산구 청파로47길 100",
@@ -160,53 +166,47 @@ export const handlers = [
               ],
             },
             {
-              id: Date.now() + 2,
+              id: Date.now() + 3,
               sender: "user",
               text: "많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요!",
-            },
-            {
-              id: Date.now() + 3,
-              sender: "lumi",
-              text: `많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요! ${page}-2`,
-              location: ["서울특별시 구로구 연동로 320"],
             },
             {
               id: Date.now() + 4,
-              sender: "user",
-              text: "많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요!",
-            },
-            {
-              id: Date.now() + 5,
-              sender: "lumi",
-              text: `많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요! ${page}-3`,
-              location: ["서울특별시 구로구 연동로 320"],
-            },
-            {
-              id: Date.now() + 6,
-              sender: "user",
-              text: "많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요!",
-            },
-            {
-              id: Date.now() + 7,
               sender: "lumi",
               text: `많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요! ${page}-4`,
               location: ["서울특별시 구로구 연동로 320"],
             },
             {
-              id: Date.now() + 8,
+              id: Date.now() + 5,
               sender: "user",
               text: "많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요!",
             },
             {
-              id: Date.now() + 9,
+              id: Date.now() + 6,
               sender: "lumi",
-              text: `많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요! ${page}-5`,
+              text: `많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요! ${page}-3`,
               location: ["서울특별시 구로구 연동로 320"],
             },
             {
-              id: Date.now() + 10,
+              id: Date.now() + 7,
               sender: "user",
               text: "많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요!",
+            },
+            {
+              id: Date.now() + 8,
+              sender: "lumi",
+              text: `많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요! ${page}-2`,
+              location: ["서울특별시 구로구 연동로 320"],
+            },
+            {
+              id: Date.now() + 9,
+              sender: "user",
+              text: "많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요!",
+            },
+            {
+              id: Date.now() + 10,
+              sender: "lumi",
+              text: `(최신)많이 힘드셨겠어요... 아래의 장소로 가서 기분전환을 해보세요! ${page}-1`,
             },
           ],
         },
