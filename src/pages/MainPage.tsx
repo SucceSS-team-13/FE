@@ -6,15 +6,10 @@ import ChatInput from "../components/main/ChatInput";
 import { useState, useEffect, useRef } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import {
-  InfiniteData,
-  useMutation,
-  useQueryClient,
-} from "@tanstack/react-query";
-import CustomAxios from "../api/CustomAxios";
-import {
   getChatting,
   getChatRoomList,
   createChatRoom,
+  postChat,
 } from "../service/ChattingService";
 import Sidebar from "../components/main/Sidebar";
 import { useSidebarStore } from "../store/SideBarStatusStore";
@@ -22,6 +17,7 @@ import { useInfiniteScroll } from "../hook/useInfiniteScroll";
 import MessageContainer from "../components/main/MessageContainer";
 import ActionIcon from "../components/main/ActionIcon";
 import SearchModal from "../components/main/SearchModal";
+import { useChat } from "react-optimistic-chat";
 
 const MainPage = ({ isDarkMode }: { isDarkMode: boolean }) => {
   const [searchParams] = useSearchParams();
@@ -29,7 +25,6 @@ const MainPage = ({ isDarkMode }: { isDarkMode: boolean }) => {
   const [chatRoomId, setChatRoomId] = useState<number | null>(null);
   const messageEndRef = useRef<HTMLDivElement>(null);
 
-  const queryClient = useQueryClient();
   const { sideBarStatus, toggleSidebar } = useSidebarStore();
   const [searchModal, setSearchModal] = useState(false);
   const navigate = useNavigate();
@@ -56,99 +51,31 @@ const MainPage = ({ isDarkMode }: { isDarkMode: boolean }) => {
   }, [searchParams]);
 
   const {
-    data: chatting,
-    lastElementRef: messageLastElementRef,
-    isFetchingNextPage: isFetchingNextChat,
+    messages: chatting,
+    sendUserMessage, 
+    isPending, 
+    fetchNextPage,
     hasNextPage,
-  } = useInfiniteScroll<Chat[], [string, number]>({
+    isFetchingNextPage
+  } = useChat<Chat>({
     queryKey: ["chatting", chatRoomId!],
-    queryFn: getChatting,
-    getNextPageParam: (lastPage, allPages) => {
-      if (lastPage.length < 10) return undefined;
+    queryFn: (pageParam) => getChatting(chatRoomId!, pageParam as number),
+    initialPageParam: 0,
+    getNextPageParam(lastPage, allPages) {
+      if (lastPage.length < 10)
+        return undefined;
       return allPages.length;
     },
-  });
-
-  useEffect(() => {
-    if (chatting && messageEndRef.current) {
-      messageEndRef.current.scrollIntoView({ behavior: "smooth" });
-    }
-  }, [chatting?.pages]);
-
-  const postChat = useMutation({
-    mutationFn: async () => {
-      const messageText = inputValue;
+    mutationFn: async (content) => {
       setInputValue("");
-      return CustomAxios.post(`/api/chat`, {
-        chatRoomId,
-        text: messageText,
-        sender: "user",
-      });
+      return postChat(content, chatRoomId!, "user");
     },
-
-    onMutate: () => {
-      const value = queryClient.getQueryData<InfiniteData<Chat[]>>([
-        "chatting",
-        chatRoomId,
-      ]);
-
-      if (!value) return;
-
-      const newUserMsg: Chat = {
-        id: Date.now() + 1,
-        sender: "user",
-        text: inputValue,
-      };
-
-      const newLumiMsg: Chat = {
-        id: Date.now() + 2,
-        sender: "lumi",
-        text: "",
-      };
-
-      const updatedFirstPage = [
-        newLumiMsg,
-        newUserMsg,
-        ...value.pages[0],
-      ];
-
-      const newData: InfiniteData<Chat[]> = {
-        pages: [updatedFirstPage, ...value.pages.slice(1)],
-        pageParams: [...value.pageParams],
-      };
-
-      queryClient.setQueryData(["chatting", chatRoomId], newData);
-    },
-
-    onSuccess: (response) => {
-      const value = queryClient.getQueryData<InfiniteData<Chat[]>>([
-        "chatting",
-        chatRoomId,
-      ]);
-      if (!value) return;
-
-      const recomment = response.data.result;
-
-      const lumiResponse: Chat = {
-        id: recomment.id,
-        sender: "lumi",
-        text: recomment.text,
-        location: recomment.location,
-      };
-
-      const updatedFirstPage = [...value.pages[0]];
-      updatedFirstPage[0] = lumiResponse;
-
-      const newData: InfiniteData<Chat[]> = {
-        pages: [updatedFirstPage, ...value.pages.slice(1)],
-        pageParams: [...value.pageParams],
-      };
-
-      queryClient.setQueryData(["chatting", chatRoomId], newData);
-    },
-
-    onError: (e) => console.error("Mutation error:", e),
-  });
+    map: (raw) => ({
+      id: raw.id,
+      role: raw.sender === "user" ? "USER" : "AI",
+      content: raw.text,
+    }),
+  })
 
   const {
     data: chatRoomData,
@@ -169,7 +96,10 @@ const MainPage = ({ isDarkMode }: { isDarkMode: boolean }) => {
 
   const handleSendMessage = (e: React.FormEvent) => {
     e.preventDefault();
-    postChat.mutate();
+    sendUserMessage(inputValue);
+    if (chatting && messageEndRef.current) {
+      messageEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   return (
@@ -234,12 +164,12 @@ const MainPage = ({ isDarkMode }: { isDarkMode: boolean }) => {
           }`}
         >
           <MessageContainer
-            messages={chatting?.pages.flat() ?? []}
-            isPending={postChat.isPending}
+            messages={chatting}
+            isPending={isPending}
             messageEndRef={messageEndRef}
+            fetchNextPage={fetchNextPage}
             hasNextPage={hasNextPage}
-            isFetchingNextChat={isFetchingNextChat}
-            lastElementRef={messageLastElementRef}
+            isFetchingNextPage={isFetchingNextPage}
           />
 
           <div className={styles.bottomContainer}>
@@ -248,7 +178,7 @@ const MainPage = ({ isDarkMode }: { isDarkMode: boolean }) => {
               handleSendMessage={handleSendMessage}
               inputValue={inputValue}
               setInputValue={setInputValue}
-              isPending={postChat.isPending}
+              isPending={isPending}
             />
           </div>
         </div>

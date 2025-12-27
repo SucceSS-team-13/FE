@@ -5,6 +5,7 @@ import AuthPage from "./pages/AuthPage";
 import MainPage from "./pages/MainPage";
 import LoginPage from "./pages/LoginPage";
 import useThemeStore from "./store/themeStore";
+
 function App() {
   const isDarkMode = useThemeStore((state) => state.isDarkMode);
   return (
